@@ -1,0 +1,26 @@
+service:
+  name: ticket-swap-graphql
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: eu-central-1
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    port: 8080
+
+functions:
+  graphql:
+    handler: src/index.graphql
+    events:
+      - http:
+          method: post
+          path: '/graphql'
+      - http:
+          method: get
+          path: '/graphql'
