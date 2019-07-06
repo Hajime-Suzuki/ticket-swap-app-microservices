@@ -1,7 +1,9 @@
-export const eventResolvers = {
+import { IResolvers } from '../generated/graphql'
+
+export const eventResolvers: IResolvers = {
   Query: {
     events: () => {
-      'event!!!'
+      return 'event!!!'
     }
   }
 }

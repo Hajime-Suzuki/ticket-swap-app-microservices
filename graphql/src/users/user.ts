@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-lambda'
 
 export const userSchema = gql`
   type Query {
-    user: String
+    user: User
   }
   type Mutation {
     createUser(data: CreateUserInput): User

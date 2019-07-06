@@ -1,7 +1,9 @@
-export const userResolvers = {
+import { IResolvers } from '../generated/graphql'
+
+export const userResolvers: IResolvers = {
   Query: {
     user: () => {
-      return 'Hello world!!'
+      return 'Hello world!!' as any
     }
   }
 }
