@@ -1,0 +1,67 @@
+service:
+  name: ticket-swap-tickets-service
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: eu-central-1
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    port: 8081
+
+functions:
+  tickets:
+    name: ${self:service.name}
+    handler: src/index.handler
+    events:
+      - http:
+          method: get
+          path: '/tickets'
+
+  eventEventListener:
+    name: ${self:service.name}-event-event-listener
+    handler: src/event-event-listener.handler
+    events:
+      - sns:
+          topicName: event-created
+          displayName: event-created
+# resources:
+#   Resources:
+#     ticketSwapRole:
+#       Type: AWS::IAM::Role
+#       Properties:
+#         RoleName: ticketSwapTicketService
+#         AssumeRolePolicyDocument:
+#           Version: '2012-10-17'
+#           Statement:
+#             - Effect: Allow
+#               Principal:
+#                 Service:
+#                   - lambda.amazonaws.com
+#               Action: sts:AssumeRole
+#             - Effect: Allow
+#               Action:
+#                 - lambda:InvokeFunction
+#                 - lambda:InvokeAsync
+#               Resource: '*'
+
+#         Policies:
+#           - PolicyName: callTicket
+#             PolicyDocument:
+#               Version: '2012-10-17'
+#               Statement:
+#                 - Effect: 'Allow'
+#                   Action:
+#                     - 'lambda:invokeFunction'
+#                   Resource:
+#                     - 'Fn::Join':
+#                         - ':'
+#                         - - 'arn:aws:logs'
+#                           - Ref: 'AWS::Region'
+#                           - Ref: 'AWS::AccountId'
+#                           - 'log-group:/aws/lambda/*:*:*'
