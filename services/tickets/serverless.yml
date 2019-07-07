@@ -1,10 +1,25 @@
 service:
-  name: ticket-swap-tickets-service
+  name: ${file(../../shared-config.js):shared.ticketServiceName}
 
 provider:
   name: aws
   runtime: nodejs10.x
   region: eu-central-1
+  environment: ${file(config.js):env}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchWriteItem
+      Resource:
+        - { Fn::GetAtt: [ticketsTable, Arn] }
+        - { Fn::GetAtt: [eventTable, Arn] }
+        - { Fn::GetAtt: [userTable, Arn] }
 
 plugins:
   - serverless-webpack
@@ -13,6 +28,11 @@ plugins:
 custom:
   serverless-offline:
     port: 8081
+
+  webpack:
+    includeModules:
+      forceExclude:
+        - aws-sdk
 
 functions:
   tickets:
@@ -28,40 +48,57 @@ functions:
     handler: src/event-event-listener.handler
     events:
       - sns:
-          topicName: event-created
-          displayName: event-created
-# resources:
-#   Resources:
-#     ticketSwapRole:
-#       Type: AWS::IAM::Role
-#       Properties:
-#         RoleName: ticketSwapTicketService
-#         AssumeRolePolicyDocument:
-#           Version: '2012-10-17'
-#           Statement:
-#             - Effect: Allow
-#               Principal:
-#                 Service:
-#                   - lambda.amazonaws.com
-#               Action: sts:AssumeRole
-#             - Effect: Allow
-#               Action:
-#                 - lambda:InvokeFunction
-#                 - lambda:InvokeAsync
-#               Resource: '*'
+          topicName: ${file(../../shared-config.js):shared.eventCreated}
+          displayName: ${file(../../shared-config.js):shared.eventCreated}
+      - sqs: # TODO: check sns vs sqs
+          arn:
+            Fn::GetAtt:
+              - eventCreatedSQS
+              - Arn
+          batchSize: 1
 
-#         Policies:
-#           - PolicyName: callTicket
-#             PolicyDocument:
-#               Version: '2012-10-17'
-#               Statement:
-#                 - Effect: 'Allow'
-#                   Action:
-#                     - 'lambda:invokeFunction'
-#                   Resource:
-#                     - 'Fn::Join':
-#                         - ':'
-#                         - - 'arn:aws:logs'
-#                           - Ref: 'AWS::Region'
-#                           - Ref: 'AWS::AccountId'
-#                           - 'log-group:/aws/lambda/*:*:*'
+resources:
+  Resources:
+    eventCreatedSQS:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: event-created-queue-test
+
+    ticketsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Ticket-swap-tickets-tickets
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+        BillingMode: PAY_PER_REQUEST
+
+    eventTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Ticket-swap-tickets-event
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+        BillingMode: PAY_PER_REQUEST
+
+    userTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Ticket-swap-tickets-user
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+        BillingMode: PAY_PER_REQUEST

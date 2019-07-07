@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-lambda'
 
 export const eventSchema = gql`
-  type Query {
+  extend type Query {
     events: String
   }
 `

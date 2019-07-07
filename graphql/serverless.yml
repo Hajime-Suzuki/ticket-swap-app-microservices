@@ -1,5 +1,5 @@
 service:
-  name: ticket-swap-graphql
+  name: ${file(../../shared-config.js):shared.gqlServiceName}
 
 provider:
   name: aws
@@ -13,6 +13,10 @@ plugins:
 custom:
   serverless-offline:
     port: 8080
+  webpack:
+    includeModules:
+      forceExclude:
+        - aws-sdk
 
 functions:
   graphql:

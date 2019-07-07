@@ -1,0 +1,4 @@
+- Monorepo: In order to share code.
+- GraphQL: Apollo + Lambda. I don't use AppSync this time. I wouldn't like to write business logic in mapping templates.
+- DynamoDB: This is for the sake of price. I don't want to pay for the idle time for DB.
+- SNS: Trigger Lambda functions when certain event happens.
