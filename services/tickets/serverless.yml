@@ -23,6 +23,7 @@ provider:
 
 plugins:
   - serverless-webpack
+  - serverless-dynamodb-local
   - serverless-offline
 
 custom:
@@ -33,6 +34,12 @@ custom:
     includeModules:
       forceExclude:
         - aws-sdk
+
+  dynamodb:
+    start:
+      migrate: true
+    stages:
+      - dev
 
 functions:
   tickets:
@@ -67,7 +74,7 @@ resources:
     ticketsTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Ticket-swap-tickets-tickets
+        TableName: ${file(config.js):env.tickets_tickets_table}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -80,7 +87,7 @@ resources:
     eventTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Ticket-swap-tickets-event
+        TableName: ${file(config.js):env.tickets_events_table}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -93,7 +100,7 @@ resources:
     userTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Ticket-swap-tickets-user
+        TableName: ${file(config.js):env.tickets_users_table}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S

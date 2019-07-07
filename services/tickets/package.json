@@ -1,18 +1,26 @@
 {
-  "name": "tickets",
+  "name": "@services/tickets",
   "private": true,
   "version": "1.0.0",
   "scripts": {
     "dev": "serverless offline start --showDuration",
-    "deploy": "serverless deploy -v"
+    "deploy": "serverless deploy -v",
+    "dynamo:stop": "lsof -ti:8000 | xargs kill"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@aws/dynamodb-data-mapper": "^0.7.3",
+    "@ticket-swap-app/gql": "1.0.0",
+    "@ticket-swap-app/shared": "1.0.0"
+  },
   "devDependencies": {
+    "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "@types/aws-lambda": "^8.10.17",
     "@types/node": "^10.12.18",
     "aws-sdk": "^2.488.0",
+    "dynamodb": "^1.2.0",
     "fork-ts-checker-webpack-plugin": "^1.3.7",
     "serverless": "^1.46.1",
+    "serverless-dynamodb-local": "^0.2.38",
     "serverless-offline": "^5.6.1",
     "serverless-webpack": "^5.2.0",
     "source-map-support": "^0.5.10",

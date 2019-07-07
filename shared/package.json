@@ -1,0 +1,10 @@
+{
+  "name": "@ticket-swap-app/shared",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.17",
+    "aws-sdk": "^2.488.0"
+  }
+}

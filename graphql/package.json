@@ -1,5 +1,5 @@
 {
-  "name": "gql",
+  "name": "@ticket-swap-app/gql",
   "private": true,
   "version": "1.0.0",
   "scripts": {
