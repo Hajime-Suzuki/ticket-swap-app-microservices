@@ -10,10 +10,11 @@ export type Scalars = {
   Float: number;
 };
 
-export enum ICacheControlScope {
-  Public = "PUBLIC",
-  Private = "PRIVATE"
-}
+export type ICreateTicketInput = {
+  eventId: Scalars["ID"];
+  user: Scalars["ID"];
+  price: Scalars["String"];
+};
 
 export type ICreateUserInput = {
   userName: Scalars["String"];
@@ -21,19 +22,43 @@ export type ICreateUserInput = {
   password: Scalars["String"];
 };
 
+export type IGetTicketResponse = {
+  __typename?: "GetTicketResponse";
+  ticket?: Maybe<ITicket>;
+};
+
 export type IMutation = {
   __typename?: "Mutation";
   createUser?: Maybe<IUser>;
+  createTicket?: Maybe<ITicket>;
 };
 
 export type IMutationCreateUserArgs = {
   data?: Maybe<ICreateUserInput>;
 };
 
+export type IMutationCreateTicketArgs = {
+  data?: Maybe<ICreateTicketInput>;
+};
+
 export type IQuery = {
   __typename?: "Query";
   user?: Maybe<IUser>;
   events?: Maybe<Scalars["String"]>;
+  getTicket?: Maybe<IGetTicketResponse>;
+};
+
+export type IQueryGetTicketArgs = {
+  id: Scalars["ID"];
+};
+
+export type ITicket = {
+  __typename?: "Ticket";
+  eventId: Scalars["ID"];
+  userId: Scalars["ID"];
+  price: Scalars["String"];
+  soldAt?: Maybe<Scalars["Int"]>;
+  createdAt: Scalars["Int"];
 };
 
 export type IUser = {
@@ -118,11 +143,13 @@ export type IResolversTypes = {
   User: ResolverTypeWrapper<IUser>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  GetTicketResponse: ResolverTypeWrapper<IGetTicketResponse>;
+  Ticket: ResolverTypeWrapper<ITicket>;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
   Mutation: ResolverTypeWrapper<{}>;
   CreateUserInput: ICreateUserInput;
+  CreateTicketInput: ICreateTicketInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
-  CacheControlScope: ICacheControlScope;
-  Int: ResolverTypeWrapper<Scalars["Int"]>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -131,22 +158,21 @@ export type IResolversParentTypes = {
   User: IUser;
   ID: Scalars["ID"];
   String: Scalars["String"];
+  GetTicketResponse: IGetTicketResponse;
+  Ticket: ITicket;
+  Int: Scalars["Int"];
   Mutation: {};
   CreateUserInput: ICreateUserInput;
+  CreateTicketInput: ICreateTicketInput;
   Boolean: Scalars["Boolean"];
-  CacheControlScope: ICacheControlScope;
-  Int: Scalars["Int"];
 };
 
-export type ICacheControlDirectiveResolver<
-  Result,
-  Parent,
+export type IGetTicketResponseResolvers<
   ContextType = any,
-  Args = {
-    maxAge?: Maybe<Maybe<Scalars["Int"]>>;
-    scope?: Maybe<Maybe<ICacheControlScope>>;
-  }
-> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+  ParentType = IResolversParentTypes["GetTicketResponse"]
+> = {
+  ticket?: Resolver<Maybe<IResolversTypes["Ticket"]>, ParentType, ContextType>;
+};
 
 export type IMutationResolvers<
   ContextType = any,
@@ -158,6 +184,12 @@ export type IMutationResolvers<
     ContextType,
     IMutationCreateUserArgs
   >;
+  createTicket?: Resolver<
+    Maybe<IResolversTypes["Ticket"]>,
+    ParentType,
+    ContextType,
+    IMutationCreateTicketArgs
+  >;
 };
 
 export type IQueryResolvers<
@@ -166,6 +198,23 @@ export type IQueryResolvers<
 > = {
   user?: Resolver<Maybe<IResolversTypes["User"]>, ParentType, ContextType>;
   events?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
+  getTicket?: Resolver<
+    Maybe<IResolversTypes["GetTicketResponse"]>,
+    ParentType,
+    ContextType,
+    IQueryGetTicketArgs
+  >;
+};
+
+export type ITicketResolvers<
+  ContextType = any,
+  ParentType = IResolversParentTypes["Ticket"]
+> = {
+  eventId?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
+  userId?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
+  price?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  soldAt?: Resolver<Maybe<IResolversTypes["Int"]>, ParentType, ContextType>;
+  createdAt?: Resolver<IResolversTypes["Int"], ParentType, ContextType>;
 };
 
 export type IUserResolvers<
@@ -178,11 +227,9 @@ export type IUserResolvers<
 };
 
 export type IResolvers<ContextType = any> = {
+  GetTicketResponse?: IGetTicketResponseResolvers<ContextType>;
   Mutation?: IMutationResolvers<ContextType>;
   Query?: IQueryResolvers<ContextType>;
+  Ticket?: ITicketResolvers<ContextType>;
   User?: IUserResolvers<ContextType>;
-};
-
-export type IDirectiveResolvers<ContextType = any> = {
-  cacheControl?: ICacheControlDirectiveResolver<any, any, ContextType>;
 };

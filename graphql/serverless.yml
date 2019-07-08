@@ -1,5 +1,5 @@
 service:
-  name: ${file(../../shared-config.js):shared.gqlServiceName}
+  name: ${file(../shared-config.js):shared.gqlServiceName}
 
 provider:
   name: aws
