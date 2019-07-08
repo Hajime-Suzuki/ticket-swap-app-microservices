@@ -1,7 +1,7 @@
-const { shared } = require('../../shared-config')
+const { shared } = require('../shared-config')
 
 module.exports.env = () => {
   const output = { ...shared() }
-  console.log('env: ', output)
+  // console.log('env: ', output)
   return output
 }

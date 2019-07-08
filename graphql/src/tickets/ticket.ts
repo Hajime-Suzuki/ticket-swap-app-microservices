@@ -5,8 +5,8 @@ export const ticketSchema = gql`
     eventId: ID!
     userId: ID!
     price: String!
-    soldAt: Int
-    createdAt: Int!
+    createdAt: String!
+    soldAt: String
   }
 
   extend type Query {
@@ -14,12 +14,12 @@ export const ticketSchema = gql`
   }
 
   extend type Mutation {
-    createTicket(data: CreateTicketInput): Ticket
+    createTicket(data: CreateTicketInput): GetTicketResponse
   }
 
   input CreateTicketInput {
     eventId: ID!
-    user: ID!
+    userId: ID!
     price: String!
   }
 

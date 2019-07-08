@@ -4,7 +4,8 @@ service:
 provider:
   name: aws
   runtime: nodejs10.x
-  region: eu-central-1
+  region: ${file(../shared-config.js):shared.region}
+  environment: ${file(config.js):env}
 
 plugins:
   - serverless-webpack

@@ -12,7 +12,7 @@ export type Scalars = {
 
 export type ICreateTicketInput = {
   eventId: Scalars["ID"];
-  user: Scalars["ID"];
+  userId: Scalars["ID"];
   price: Scalars["String"];
 };
 
@@ -30,7 +30,7 @@ export type IGetTicketResponse = {
 export type IMutation = {
   __typename?: "Mutation";
   createUser?: Maybe<IUser>;
-  createTicket?: Maybe<ITicket>;
+  createTicket?: Maybe<IGetTicketResponse>;
 };
 
 export type IMutationCreateUserArgs = {
@@ -57,8 +57,8 @@ export type ITicket = {
   eventId: Scalars["ID"];
   userId: Scalars["ID"];
   price: Scalars["String"];
-  soldAt?: Maybe<Scalars["Int"]>;
   createdAt: Scalars["Int"];
+  soldAt?: Maybe<Scalars["Int"]>;
 };
 
 export type IUser = {
@@ -185,7 +185,7 @@ export type IMutationResolvers<
     IMutationCreateUserArgs
   >;
   createTicket?: Resolver<
-    Maybe<IResolversTypes["Ticket"]>,
+    Maybe<IResolversTypes["GetTicketResponse"]>,
     ParentType,
     ContextType,
     IMutationCreateTicketArgs
@@ -213,8 +213,8 @@ export type ITicketResolvers<
   eventId?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
   userId?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
   price?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
-  soldAt?: Resolver<Maybe<IResolversTypes["Int"]>, ParentType, ContextType>;
   createdAt?: Resolver<IResolversTypes["Int"], ParentType, ContextType>;
+  soldAt?: Resolver<Maybe<IResolversTypes["Int"]>, ParentType, ContextType>;
 };
 
 export type IUserResolvers<

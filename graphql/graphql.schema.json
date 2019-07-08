@@ -182,14 +182,6 @@
             "deprecationReason": null
           },
           {
-            "name": "soldAt",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "createdAt",
             "description": null,
             "args": [],
@@ -198,6 +190,14 @@
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
             },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "soldAt",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -256,7 +256,11 @@
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "Ticket", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "GetTicketResponse",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -324,7 +328,7 @@
             "defaultValue": null
           },
           {
-            "name": "user",
+            "name": "userId",
             "description": null,
             "type": {
               "kind": "NON_NULL",

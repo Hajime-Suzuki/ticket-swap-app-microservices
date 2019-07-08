@@ -5,11 +5,12 @@ import { eventResolvers } from './events/event-resolvers'
 import { userSchema } from './users/user'
 import { userResolvers } from './users/user-resolvers'
 import { ticketSchema } from './tickets/ticket'
+import { ticketResolvers } from './tickets/ticket-resolvers'
 
 const server = new ApolloServer({
   schema: makeExecutableSchema({
     typeDefs: [userSchema, eventSchema, ticketSchema],
-    resolvers: [userResolvers, eventResolvers]
+    resolvers: [userResolvers, eventResolvers, ticketResolvers]
   })
 })
 

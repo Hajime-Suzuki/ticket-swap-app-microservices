@@ -2,9 +2,11 @@
   "name": "@ticket-swap-app/shared",
   "private": true,
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "@aws/dynamodb-data-mapper": "^0.7.3"
+  },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
-    "aws-sdk": "^2.488.0"
+    "aws-sdk": "^2.489.0"
   }
 }

@@ -5,6 +5,7 @@ const lambda = new Lambda({
   apiVersion: '2015-03-31'
 })
 
+// TODO: implement
 export const eventResolvers: IResolvers = {
   Query: {
     events: async () => {

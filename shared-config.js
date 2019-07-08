@@ -11,8 +11,18 @@ const ports = {
   ticketPort: 8081
 }
 
+const dynamo = {
+  ticketDbPort: 8000
+}
+
+const awsSettings = {
+  region: 'eu-central-1'
+}
+
 module.exports.shared = () => ({
   ...serviceNames,
   ...eventNames,
-  ...ports
+  ...ports,
+  ...awsSettings,
+  ...dynamo
 })

@@ -1,5 +1,6 @@
 import { IResolvers } from '../generated/graphql'
 
+//TODO: implement
 export const userResolvers: IResolvers = {
   Query: {
     user: () => {

@@ -4,7 +4,7 @@ service:
 provider:
   name: aws
   runtime: nodejs10.x
-  region: eu-central-1
+  region: ${file(../.../shared-config.js):shared.region}
   environment: ${file(config.js):env}
   iamRoleStatements:
     - Effect: Allow
@@ -37,6 +37,7 @@ custom:
 
   dynamodb:
     start:
+      port: ${file(../../shared-config.js):shared.ticketDbPort}
       migrate: true
     stages:
       - dev
