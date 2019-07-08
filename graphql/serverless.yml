@@ -12,7 +12,7 @@ plugins:
 
 custom:
   serverless-offline:
-    port: 8080
+    port: ${file(../shared-config.js):shared.gqlPort}
   webpack:
     includeModules:
       forceExclude:

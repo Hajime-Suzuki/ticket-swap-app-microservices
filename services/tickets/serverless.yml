@@ -28,7 +28,7 @@ plugins:
 
 custom:
   serverless-offline:
-    port: 8081
+    port: ${file(../../shared-config.js):shared.ticketPort}
 
   webpack:
     includeModules:
@@ -76,11 +76,15 @@ resources:
       Properties:
         TableName: ${file(config.js):env.tickets_tickets_table}
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: eventId
+            AttributeType: S
+          - AttributeName: userId
             AttributeType: S
         KeySchema:
-          - AttributeName: id
+          - AttributeName: eventId
             KeyType: HASH
+          - AttributeName: userId
+            KeyType: RANGE
 
         BillingMode: PAY_PER_REQUEST
 

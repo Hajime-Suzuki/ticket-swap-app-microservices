@@ -6,7 +6,13 @@ const eventNames = {
   eventCreated: 'ticket-swap-event-created'
 }
 
+const ports = {
+  gqlPort: 8080,
+  ticketPort: 8081
+}
+
 module.exports.shared = () => ({
   ...serviceNames,
-  ...eventNames
+  ...eventNames,
+  ...ports
 })

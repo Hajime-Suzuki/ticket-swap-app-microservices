@@ -1,16 +1,17 @@
 import {
   attribute,
   hashKey,
-  table
+  table,
+  rangeKey
 } from '@aws/dynamodb-data-mapper-annotations'
 import { ITicket } from '@ticket-swap-app/gql/src/generated/graphql'
 
 @table(process.env.tickets_tickets_table)
-export class Ticket implements ITicket {
+export class TicketModel implements ITicket {
   @hashKey()
   eventId: string
 
-  @attribute()
+  @rangeKey()
   userId: string
 
   @attribute()
