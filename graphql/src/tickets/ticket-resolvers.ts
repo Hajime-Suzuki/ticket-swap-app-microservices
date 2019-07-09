@@ -31,11 +31,17 @@ class TicketLambda {
 const ticketLambda = new TicketLambda(process.env.ticketPort)
 
 export const ticketResolvers: IResolvers = {
+  Query: {
+    getTicket: async (_, { eventId, userId }) => {
+      const res = await ticketLambda.invoke<{ ticket: ITicket }>({ eventId, userId })
+      return res
+    }
+  },
   Mutation: {
     createTicket: async (_, { data }) => {
       try {
-        const res = await ticketLambda.invoke<{ ticket: ITicket }>(data)
-        return res
+        const { ticket } = await ticketLambda.invoke<{ ticket: ITicket }>(data)
+        return ticket
       } catch (err) {
         console.log(err)
       }

@@ -30,7 +30,7 @@ export type IGetTicketResponse = {
 export type IMutation = {
   __typename?: "Mutation";
   createUser?: Maybe<IUser>;
-  createTicket?: Maybe<IGetTicketResponse>;
+  createTicket?: Maybe<ITicket>;
 };
 
 export type IMutationCreateUserArgs = {
@@ -49,7 +49,8 @@ export type IQuery = {
 };
 
 export type IQueryGetTicketArgs = {
-  id: Scalars["ID"];
+  eventId: Scalars["ID"];
+  userId: Scalars["ID"];
 };
 
 export type ITicket = {
@@ -57,8 +58,8 @@ export type ITicket = {
   eventId: Scalars["ID"];
   userId: Scalars["ID"];
   price: Scalars["String"];
-  createdAt: Scalars["Int"];
-  soldAt?: Maybe<Scalars["Int"]>;
+  createdAt: Scalars["String"];
+  soldAt?: Maybe<Scalars["String"]>;
 };
 
 export type IUser = {
@@ -145,7 +146,6 @@ export type IResolversTypes = {
   String: ResolverTypeWrapper<Scalars["String"]>;
   GetTicketResponse: ResolverTypeWrapper<IGetTicketResponse>;
   Ticket: ResolverTypeWrapper<ITicket>;
-  Int: ResolverTypeWrapper<Scalars["Int"]>;
   Mutation: ResolverTypeWrapper<{}>;
   CreateUserInput: ICreateUserInput;
   CreateTicketInput: ICreateTicketInput;
@@ -160,7 +160,6 @@ export type IResolversParentTypes = {
   String: Scalars["String"];
   GetTicketResponse: IGetTicketResponse;
   Ticket: ITicket;
-  Int: Scalars["Int"];
   Mutation: {};
   CreateUserInput: ICreateUserInput;
   CreateTicketInput: ICreateTicketInput;
@@ -185,7 +184,7 @@ export type IMutationResolvers<
     IMutationCreateUserArgs
   >;
   createTicket?: Resolver<
-    Maybe<IResolversTypes["GetTicketResponse"]>,
+    Maybe<IResolversTypes["Ticket"]>,
     ParentType,
     ContextType,
     IMutationCreateTicketArgs
@@ -213,8 +212,8 @@ export type ITicketResolvers<
   eventId?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
   userId?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
   price?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
-  createdAt?: Resolver<IResolversTypes["Int"], ParentType, ContextType>;
-  soldAt?: Resolver<Maybe<IResolversTypes["Int"]>, ParentType, ContextType>;
+  createdAt?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  soldAt?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
 };
 
 export type IUserResolvers<
