@@ -10,7 +10,8 @@
   "dependencies": {
     "@aws/dynamodb-data-mapper": "^0.7.3",
     "@ticket-swap-app/gql": "1.0.0",
-    "@ticket-swap-app/shared": "1.0.0"
+    "@ticket-swap-app/shared": "1.0.0",
+    "tslint": "^5.18.0"
   },
   "devDependencies": {
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",

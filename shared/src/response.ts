@@ -1,4 +1,4 @@
-export const ToJSON = {
+export const handleResponse = {
   success(res: any) {
     return {
       statusCode: 200,
