@@ -81,17 +81,5 @@ resources:
                         - - 'arn:aws:lambda'
                           - Ref: 'AWS::Region'
                           - Ref: 'AWS::AccountId'
-                          - 'function:'
-                          - ${file(../shared-config.js):shared.ticketServiceName}
-
-                - Effect: 'Allow'
-                  Action:
-                    - lambda:InvokeFunction
-                    - lambda:InvokeAsync
-                  Resource:
-                    - 'Fn::Join':
-                        - ':'
-                        - - 'arn:aws:lambda'
-                          - Ref: 'AWS::Region'
-                          - Ref: 'AWS::AccountId'
-                          - 'function:ticket-swap-tickets-service'
+                          - 'function'
+                          - ${file(../shared-config.js):shared.createTicketFunc}

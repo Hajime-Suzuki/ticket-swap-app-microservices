@@ -15,7 +15,7 @@ class TicketLambda {
 
   async invoke<TRes = any>(data: any) {
     const params = {
-      FunctionName: process.env.ticketServiceName,
+      FunctionName: process.env.createTicketFunc,
       InvocationType: 'RequestResponse',
       Payload: JSON.stringify({
         body: data

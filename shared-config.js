@@ -19,10 +19,15 @@ const awsSettings = {
   region: 'eu-central-1'
 }
 
+const functionNames = {
+  createTicketFunc: 'ticket-swap-create-ticket'
+}
+
 module.exports.shared = () => ({
   ...serviceNames,
   ...eventNames,
   ...ports,
   ...awsSettings,
-  ...dynamo
+  ...dynamo,
+  ...functionNames
 })

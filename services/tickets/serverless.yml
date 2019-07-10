@@ -43,8 +43,8 @@ custom:
       - dev
 
 functions:
-  tickets:
-    name: ${self:service.name}
+  createTicket:
+    name: ${file(../../shared-config.js):shared.createTicketFunc}
     handler: src/index.handler
     events:
       - http:
