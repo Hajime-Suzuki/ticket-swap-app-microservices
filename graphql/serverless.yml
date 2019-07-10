@@ -6,6 +6,14 @@ provider:
   runtime: nodejs10.x
   region: ${file(../shared-config.js):shared.region}
   environment: ${file(config.js):env}
+  # role: mainRole
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+      Resource: '*'
+  # TODO: Add IAM role to call lambda functions
 
 plugins:
   - serverless-webpack
@@ -29,3 +37,61 @@ functions:
       - http:
           method: get
           path: '/graphql'
+    role: mainRole
+
+resources:
+  Resources:
+    mainRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: ticket-swap-gql-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+
+        Policies:
+          - PolicyName: can-call-lambda
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource:
+                    - 'Fn::Join':
+                        - ':'
+                        - - 'arn:aws:logs'
+                          - Ref: 'AWS::Region'
+                          - Ref: 'AWS::AccountId'
+                          - 'log-group:/aws/lambda/*:*:*'
+                - Effect: 'Allow'
+                  Action:
+                    - lambda:InvokeFunction
+                    - lambda:InvokeAsync
+                  Resource:
+                    - 'Fn::Join':
+                        - ':'
+                        - - 'arn:aws:lambda'
+                          - Ref: 'AWS::Region'
+                          - Ref: 'AWS::AccountId'
+                          - 'function:'
+                          - ${file(../shared-config.js):shared.ticketServiceName}
+
+                - Effect: 'Allow'
+                  Action:
+                    - lambda:InvokeFunction
+                    - lambda:InvokeAsync
+                  Resource:
+                    - 'Fn::Join':
+                        - ':'
+                        - - 'arn:aws:lambda'
+                          - Ref: 'AWS::Region'
+                          - Ref: 'AWS::AccountId'
+                          - 'function:ticket-swap-tickets-service'

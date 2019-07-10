@@ -18,8 +18,8 @@ export class TicketModel implements ITicket {
   price: string
 
   @attribute()
-  createdAt: number
+  createdAt: string
 
   @attribute()
-  soldAt?: number
+  soldAt?: string
 }

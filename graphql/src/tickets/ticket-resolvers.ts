@@ -14,16 +14,16 @@ class TicketLambda {
   }
 
   async invoke<TRes = any>(data: any) {
-    const res = await this.lambda
-      .invoke({
-        FunctionName: process.env.ticketServiceName,
-        InvocationType: 'RequestResponse',
-        Payload: JSON.stringify({
-          body: data
-        })
+    const params = {
+      FunctionName: process.env.ticketServiceName,
+      InvocationType: 'RequestResponse',
+      Payload: JSON.stringify({
+        body: data
       })
-      .promise()
-
+    }
+    console.log('will invoke lambda: ', params)
+    const res = await this.lambda.invoke(params).promise()
+    console.log('invoked lambda: ', res)
     return JSON.parse(JSON.parse(res.Payload.toString()).body) as TRes
   }
 }
@@ -39,6 +39,8 @@ export const ticketResolvers: IResolvers = {
   },
   Mutation: {
     createTicket: async (_, { data }) => {
+      console.log('createTicket')
+      console.log('data: ', data)
       try {
         const { ticket } = await ticketLambda.invoke<{ ticket: ITicket }>(data)
         return ticket
