@@ -1,7 +1,10 @@
 import { Lambda } from 'aws-sdk'
 import { IResolvers, ITicket } from '../generated/graphql'
-
+import { ticketActions } from '@ticket-swap-app/shared/src/constants'
 console.log({ port: process.env.ticketPort })
+
+const ticketsFunc = process.env.ticketsFunc
+
 
 // TODO: use dataLayer.
 class TicketLambda {
@@ -13,17 +16,19 @@ class TicketLambda {
     })
   }
 
-  async invoke<TRes = any>(data: any) {
+  async invoke<TRes = any>(actionName: string, data: any) {
     const params = {
-      FunctionName: process.env.createTicketFunc,
+      FunctionName: ticketsFunc,
       InvocationType: 'RequestResponse',
       Payload: JSON.stringify({
+        action: actionName,
         body: data
       })
     }
     console.log('will invoke lambda: ', params)
     const res = await this.lambda.invoke(params).promise()
     console.log('invoked lambda: ', res)
+    if (res.StatusCode !== 200) throw new Error(`lambda function ${ticketsFunc}.${actionName} failed`)
     return JSON.parse(JSON.parse(res.Payload.toString()).body) as TRes
   }
 }
@@ -33,7 +38,8 @@ const ticketLambda = new TicketLambda(process.env.ticketPort)
 export const ticketResolvers: IResolvers = {
   Query: {
     getTicket: async (_, { eventId, userId }) => {
-      const res = await ticketLambda.invoke<{ ticket: ITicket }>({ eventId, userId })
+      console.log('getTicket')
+      const res = await ticketLambda.invoke<{ ticket: ITicket }>(ticketActions.getTicket, { eventId, userId })
       return res
     }
   },
@@ -42,7 +48,7 @@ export const ticketResolvers: IResolvers = {
       console.log('createTicket')
       console.log('data: ', data)
       try {
-        const { ticket } = await ticketLambda.invoke<{ ticket: ITicket }>(data)
+        const { ticket } = await ticketLambda.invoke<{ ticket: ITicket }>(ticketActions.createTicket, data)
         return ticket
       } catch (err) {
         console.log(err)

@@ -1,15 +1,31 @@
-import { handleResponse } from '@ticket-swap-app/shared/src/response'
-import { ICreateTicketInput } from '@ticket-swap-app/gql/src/generated/graphql'
-import { APIGatewayProxyHandler } from '@ticket-swap-app/shared/src/types'
-import { TicketRepository } from './repository'
-// import from 'aws-sdk'
-// event: { userId: '1', eventId: '9998', price: '159.09' }
-export const handler = async event => {
+import { ticketActions } from '@ticket-swap-app/shared/src/constants';
+import { handleResponse } from '@ticket-swap-app/shared/src/response';
+import { createTicketHandler } from './handlers/create-ticket';
+import { getTicketHandler } from './handlers/get-ticket';
+
+type ActionTypes = keyof typeof ticketActions
+
+export interface Event<TBody = any> {
+  action: ActionTypes
+  body: TBody
+}
+
+export const handler = async (event: Event) => {
   try {
-    console.log('event:', event)
-    const res = await TicketRepository.save(event.body)
-    console.log('ticket saved: ', res)
-    return handleResponse.success({ ticket: res })
+    switch (event.action) {
+      case ticketActions.createTicket: {
+        const res = await createTicketHandler(event)
+        return handleResponse.success({ ticket: res })
+      }
+      case ticketActions.getTicket: {
+        const res = await getTicketHandler(event)
+        return handleResponse.success({ ticket: res })
+      }
+
+      default:
+        handleResponse.error(new Error('unknown action'))
+    }
+
   } catch (error) {
     return handleResponse.error(error)
   }

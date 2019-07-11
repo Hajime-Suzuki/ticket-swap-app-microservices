@@ -53,7 +53,7 @@ functions:
 
   eventEventListener:
     name: ${self:service.name}-event-event-listener
-    handler: src/event-event-listener.handler
+    handler: src/handlers/event-event-listener.handler
     events:
       - sns:
           topicName: ${file(../../shared-config.js):shared.eventCreated}

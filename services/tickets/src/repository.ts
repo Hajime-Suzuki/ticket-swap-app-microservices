@@ -3,8 +3,10 @@ import { ZeroArgumentsConstructor } from '@aws/dynamodb-data-marshaller';
 import { ITicket } from '@ticket-swap-app/gql/src/generated/graphql';
 import { newMapper } from '@ticket-swap-app/shared/src/database';
 import { TicketModel } from './model';
+
 const { IS_OFFLINE, region, ticketDbPort } = process.env
 
+//TODO: move to shared
 class Mapper<T, TModel extends ZeroArgumentsConstructor<StringToAnyObjectMap>> {
   private mapper: DataMapper
   private model: TModel
@@ -47,14 +49,15 @@ const mapper = new Mapper<ITicket, typeof TicketModel>({
   model: TicketModel
 })
 
+export type CreateTicketArgs = Pick<TicketModel, 'userId' | 'eventId' | 'price'>
 
-const save = (data: Pick<TicketModel, 'userId' | 'eventId' | 'price'>) => {
+const save = (data: CreateTicketArgs) => {
   return mapper.save(data)
 }
 
-interface FindTicketArgs {
-  eventId: string
-  userId: string
+export interface FindTicketArgs {
+  userId: TicketModel['userId']
+  eventId: TicketModel['eventId']
 }
 const findByKey = async (args: FindTicketArgs) => {
   const res = await mapper.query(args)
