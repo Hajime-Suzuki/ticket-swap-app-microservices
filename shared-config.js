@@ -20,7 +20,7 @@ const awsSettings = {
 }
 
 const functionNames = {
-  createTicketFunc: 'ticket-swap-create-ticket'
+  ticketsFunc: 'ticket-swap-tickets-handler'
 }
 
 module.exports.shared = () => ({

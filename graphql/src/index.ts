@@ -10,8 +10,15 @@ import { ticketResolvers } from './tickets/ticket-resolvers'
 const server = new ApolloServer({
   schema: makeExecutableSchema({
     typeDefs: [userSchema, eventSchema, ticketSchema],
-    resolvers: [userResolvers, eventResolvers, ticketResolvers]
-  })
+    resolvers: [userResolvers, eventResolvers, ticketResolvers],
+
+  }),
+  introspection: true, // by setting this false, you don't allow use graphql playground for this endpoint.
 })
 
-export const graphql = server.createHandler()
+export const graphql = server.createHandler({
+  cors: {
+    origin: true,
+    credentials: true,
+  },
+})
