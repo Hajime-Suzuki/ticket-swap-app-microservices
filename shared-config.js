@@ -1,6 +1,7 @@
 const serviceNames = {
   ticketServiceName: 'ticket-swap-tickets-service',
-  gqlServiceName: 'ticket-swap-graphql-service'
+  gqlServiceName: 'ticket-swap-graphql-service',
+  usersServiceName: 'ticket-swap-users-service'
 }
 const eventNames = {
   eventCreated: 'ticket-swap-event-created'
@@ -8,11 +9,13 @@ const eventNames = {
 
 const ports = {
   gqlPort: 8080,
-  ticketPort: 8081
+  ticketsPort: 8081,
+  usersPort: 8082
 }
 
 const dynamo = {
-  ticketDbPort: 8000
+  ticketsDbPort: 8000,
+  usersDbPort: 8001
 }
 
 const awsSettings = {
@@ -20,7 +23,8 @@ const awsSettings = {
 }
 
 const functionNames = {
-  ticketsFunc: 'ticket-swap-tickets-handler'
+  ticketsFunc: 'ticket-swap-tickets-handler',
+  usersFunc: 'ticket-swap-users-handler'
 }
 
 module.exports.shared = () => ({

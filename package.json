@@ -4,6 +4,7 @@
     "graphql",
     "services/tickets",
     "services/events",
+    "services/users",
     "shared"
   ]
 }

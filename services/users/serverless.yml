@@ -1,5 +1,5 @@
 service:
-  name: ${file(../../shared-config.js):shared.ticketServiceName}
+  name: ${file(../../shared-config.js):shared.usersServiceName}
 
 provider:
   name: aws
@@ -18,8 +18,8 @@ provider:
         - dynamodb:BatchWriteItem
       Resource:
         - { Fn::GetAtt: [ticketsTable, Arn] }
-        - { Fn::GetAtt: [eventTable, Arn] }
-        - { Fn::GetAtt: [userTable, Arn] }
+        - { Fn::GetAtt: [eventsTable, Arn] }
+        - { Fn::GetAtt: [usersTable, Arn] }
 
 plugins:
   - serverless-webpack
@@ -28,7 +28,7 @@ plugins:
 
 custom:
   serverless-offline:
-    port: ${file(../../shared-config.js):shared.ticketsPort}
+    port: ${file(../../shared-config.js):shared.usersPort}
 
   webpack:
     includeModules:
@@ -37,45 +37,25 @@ custom:
 
   dynamodb:
     start:
-      port: ${file(../../shared-config.js):shared.ticketsDbPort}
+      port: ${file(../../shared-config.js):shared.usersDbPort}
       migrate: true
     stages:
       - dev
 
 functions:
-  tickets:
-    name: ${file(../../shared-config.js):shared.ticketsFunc}
+  users:
+    name: ${file(../../shared-config.js):shared.usersFunc}
     handler: src/index.handler
     events:
       - http:
-          method: get
-          path: '/tickets'
-
-  eventEventListener:
-    name: ${self:service.name}-event-event-listener
-    handler: src/handlers/event-event-listener.handler
-    events:
-      - sns:
-          topicName: ${file(../../shared-config.js):shared.eventCreated}
-          displayName: ${file(../../shared-config.js):shared.eventCreated}
-      - sqs: # TODO: check sns vs sqs
-          arn:
-            Fn::GetAtt:
-              - eventCreatedSQS
-              - Arn
-          batchSize: 1
-
+          method: '*'
+          path: '/users'
 resources:
   Resources:
-    eventCreatedSQS:
-      Type: AWS::SQS::Queue
-      Properties:
-        QueueName: event-created-queue-test
-
     ticketsTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${file(config.js):env.tickets_tickets_table}
+        TableName: ${file(config.js):env.users_tickets_table}
         AttributeDefinitions:
           - AttributeName: eventId
             AttributeType: S
@@ -89,10 +69,10 @@ resources:
 
         BillingMode: PAY_PER_REQUEST
 
-    eventTable:
+    eventsTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${file(config.js):env.tickets_events_table}
+        TableName: ${file(config.js):env.users_events_table}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -102,10 +82,10 @@ resources:
 
         BillingMode: PAY_PER_REQUEST
 
-    userTable:
+    usersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${file(config.js):env.tickets_users_table}
+        TableName: ${file(config.js):env.users_users_table}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S

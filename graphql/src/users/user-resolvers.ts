@@ -1,10 +1,18 @@
-import { IResolvers } from '../generated/graphql'
+import { IResolvers, IUser } from '../generated/graphql'
+import { ResolverContext } from '..'
+import { LambdaCaller } from '../helpers/lambda-caller'
+import { usersActions } from '@ticket-swap-app/shared/src/constants'
 
-// TODO: implement
-export const userResolvers: IResolvers = {
+const userLambda = new LambdaCaller(process.env.usersPort, process.env.usersFunc)
+
+export const userResolvers: IResolvers<ResolverContext> = {
   Query: {
-    user: () => {
-      return { id: '2', userName: 'my name', email: 'asht@test.com' }
+  },
+  Mutation: {
+    createUser: async (_, { data }) => {
+      const { user } = await userLambda.invoke<{ user: IUser }>(usersActions.createUser, data)
+      console.log(user)
+      return user
     }
   }
 }

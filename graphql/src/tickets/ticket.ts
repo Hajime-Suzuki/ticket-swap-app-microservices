@@ -12,7 +12,7 @@ export const ticketSchema = gql`
   }
 
   extend type Query {
-    getTicket(eventId: ID!, userId: ID!): GetTicketResponse @authenticated
+    getTicket(eventId: ID!, userId: ID!): GetTicketResponse
   }
 
   extend type Mutation {

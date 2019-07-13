@@ -4,14 +4,14 @@ import { ITicket } from '@ticket-swap-app/gql/src/generated/graphql'
 import { newMapper } from '@ticket-swap-app/shared/src/database'
 import { TicketModel } from './model'
 
-const { IS_OFFLINE, region, ticketDbPort } = process.env
+const { IS_OFFLINE, region, ticketsDbPort } = process.env
 
 // TODO: move to shared
 class Mapper<T, TModel extends ZeroArgumentsConstructor<StringToAnyObjectMap>> {
   private mapper: DataMapper
   private model: TModel
 
-  constructor({ region, endpoint, model }: { region: string, endpoint: string, model: TModel }) {
+  constructor({ endpoint, model }: { endpoint: string, model: TModel }) {
     this.model = model
     this.mapper = newMapper({ region, endpoint })
   }
@@ -44,8 +44,7 @@ class Mapper<T, TModel extends ZeroArgumentsConstructor<StringToAnyObjectMap>> {
 }
 
 const mapper = new Mapper<ITicket, typeof TicketModel>({
-  region,
-  endpoint: IS_OFFLINE ? 'http://localhost:' + ticketDbPort : undefined,
+  endpoint: IS_OFFLINE ? 'http://localhost:' + ticketsDbPort : undefined,
   model: TicketModel
 })
 
