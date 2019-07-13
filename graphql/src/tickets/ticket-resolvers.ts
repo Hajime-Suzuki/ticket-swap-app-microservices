@@ -1,6 +1,7 @@
 import { Lambda } from 'aws-sdk'
 import { IResolvers, ITicket } from '../generated/graphql'
 import { ticketActions } from '@ticket-swap-app/shared/src/constants'
+import { ResolverContext } from '..';
 console.log({ port: process.env.ticketPort })
 
 const ticketsFunc = process.env.ticketsFunc
@@ -35,7 +36,7 @@ class TicketLambda {
 
 const ticketLambda = new TicketLambda(process.env.ticketPort)
 
-export const ticketResolvers: IResolvers = {
+export const ticketResolvers: IResolvers<ResolverContext> = {
   Query: {
     getTicket: async (_, { eventId, userId }) => {
       console.log('getTicket')

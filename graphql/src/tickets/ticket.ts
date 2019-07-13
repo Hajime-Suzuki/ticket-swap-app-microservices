@@ -1,6 +1,8 @@
 import { gql } from 'apollo-server-lambda'
 
 export const ticketSchema = gql`
+  directive @authenticated on FIELD_DEFINITION
+
   type Ticket {
     eventId: ID!
     userId: ID!
@@ -10,7 +12,7 @@ export const ticketSchema = gql`
   }
 
   extend type Query {
-    getTicket(eventId: ID!, userId: ID!): GetTicketResponse
+    getTicket(eventId: ID!, userId: ID!): GetTicketResponse @authenticated
   }
 
   extend type Mutation {

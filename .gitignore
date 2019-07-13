@@ -89,4 +89,6 @@ typings/
 
 **/.webpack/
 **/.env.js
-.requersts/
+.requests/
+**/.data
+**/.secret.*
