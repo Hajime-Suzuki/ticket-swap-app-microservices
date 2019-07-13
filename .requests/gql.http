@@ -1,9 +1,0 @@
-
-POST http://localhost:8080/graphql
-
-###
-POST https://tpxy55erji.execute-api.eu-central-1.amazonaws.com/dev/graphql
-
-{
-  "query": "{hello}"
-}

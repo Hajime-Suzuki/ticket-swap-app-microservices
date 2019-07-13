@@ -9,6 +9,5 @@ const tableNames = {
 module.exports.env = () => {
   const output = { ...shared(), ...tableNames }
 
-  console.log('env: ', output)
   return output
 }

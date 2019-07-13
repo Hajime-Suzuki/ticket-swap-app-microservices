@@ -51,10 +51,6 @@ functions:
           method: get
           path: '/tickets'
 
-  authChecker:
-    name: ticket-swap-auth-checker
-    handler: src/auth/custom-authorizer.ts
-
   eventEventListener:
     name: ${self:service.name}-event-event-listener
     handler: src/handlers/event-event-listener.handler
