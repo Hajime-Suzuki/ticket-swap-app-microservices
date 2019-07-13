@@ -1,7 +1,7 @@
-import { ticketActions } from '@ticket-swap-app/shared/src/constants';
-import { handleResponse } from '@ticket-swap-app/shared/src/response';
-import { createTicketHandler } from './handlers/create-ticket';
-import { getTicketHandler } from './handlers/get-ticket';
+import { ticketActions } from '@ticket-swap-app/shared/src/constants'
+import { handleResponse } from '@ticket-swap-app/shared/src/response'
+import { createTicketHandler } from './handlers/create-ticket'
+import { getTicketHandler } from './handlers/get-ticket'
 
 type ActionTypes = keyof typeof ticketActions
 

@@ -1,6 +1,5 @@
-import { TicketRepository, CreateTicketArgs } from "../repository";
-import { Event } from "..";
-
+import { TicketRepository, CreateTicketArgs } from '../repository'
+import { Event } from '..'
 
 export const createTicketHandler = async (event: Event<CreateTicketArgs>) => {
   console.log('event:', event)

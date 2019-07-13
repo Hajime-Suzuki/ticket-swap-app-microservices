@@ -1,14 +1,13 @@
-import { ApolloServer, makeExecutableSchema } from 'apollo-server-lambda';
-import { APIGatewayEvent } from 'aws-lambda';
-import 'source-map-support/register';
-import { AuthenticatedDirective } from './directives/authentication';
-import { eventSchema } from './events/event';
-import { eventResolvers } from './events/event-resolvers';
-import { ticketSchema } from './tickets/ticket';
-import { ticketResolvers } from './tickets/ticket-resolvers';
-import { userSchema } from './users/user';
-import { userResolvers } from './users/user-resolvers';
-
+import { ApolloServer, makeExecutableSchema } from 'apollo-server-lambda'
+import { APIGatewayEvent } from 'aws-lambda'
+import 'source-map-support/register'
+import { AuthenticatedDirective } from './directives/authentication'
+import { eventSchema } from './events/event'
+import { eventResolvers } from './events/event-resolvers'
+import { ticketSchema } from './tickets/ticket'
+import { ticketResolvers } from './tickets/ticket-resolvers'
+import { userSchema } from './users/user'
+import { userResolvers } from './users/user-resolvers'
 
 export interface ResolverContext {
   authorization?: string
@@ -29,9 +28,6 @@ const server = new ApolloServer({
       authorization: args.event.headers.Authorization,
       user: undefined
     }
-    // const res = await authenticationChecker(event)
-    // console.log(res)
-    // return res
   },
   introspection: true, // by setting this false, you don't allow use graphql playground for this endpoint.
 })
@@ -42,4 +38,3 @@ export const graphql = server.createHandler({
     credentials: true,
   },
 })
-

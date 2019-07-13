@@ -166,6 +166,13 @@ export type IResolversParentTypes = {
   Boolean: Scalars["Boolean"];
 };
 
+export type IAuthenticatedDirectiveResolver<
+  Result,
+  Parent,
+  ContextType = any,
+  Args = {}
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
 export type IGetTicketResponseResolvers<
   ContextType = any,
   ParentType = IResolversParentTypes["GetTicketResponse"]
@@ -231,4 +238,8 @@ export type IResolvers<ContextType = any> = {
   Query?: IQueryResolvers<ContextType>;
   Ticket?: ITicketResolvers<ContextType>;
   User?: IUserResolvers<ContextType>;
+};
+
+export type IDirectiveResolvers<ContextType = any> = {
+  authenticated?: IAuthenticatedDirectiveResolver<any, any, ContextType>;
 };

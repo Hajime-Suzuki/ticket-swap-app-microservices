@@ -1,11 +1,10 @@
 import { Lambda } from 'aws-sdk'
 import { IResolvers, ITicket } from '../generated/graphql'
 import { ticketActions } from '@ticket-swap-app/shared/src/constants'
-import { ResolverContext } from '..';
+import { ResolverContext } from '..'
 console.log({ port: process.env.ticketPort })
 
 const ticketsFunc = process.env.ticketsFunc
-
 
 // TODO: use dataLayer.
 class TicketLambda {

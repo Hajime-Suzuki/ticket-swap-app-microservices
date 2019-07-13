@@ -1,14 +1,13 @@
-import { SchemaDirectiveVisitor } from "graphql-tools";
-import { GraphQLField, defaultFieldResolver } from "graphql";
-import { ResolverContext } from "..";
-import axios from 'axios';
-import * as jwt from 'jsonwebtoken';
-import * as jwkToPem from 'jwk-to-pem';
-
+import axios from 'axios'
+import { defaultFieldResolver, GraphQLField } from 'graphql'
+import { SchemaDirectiveVisitor } from 'graphql-tools'
+import * as jwt from 'jsonwebtoken'
+import * as jwkToPem from 'jwk-to-pem'
+import { ResolverContext } from '..'
 const region = process.env.region
 const userPoolId = process.env.AWS_COGNITO_USER_POOL_ID
 
-type RawAuthResponse = {
+interface RawAuthResponse {
   sub: string,
   aud: string,
   email_verified: boolean,
@@ -48,7 +47,6 @@ const authenticationChecker = async (token?: string) => {
   const res = jwt.verify(jwtToken, pem) as RawAuthResponse
   return { user: { id: res.sub } }
 }
-
 
 export class AuthenticatedDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field: GraphQLField<any, ResolverContext>, ) {
