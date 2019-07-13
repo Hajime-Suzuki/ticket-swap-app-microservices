@@ -6,14 +6,7 @@ provider:
   runtime: nodejs10.x
   region: ${file(../shared-config.js):shared.region}
   environment: ${file(config.js):env}
-  # role: mainRole
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - lambda:InvokeFunction
-        - lambda:InvokeAsync
-      Resource: '*'
-  # TODO: Add IAM role to call lambda functions
+  role: mainRole
 
 plugins:
   - serverless-webpack
@@ -41,6 +34,28 @@ functions:
 
 resources:
   Resources:
+    userPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: ${self:service.name}-user-pool
+        AutoVerifiedAttributes:
+          - email
+        Schema:
+          - Name: email
+            AttributeDataType: String
+            DeveloperOnlyAttribute: false
+            Mutable: true
+            Required: true
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+    userClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        ClientName: ${self:service.name}-user-client
+        GenerateSecret: false
+        UserPoolId: { Ref: userPool }
+
     mainRole:
       Type: AWS::IAM::Role
       Properties:
@@ -71,6 +86,7 @@ resources:
                           - Ref: 'AWS::Region'
                           - Ref: 'AWS::AccountId'
                           - 'log-group:/aws/lambda/*:*:*'
+
                 - Effect: 'Allow'
                   Action:
                     - lambda:InvokeFunction
