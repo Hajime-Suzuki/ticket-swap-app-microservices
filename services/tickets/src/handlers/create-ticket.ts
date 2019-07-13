@@ -1,9 +1,9 @@
 import { TicketRepository, CreateTicketArgs } from '../repository'
-import { Event } from '..'
+import { HandlerEvent } from '@ticket-swap-app/shared/src/handlers/types'
 
-export const createTicketHandler = async (event: Event<CreateTicketArgs>) => {
+export const createTicketHandler = async (event: HandlerEvent<CreateTicketArgs>) => {
   console.log('event:', event)
-  const res = await TicketRepository.save(event.body)
+  const res = await TicketRepository.save(event.body.data)
   console.log('ticket saved: ', res)
   return res
 }

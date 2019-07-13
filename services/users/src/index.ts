@@ -1,17 +1,17 @@
 import { usersActions } from '@ticket-swap-app/shared/src/constants'
 import { handleResponse } from '@ticket-swap-app/shared/src/response'
+import { HandlerEvent } from '@ticket-swap-app/shared/src/handlers/types'
 import { IUser } from '@ticket-swap-app/gql/src/generated/graphql'
+
 type ActionTypes = keyof typeof usersActions
 
-export interface Event<TBody = any> {
-  action: ActionTypes
-  body: TBody
-}
+export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
+  // maybe need to stop calling lambda from graphql lambda. instead, use API gateway. in that case, body is string
+  if (typeof event.body === 'string') { event.body = JSON.parse(event.body) }
 
-export const handler = async (event: Event) => {
   console.log('event: ', event)
   try {
-    switch (event.action) {
+    switch (event.body.action) {
       case usersActions.createUser: {
         const user: IUser = {
           id: '1234',

@@ -17,8 +17,10 @@ export class LambdaCaller {
       FunctionName: this.functionName,
       InvocationType: 'RequestResponse',
       Payload: JSON.stringify({
-        action: actionName,
-        body: data
+        body: {
+          action: actionName,
+          data
+        }
       })
     }
     console.log('will invoke lambda: ', params)

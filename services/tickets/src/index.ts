@@ -1,18 +1,14 @@
 import { ticketsActions } from '@ticket-swap-app/shared/src/constants'
 import { handleResponse } from '@ticket-swap-app/shared/src/response'
+import { HandlerEvent } from '@ticket-swap-app/shared/src/handlers/types'
 import { createTicketHandler } from './handlers/create-ticket'
 import { getTicketHandler } from './handlers/get-ticket'
 
 type ActionTypes = keyof typeof ticketsActions
 
-export interface Event<TBody = any> {
-  action: ActionTypes
-  body: TBody
-}
-
-export const handler = async (event: Event) => {
+export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
   try {
-    switch (event.action) {
+    switch (event.body.action) {
       case ticketsActions.createTicket: {
         const res = await createTicketHandler(event)
         return handleResponse.success({ ticket: res })
