@@ -16,12 +16,6 @@ export type ICreateTicketInput = {
   price: Scalars["String"];
 };
 
-export type ICreateUserInput = {
-  userName: Scalars["String"];
-  email: Scalars["String"];
-  password: Scalars["String"];
-};
-
 export type IGetTicketResponse = {
   __typename?: "GetTicketResponse";
   ticket?: Maybe<ITicket>;
@@ -29,12 +23,7 @@ export type IGetTicketResponse = {
 
 export type IMutation = {
   __typename?: "Mutation";
-  createUser?: Maybe<IUser>;
   createTicket?: Maybe<ITicket>;
-};
-
-export type IMutationCreateUserArgs = {
-  data?: Maybe<ICreateUserInput>;
 };
 
 export type IMutationCreateTicketArgs = {
@@ -43,9 +32,9 @@ export type IMutationCreateTicketArgs = {
 
 export type IQuery = {
   __typename?: "Query";
-  user?: Maybe<IUser>;
-  events?: Maybe<Scalars["String"]>;
   getTicket?: Maybe<IGetTicketResponse>;
+  events?: Maybe<Scalars["String"]>;
+  user?: Maybe<IUser>;
 };
 
 export type IQueryGetTicketArgs = {
@@ -64,8 +53,9 @@ export type ITicket = {
 
 export type IUser = {
   __typename?: "User";
-  id: Scalars["ID"];
-  userName: Scalars["String"];
+  /** id is sub from cognito */
+  id?: Maybe<Scalars["ID"]>;
+  /** email is hash key of DynamoDB */
   email: Scalars["String"];
 };
 
@@ -141,13 +131,12 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type IResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
-  User: ResolverTypeWrapper<IUser>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
-  String: ResolverTypeWrapper<Scalars["String"]>;
   GetTicketResponse: ResolverTypeWrapper<IGetTicketResponse>;
   Ticket: ResolverTypeWrapper<ITicket>;
+  String: ResolverTypeWrapper<Scalars["String"]>;
+  User: ResolverTypeWrapper<IUser>;
   Mutation: ResolverTypeWrapper<{}>;
-  CreateUserInput: ICreateUserInput;
   CreateTicketInput: ICreateTicketInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
 };
@@ -155,13 +144,12 @@ export type IResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type IResolversParentTypes = {
   Query: {};
-  User: IUser;
   ID: Scalars["ID"];
-  String: Scalars["String"];
   GetTicketResponse: IGetTicketResponse;
   Ticket: ITicket;
+  String: Scalars["String"];
+  User: IUser;
   Mutation: {};
-  CreateUserInput: ICreateUserInput;
   CreateTicketInput: ICreateTicketInput;
   Boolean: Scalars["Boolean"];
 };
@@ -184,12 +172,6 @@ export type IMutationResolvers<
   ContextType = any,
   ParentType = IResolversParentTypes["Mutation"]
 > = {
-  createUser?: Resolver<
-    Maybe<IResolversTypes["User"]>,
-    ParentType,
-    ContextType,
-    IMutationCreateUserArgs
-  >;
   createTicket?: Resolver<
     Maybe<IResolversTypes["Ticket"]>,
     ParentType,
@@ -202,14 +184,14 @@ export type IQueryResolvers<
   ContextType = any,
   ParentType = IResolversParentTypes["Query"]
 > = {
-  user?: Resolver<Maybe<IResolversTypes["User"]>, ParentType, ContextType>;
-  events?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
   getTicket?: Resolver<
     Maybe<IResolversTypes["GetTicketResponse"]>,
     ParentType,
     ContextType,
     IQueryGetTicketArgs
   >;
+  events?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
+  user?: Resolver<Maybe<IResolversTypes["User"]>, ParentType, ContextType>;
 };
 
 export type ITicketResolvers<
@@ -227,8 +209,7 @@ export type IUserResolvers<
   ContextType = any,
   ParentType = IResolversParentTypes["User"]
 > = {
-  id?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
-  userName?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  id?: Resolver<Maybe<IResolversTypes["ID"]>, ParentType, ContextType>;
   email?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
 };
 

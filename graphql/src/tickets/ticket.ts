@@ -11,11 +11,11 @@ export const ticketSchema = gql`
     soldAt: String
   }
 
-  extend type Query {
+  type Query {
     getTicket(eventId: ID!, userId: ID!): GetTicketResponse
   }
 
-  extend type Mutation {
+  type Mutation {
     createTicket(data: CreateTicketInput): Ticket
   }
 

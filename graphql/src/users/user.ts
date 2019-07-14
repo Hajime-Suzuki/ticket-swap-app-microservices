@@ -1,20 +1,14 @@
 import { gql } from 'apollo-server-lambda'
 
 export const userSchema = gql`
-  type Query {
+  extend type Query {
     user: User
   }
-  type Mutation {
-    createUser(data: CreateUserInput): User
-  }
   type User {
-    id: ID!
-    userName: String!
+    "id is sub from cognito"
+    id: ID
+
+    "email is hash key of DynamoDB"
     email: String!
-  }
-  input CreateUserInput {
-    userName: String!
-    email: String!
-    password: String!
   }
 `

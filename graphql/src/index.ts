@@ -16,7 +16,7 @@ export interface ResolverContext {
 
 const server = new ApolloServer({
   schema: makeExecutableSchema({
-    typeDefs: [userSchema, eventSchema, ticketSchema],
+    typeDefs: [ticketSchema, eventSchema, userSchema],
     resolvers: [userResolvers, eventResolvers, ticketResolvers],
     schemaDirectives: {
       authenticated: AuthenticatedDirective

@@ -3,10 +3,14 @@ import { handleResponse } from '@ticket-swap-app/shared/src/response'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import { createTicketHandler } from './handlers/create-ticket'
 import { getTicketHandler } from './handlers/get-ticket'
+import { TicketRepository } from './repositories/tickets-repository'
+import { UserRepository } from './repositories/users-repository'
 
 type ActionTypes = keyof typeof ticketsActions
 
 export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
+  if (typeof event.body === 'string') { event.body = JSON.parse(event.body) }
+  console.log('action: ', event.body.action)
   try {
     switch (event.body.action) {
       case ticketsActions.createTicket: {
@@ -18,8 +22,9 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
         return handleResponse.success({ ticket: res })
       }
 
-      default:
-        handleResponse.error(new Error('unknown action'))
+      default: {
+        return handleResponse.error(new Error('unknown action'))
+      }
     }
 
   } catch (error) {

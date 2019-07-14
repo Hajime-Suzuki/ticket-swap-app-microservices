@@ -1,5 +1,5 @@
 
-import { FindTicketArgs, TicketRepository } from '../repository'
+import { FindTicketArgs, TicketRepository } from '../repositories/tickets-repository'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 export const getTicketHandler = async (event: HandlerEvent<FindTicketArgs>) => {
   console.log('event:', event)
