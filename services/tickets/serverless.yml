@@ -51,19 +51,19 @@ functions:
           method: get
           path: '/tickets'
 
-  eventEventListener:
-    name: ${self:service.name}-event-event-listener
-    handler: src/handlers/event-event-listener.handler
+  usersEventListener:
+    name: ${self:service.name}-users-event-listener
+    handler: src/handlers/users-event-listener.handler
     events:
       - sns:
-          topicName: ${file(../../shared-config.js):shared.eventCreated}
-          displayName: ${file(../../shared-config.js):shared.eventCreated}
-      - sqs: # TODO: check sns vs sqs
           arn:
-            Fn::GetAtt:
-              - eventCreatedSQS
-              - Arn
-          batchSize: 1
+            Fn::Join:
+              - ':'
+              - - 'arn:aws:sns'
+                - Ref: 'AWS::Region'
+                - Ref: 'AWS::AccountId'
+                - ${file(../../shared-config.js):shared.userSignUpEvent}
+          topicName: ${file(../../shared-config.js):shared.userSignUpEvent}
 
 resources:
   Resources:

@@ -34,28 +34,6 @@ functions:
 
 resources:
   Resources:
-    userPool:
-      Type: AWS::Cognito::UserPool
-      Properties:
-        UserPoolName: ${self:service.name}-user-pool
-        AutoVerifiedAttributes:
-          - email
-        Schema:
-          - Name: email
-            AttributeDataType: String
-            DeveloperOnlyAttribute: false
-            Mutable: true
-            Required: true
-        Policies:
-          PasswordPolicy:
-            MinimumLength: 6
-    userClient:
-      Type: AWS::Cognito::UserPoolClient
-      Properties:
-        ClientName: ${self:service.name}-user-client
-        GenerateSecret: false
-        UserPoolId: { Ref: userPool }
-
     mainRole:
       Type: AWS::IAM::Role
       Properties:

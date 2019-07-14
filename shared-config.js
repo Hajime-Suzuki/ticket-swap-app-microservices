@@ -1,10 +1,13 @@
+const secrets = require('./.env')
+
 const serviceNames = {
   ticketServiceName: 'ticket-swap-tickets-service',
   gqlServiceName: 'ticket-swap-graphql-service',
   usersServiceName: 'ticket-swap-users-service'
 }
 const eventNames = {
-  eventCreated: 'ticket-swap-event-created'
+  eventCreated: 'ticket-swap-event-created',
+  userSignUpEvent: 'ticket-swap-user-sign-up'
 }
 
 const ports = {
@@ -28,6 +31,7 @@ const functionNames = {
 }
 
 module.exports.shared = () => ({
+  ...secrets,
   ...serviceNames,
   ...eventNames,
   ...ports,

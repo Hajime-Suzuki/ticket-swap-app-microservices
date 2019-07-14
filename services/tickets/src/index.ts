@@ -1,6 +1,6 @@
 import { ticketsActions } from '@ticket-swap-app/shared/src/constants'
 import { handleResponse } from '@ticket-swap-app/shared/src/response'
-import { HandlerEvent } from '@ticket-swap-app/shared/src/handlers/types'
+import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import { createTicketHandler } from './handlers/create-ticket'
 import { getTicketHandler } from './handlers/get-ticket'
 

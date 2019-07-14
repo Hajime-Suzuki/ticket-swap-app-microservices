@@ -20,6 +20,16 @@ provider:
         - { Fn::GetAtt: [ticketsTable, Arn] }
         - { Fn::GetAtt: [eventsTable, Arn] }
         - { Fn::GetAtt: [usersTable, Arn] }
+    - Effect: Allow
+      Action:
+        - sns:*
+      Resource:
+        - 'Fn::Join':
+            - ':'
+            - - 'arn:aws:sns'
+              - Ref: 'AWS::Region'
+              - Ref: 'AWS::AccountId'
+              - '*'
 
 plugins:
   - serverless-webpack
@@ -48,10 +58,48 @@ functions:
     handler: src/index.handler
     events:
       - http:
-          method: '*'
+          method: any
           path: '/users'
+
+  preSignUp:
+    name: ${self:service.name}-pre-signup
+    handler: src/pre-signup.handler
+    events:
+      - cognitoUserPool:
+          pool: TicketSwapUserPool
+          trigger: PreSignUp
+
 resources:
   Resources:
+    CognitoUserPoolTicketSwapUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: ${self:service.name}-user-pool
+        AutoVerifiedAttributes:
+          - email
+        Schema:
+          - Name: email
+            AttributeDataType: String
+            DeveloperOnlyAttribute: false
+            Mutable: true
+            Required: true
+
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+    userClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        ClientName: ${self:service.name}-user-client
+        GenerateSecret: false
+        UserPoolId: { Ref: CognitoUserPoolTicketSwapUserPool }
+
+    userSignUpTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: ${file(../../shared-config.js):shared.userSignUpEvent}
+        TopicName: ${file(../../shared-config.js):shared.userSignUpEvent}
+
     ticketsTable:
       Type: AWS::DynamoDB::Table
       Properties:
