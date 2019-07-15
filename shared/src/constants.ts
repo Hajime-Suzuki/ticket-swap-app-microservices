@@ -4,7 +4,6 @@ export const ticketsActions = {
 }
 
 export const usersActions = {
-  createUser: 'create-user',
   getUser: 'getUser'
 }
 

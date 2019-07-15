@@ -21,6 +21,11 @@ export type IGetTicketResponse = {
   ticket?: Maybe<ITicket>;
 };
 
+export type IGetUserResponse = {
+  __typename?: "GetUserResponse";
+  user?: Maybe<IUser>;
+};
+
 export type IMutation = {
   __typename?: "Mutation";
   createTicket?: Maybe<ITicket>;
@@ -34,12 +39,16 @@ export type IQuery = {
   __typename?: "Query";
   getTicket?: Maybe<IGetTicketResponse>;
   events?: Maybe<Scalars["String"]>;
-  user?: Maybe<IUser>;
+  getUser?: Maybe<IGetUserResponse>;
 };
 
 export type IQueryGetTicketArgs = {
   eventId: Scalars["ID"];
   userId: Scalars["ID"];
+};
+
+export type IQueryGetUserArgs = {
+  id: Scalars["String"];
 };
 
 export type ITicket = {
@@ -135,6 +144,7 @@ export type IResolversTypes = {
   GetTicketResponse: ResolverTypeWrapper<IGetTicketResponse>;
   Ticket: ResolverTypeWrapper<ITicket>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  GetUserResponse: ResolverTypeWrapper<IGetUserResponse>;
   User: ResolverTypeWrapper<IUser>;
   Mutation: ResolverTypeWrapper<{}>;
   CreateTicketInput: ICreateTicketInput;
@@ -148,6 +158,7 @@ export type IResolversParentTypes = {
   GetTicketResponse: IGetTicketResponse;
   Ticket: ITicket;
   String: Scalars["String"];
+  GetUserResponse: IGetUserResponse;
   User: IUser;
   Mutation: {};
   CreateTicketInput: ICreateTicketInput;
@@ -166,6 +177,13 @@ export type IGetTicketResponseResolvers<
   ParentType = IResolversParentTypes["GetTicketResponse"]
 > = {
   ticket?: Resolver<Maybe<IResolversTypes["Ticket"]>, ParentType, ContextType>;
+};
+
+export type IGetUserResponseResolvers<
+  ContextType = any,
+  ParentType = IResolversParentTypes["GetUserResponse"]
+> = {
+  user?: Resolver<Maybe<IResolversTypes["User"]>, ParentType, ContextType>;
 };
 
 export type IMutationResolvers<
@@ -191,7 +209,12 @@ export type IQueryResolvers<
     IQueryGetTicketArgs
   >;
   events?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
-  user?: Resolver<Maybe<IResolversTypes["User"]>, ParentType, ContextType>;
+  getUser?: Resolver<
+    Maybe<IResolversTypes["GetUserResponse"]>,
+    ParentType,
+    ContextType,
+    IQueryGetUserArgs
+  >;
 };
 
 export type ITicketResolvers<
@@ -215,6 +238,7 @@ export type IUserResolvers<
 
 export type IResolvers<ContextType = any> = {
   GetTicketResponse?: IGetTicketResponseResolvers<ContextType>;
+  GetUserResponse?: IGetUserResponseResolvers<ContextType>;
   Mutation?: IMutationResolvers<ContextType>;
   Query?: IQueryResolvers<ContextType>;
   Ticket?: ITicketResolvers<ContextType>;

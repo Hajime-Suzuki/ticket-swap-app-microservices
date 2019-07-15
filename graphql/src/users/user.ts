@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-lambda'
 
 export const userSchema = gql`
   extend type Query {
-    user: User
+    getUser(id: String!): GetUserResponse
   }
   type User {
     "id is sub from cognito"
@@ -10,5 +10,9 @@ export const userSchema = gql`
 
     "email is hash key of DynamoDB"
     email: String!
+  }
+
+  type GetUserResponse {
+    user: User
   }
 `

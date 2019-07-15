@@ -1,7 +1,9 @@
 import { usersActions } from '@ticket-swap-app/shared/src/constants'
 import { handleResponse } from '@ticket-swap-app/shared/src/response'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
+import { UserRepository } from './repositories/users-repository'
 import { IUser } from '@ticket-swap-app/gql/src/generated/graphql'
+import { getUserHandler } from './handlers/get-user'
 
 type ActionTypes = keyof typeof usersActions
 
@@ -13,12 +15,8 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
 
   try {
     switch (event.body.action) {
-      case usersActions.createUser: {
-        const user: IUser = {
-          id: '1234',
-          userName: 'userName',
-          email: 'some-email@t.com'
-        }
+      case usersActions.getUser: {
+        const user = await getUserHandler(event)
         return handleResponse.success({ user })
       }
       default:

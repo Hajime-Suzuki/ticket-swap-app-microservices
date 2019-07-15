@@ -1,6 +1,6 @@
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-lambda'
 import { APIGatewayEvent } from 'aws-lambda'
-import 'source-map-support/register'
+// import 'source-map-support/register'
 import { AuthenticatedDirective } from './directives/authentication'
 import { eventSchema } from './events/event'
 import { eventResolvers } from './events/event-resolvers'
@@ -23,7 +23,6 @@ const server = new ApolloServer({
     }
   }),
   context: async (args: { event: APIGatewayEvent, context: ResolverContext }) => {
-    // signIn()
     return {
       authorization: args.event.headers.Authorization,
       user: undefined
