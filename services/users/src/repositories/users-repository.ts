@@ -1,14 +1,19 @@
 import { IUser } from '@ticket-swap-app/gql/src/generated/graphql'
 import { UserModel } from '../models/User'
 import { Mapper } from '@ticket-swap-app/shared/src/database'
+import { isOffline } from '@ticket-swap-app/shared/src/constants'
 
-const { IS_OFFLINE, usersDbPort, region } = process.env
+const { usersDbPort, region } = process.env
 
 const mapper = new Mapper<UserModel, typeof UserModel>({
   region,
-  endpoint: IS_OFFLINE ? 'http://localhost:' + usersDbPort : undefined,
+  endpoint: isOffline() ? 'http://localhost:' + usersDbPort : undefined,
   model: UserModel
 })
+
+export const save = (args: Pick<IUser, 'id' | 'email'>) => {
+  return mapper.save(args)
+}
 
 export interface FindUserArgs {
   id: IUser['id']
@@ -23,6 +28,7 @@ const scan = async () => {
 }
 
 export const UserRepository = {
+  save,
   scan,
   findByKey
 }

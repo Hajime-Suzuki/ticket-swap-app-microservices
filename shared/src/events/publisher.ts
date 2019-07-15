@@ -1,4 +1,5 @@
 import { SNS } from 'aws-sdk/clients/all'
+import { isOffline } from '../constants'
 const sns = new SNS()
 
 interface PublishEventArgs {
@@ -14,5 +15,7 @@ export const publishEvent = ({ subject, message, arn }: PublishEventArgs) => {
     TopicArn: arn
   }
 
-  return sns.publish(params).promise()
+  if (!isOffline()) {
+    return sns.publish(params).promise()
+  }
 }

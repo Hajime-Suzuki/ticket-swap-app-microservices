@@ -1,4 +1,5 @@
 import { Lambda } from 'aws-sdk'
+import { isOffline } from '@ticket-swap-app/shared/src/constants'
 
 export class LambdaCaller {
   lambda: Lambda
@@ -7,7 +8,7 @@ export class LambdaCaller {
   constructor(port: string, functionName: string) {
     this.lambda = new Lambda({
       apiVersion: '2015-03-31',
-      endpoint: process.env.IS_OFFLINE ? 'http://localhost:' + port : undefined
+      endpoint: isOffline() ? 'http://localhost:' + port : undefined
     })
     this.functionName = functionName
   }

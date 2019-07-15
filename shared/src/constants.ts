@@ -8,3 +8,5 @@ export const usersActions = {
 }
 
 export const getARN = (serviceName: string) => `arn:aws:sns:${process.env.region}:${process.env.AWS_ACCOUNT_ID}:${serviceName}`
+
+export const isOffline = () => process.env.IS_OFFLINE

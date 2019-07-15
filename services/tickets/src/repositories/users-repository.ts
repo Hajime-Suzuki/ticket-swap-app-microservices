@@ -1,12 +1,13 @@
 import { IUser } from '@ticket-swap-app/gql/src/generated/graphql'
 import { UserModel } from '../models/User'
 import { Mapper } from '@ticket-swap-app/shared/src/database'
+import { isOffline } from '@ticket-swap-app/shared/src/constants'
 
-const { IS_OFFLINE, ticketsDbPort, region } = process.env
+const { ticketsDbPort, region } = process.env
 
 const mapper = new Mapper<UserModel, typeof UserModel>({
   region,
-  endpoint: IS_OFFLINE ? 'http://localhost:' + ticketsDbPort : undefined,
+  endpoint: isOffline() ? 'http://localhost:' + ticketsDbPort : undefined,
   model: UserModel
 })
 

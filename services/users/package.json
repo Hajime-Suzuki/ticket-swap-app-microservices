@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "serverless offline start --showDuration",
     "deploy": "serverless deploy -v",
-    "dynamo:stop": "lsof -ti:8000 | xargs kill"
+    "dynamo:stop": "lsof -ti:8000 | xargs kill",
+    "invoke:preSignup": "IS_OFFLINE=true sls invoke local -f preSignUp  --path event-mocks/pre-signup.json"
   },
   "dependencies": {
     "@ticket-swap-app/gql": "1.0.0",
