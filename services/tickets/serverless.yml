@@ -17,14 +17,15 @@ provider:
         - dynamodb:DeleteItem
         - dynamodb:BatchWriteItem
       Resource:
-        - { Fn::GetAtt: [ticketsTable, Arn] }
-        - { Fn::GetAtt: [eventTable, Arn] }
-        - { Fn::GetAtt: [userTable, Arn] }
+        - '#{ticketsTable.Arn}'
+        - '#{eventTable.Arn}'
+        - '#{userTable.Arn}'
 
 plugins:
   - serverless-webpack
   - serverless-dynamodb-local
   - serverless-offline
+  - serverless-pseudo-parameters
 
 custom:
   serverless-offline:
@@ -56,16 +57,7 @@ functions:
     handler: src/handlers/users-event-listener.handler
     events:
       - sns:
-          arn:
-            !Join [
-              ':',
-              [
-                'arn:aws:sns',
-                Ref: 'AWS::Region',
-                Ref: 'AWS::AccountId',
-                '${file(../../shared-config.js):shared.userSignUpEvent}',
-              ],
-            ]
+          arn: 'arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${file(../../shared-config.js):shared.userSignUpEvent}'
           topicName: ${file(../../shared-config.js):shared.userSignUpEvent}
 
 resources:
