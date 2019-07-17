@@ -1,10 +1,10 @@
 service:
-  name: ${file(../shared-config.js):shared.gqlServiceName}
+  name: ${file(config.js):env.gqlServiceName}
 
 provider:
   name: aws
   runtime: nodejs10.x
-  region: ${file(../shared-config.js):shared.region}
+  region: ${file(config.js):env.region}
   environment: ${file(config.js):env}
   role: mainRole
 
@@ -14,7 +14,7 @@ plugins:
 
 custom:
   serverless-offline:
-    port: ${file(../shared-config.js):shared.gqlPort}
+    port: ${file(config.js):env.gqlPort}
   webpack:
     includeModules:
       forceExclude:
@@ -76,4 +76,4 @@ resources:
                           - Ref: 'AWS::Region'
                           - Ref: 'AWS::AccountId'
                           - 'function'
-                          - ${file(../shared-config.js):shared.ticketsFunc}
+                          - ${file(config.js):env.ticketsFunc}

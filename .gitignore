@@ -91,4 +91,4 @@ typings/
 **/.env.js
 .requests/
 **/.data
-**/.secret.*
+**/.secrets.*

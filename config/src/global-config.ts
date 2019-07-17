@@ -1,4 +1,4 @@
-const secrets = require('./.env')
+import { secrets } from './.secrets'
 
 const serviceNames = {
   ticketServiceName: 'ticket-swap-tickets-service',
@@ -31,12 +31,13 @@ const functionNames = {
   usersFunc: 'ticket-swap-users-handler'
 }
 
-module.exports.shared = () => ({
-  ...secrets,
+export const shared = {
   ...serviceNames,
   ...eventNames,
   ...ports,
   ...awsSettings,
   ...dynamo,
-  ...functionNames
-})
+  ...functionNames,
+  ...secrets
+  // key: ${self:custom.someValue} works too.
+}

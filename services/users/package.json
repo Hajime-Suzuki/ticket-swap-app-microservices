@@ -1,5 +1,5 @@
 {
-  "name": "@services/users",
+  "name": "@ticket-swap-app/users",
   "private": true,
   "version": "1.0.0",
   "scripts": {
@@ -9,6 +9,7 @@
     "invoke:preSignup": "IS_OFFLINE=true sls invoke local -f preSignUp  --path .event-mocks/pre-signup.json"
   },
   "dependencies": {
+    "@ticket-swap-app/config": "1.0.0",
     "@ticket-swap-app/gql": "1.0.0",
     "@ticket-swap-app/shared": "1.0.0",
     "shortid": "^2.2.14"
@@ -28,6 +29,8 @@
     "serverless-webpack": "^5.2.0",
     "source-map-support": "^0.5.10",
     "ts-loader": "^5.3.3",
+    "ts-node": "^8.3.0",
+    "tsconfig-paths": "^3.8.0",
     "typescript": "^3.2.4",
     "webpack": "^4.29.0"
   }

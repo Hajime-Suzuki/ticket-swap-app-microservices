@@ -1,9 +1,11 @@
-import { getARN } from '@ticket-swap-app/shared/src/constants'
+import { getSNSARN } from '@ticket-swap-app/shared/src/constants'
 import { publishEvent } from '@ticket-swap-app/shared/src/events/publisher'
 import { CognitoUserPoolTriggerHandler } from 'aws-lambda'
 import * as shortid from 'shortid'
 import { UserRepository } from './repositories/users-repository'
-const arn = getARN(process.env.userSignUpEvent)
+import { shared } from '@ticket-swap-app/config/src/global-config'
+
+const arn = getSNSARN(shared.userSignUpEvent)
 
 export const handler: CognitoUserPoolTriggerHandler = async event => {
   console.log('event received', JSON.stringify(event, null, 2))

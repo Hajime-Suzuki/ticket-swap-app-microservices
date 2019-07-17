@@ -1,10 +1,10 @@
 service:
-  name: ${file(../../shared-config.js):shared.ticketServiceName}
+  name: ${file(config.js):env.ticketServiceName}
 
 provider:
   name: aws
   runtime: nodejs10.x
-  region: ${file(../../shared-config.js):shared.region}
+  region: ${file(config.js):env.region}
   environment: ${file(config.js):env}
   iamRoleStatements:
     - Effect: Allow
@@ -23,13 +23,13 @@ provider:
 
 plugins:
   - serverless-webpack
+  - serverless-pseudo-parameters
   - serverless-dynamodb-local
   - serverless-offline
-  - serverless-pseudo-parameters
 
 custom:
   serverless-offline:
-    port: ${file(../../shared-config.js):shared.ticketsPort}
+    port: ${file(config.js):env.ticketsPort}
 
   webpack:
     includeModules:
@@ -38,14 +38,14 @@ custom:
 
   dynamodb:
     start:
-      port: ${file(../../shared-config.js):shared.ticketsDbPort}
+      port: ${file(config.js):env.ticketsDbPort}
       migrate: true
     stages:
       - dev
 
 functions:
   tickets:
-    name: ${file(../../shared-config.js):shared.ticketsFunc}
+    name: ${file(config.js):env.ticketsFunc}
     handler: src/index.handler
     events:
       - http: # this endpoint is test purpose for now
@@ -57,8 +57,8 @@ functions:
     handler: src/handlers/users-event-listener.handler
     events:
       - sns:
-          arn: 'arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${file(../../shared-config.js):shared.userSignUpEvent}'
-          topicName: ${file(../../shared-config.js):shared.userSignUpEvent}
+          arn: 'arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${file(config.js):env.userSignUpEvent}'
+          topicName: ${file(config.js):env.userSignUpEvent}
 
 resources:
   Resources:

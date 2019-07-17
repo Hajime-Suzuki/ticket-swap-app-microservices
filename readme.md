@@ -4,10 +4,10 @@
 - SNS: Trigger Lambda functions when certain event happens.
 - Authentication: Authentication is handled by Cognito + Amplify in frontend. Backend takes only care of validation of tokens.
 
-create .env.js file and
+create config/src/.secrets.ts file and set
 
 ```
-module.exports = {
+export const secrets = {
   AWS_ACCOUNT_ID: <Your AWS accountID>
   AWS_COGNITO_USER_POOL_ID: <Your User Pool ID> // first deploy users service then you will see that user pool id in AWS console.
 }

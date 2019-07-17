@@ -2,8 +2,8 @@ import { IUser } from '@ticket-swap-app/gql/src/generated/graphql'
 import { UserModel } from '../models/User'
 import { Mapper } from '@ticket-swap-app/shared/src/database'
 import { isOffline } from '@ticket-swap-app/shared/src/constants'
-
-const { usersDbPort, region } = process.env
+import { shared } from '@ticket-swap-app/config/src/global-config'
+const { usersDbPort, region } = shared
 
 const mapper = new Mapper<UserModel, typeof UserModel>({
   region,

@@ -1,13 +1,12 @@
-const { shared } = require('../../shared-config')
-
-const tableNames = {
-  tickets_tickets_table: 'Ticket-swap-tickets-tickets',
-  tickets_events_table: 'Ticket-swap-tickets-events',
-  tickets_users_table: 'Ticket-swap-tickets-users'
-}
+require('ts-node').register({ module: 'commonjs' })
+require('tsconfig-paths').register()
 
 module.exports.env = () => {
-  const output = { ...shared(), ...tableNames }
-
+  const { shared } = require('../../config/src/global-config.ts')
+  const { tableNames } = require('../../config/src/tickets-config.ts')
+  const output = {
+    ...shared,
+    ...tableNames
+  }
   return output
 }

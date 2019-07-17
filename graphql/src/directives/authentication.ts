@@ -4,20 +4,22 @@ import { SchemaDirectiveVisitor } from 'graphql-tools'
 import * as jwt from 'jsonwebtoken'
 import * as jwkToPem from 'jwk-to-pem'
 import { ResolverContext } from '..'
-const region = process.env.region
-const userPoolId = process.env.AWS_COGNITO_USER_POOL_ID
+import { shared } from '@ticket-swap-app/config/src/global-config'
+
+const region = shared.region
+const userPoolId = shared.AWS_COGNITO_USER_POOL_ID
 
 interface RawAuthResponse {
-  sub: string,
-  aud: string,
-  email_verified: boolean,
-  event_id: string,
-  token_use: 'id',
-  auth_time: number,
-  iss: string,
-  'cognito:username': string,
-  exp: number,
-  iat: number,
+  sub: string
+  aud: string
+  email_verified: boolean
+  event_id: string
+  token_use: 'id'
+  auth_time: number
+  iss: string
+  'cognito:username': string
+  exp: number
+  iat: number
   email: string
 }
 
@@ -49,12 +51,16 @@ const authenticationChecker = async (token?: string) => {
 }
 
 export class AuthenticatedDirective extends SchemaDirectiveVisitor {
-  visitFieldDefinition(field: GraphQLField<any, ResolverContext>, ) {
+  visitFieldDefinition(field: GraphQLField<any, ResolverContext>) {
     const resolve = field.resolve || defaultFieldResolver
     field.resolve = async (source, args, context, info) => {
-
       const user = await authenticationChecker(context.authorization)
-      const res = await resolve.apply(this, [source, args, { ...context, user }, info])
+      const res = await resolve.apply(this, [
+        source,
+        args,
+        { ...context, user },
+        info
+      ])
       return res
     }
   }

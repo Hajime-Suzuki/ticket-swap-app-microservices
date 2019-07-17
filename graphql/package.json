@@ -8,6 +8,7 @@
     "gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@ticket-swap-app/config": "1.0.0",
     "@ticket-swap-app/shared": "1.0.0",
     "amazon-cognito-identity-js": "^3.0.13",
     "apollo-server-lambda": "^2.6.7",

@@ -1,11 +1,10 @@
-import { DataMapper, StringToAnyObjectMap } from '@aws/dynamodb-data-mapper'
-import { ZeroArgumentsConstructor } from '@aws/dynamodb-data-marshaller'
 import { ITicket } from '@ticket-swap-app/gql/src/generated/graphql'
-import { newMapper, Mapper } from '@ticket-swap-app/shared/src/database'
-import { TicketModel } from '../models/Ticket'
 import { isOffline } from '@ticket-swap-app/shared/src/constants'
+import { Mapper } from '@ticket-swap-app/shared/src/database'
+import { TicketModel } from '../models/Ticket'
+import { shared } from '@ticket-swap-app/config/src/global-config'
 
-const { region, ticketsDbPort } = process.env
+const { region, ticketsDbPort } = shared
 
 const mapper = new Mapper<ITicket, typeof TicketModel>({
   region,

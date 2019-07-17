@@ -1,7 +1,12 @@
-import { attribute, hashKey, table } from '@aws/dynamodb-data-mapper-annotations'
+import {
+  attribute,
+  hashKey,
+  table
+} from '@aws/dynamodb-data-mapper-annotations'
 import { IUser } from '@ticket-swap-app/gql/src/generated/graphql'
+import { tableNames } from '@ticket-swap-app/config/src/tickets-config'
 
-@table(process.env.tickets_users_table)
+@table(tableNames.tickets_users_table)
 export class UserModel implements IUser {
   @hashKey()
   email: string
