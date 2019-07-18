@@ -38,8 +38,7 @@ custom:
     port: ${file(config.js):env.usersPort}
 
   serverless-offline-sns:
-    port: ${file(config.js):env.snsOfflinePort}
-    accountId: { Ref: 'AWS::AccountId' }
+    port: ${file(config.js):env.userCreatedEventOfflinePort}
     debug: true
 
   webpack:

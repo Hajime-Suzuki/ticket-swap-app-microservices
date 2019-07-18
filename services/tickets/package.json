@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "serverless offline start --showDuration",
+    "dev": "yarn dynamo:stop && serverless offline start --showDuration",
     "deploy": "serverless deploy -v",
     "dynamo:stop": "lsof -ti:8000 | xargs kill"
   },

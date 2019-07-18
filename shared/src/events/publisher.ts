@@ -8,11 +8,11 @@ interface PublishEventArgs {
   arn: string
 }
 
-const sns = new SNS({
-  endpoint: isOffline()
-    ? 'http://localhost:' + shared.snsOfflinePort
-    : undefined
-})
+const endpoint = isOffline()
+  ? 'http://localhost:' + shared.userCreatedEventOfflinePort
+  : undefined
+
+const sns = new SNS({ endpoint })
 
 export const publishEvent = ({ subject, message, arn }: PublishEventArgs) => {
   const params = {
@@ -20,6 +20,7 @@ export const publishEvent = ({ subject, message, arn }: PublishEventArgs) => {
     Message: JSON.stringify(message),
     TopicArn: arn
   }
+  console.log({ endpoint, arn })
 
   return sns.publish(params).promise()
 }

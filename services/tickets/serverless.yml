@@ -23,13 +23,18 @@ provider:
 
 plugins:
   - serverless-webpack
-  - serverless-pseudo-parameters
   - serverless-dynamodb-local
+  - serverless-offline-sns
   - serverless-offline
+  - serverless-pseudo-parameters
 
 custom:
   serverless-offline:
     port: ${file(config.js):env.ticketsPort}
+  serverless-offline-sns:
+    port: 9999
+    sns-endpoint: http://localhost:${file(config.js):env.userCreatedEventOfflinePort}
+    debug: true
 
   webpack:
     includeModules:
@@ -57,8 +62,8 @@ functions:
     handler: src/handlers/users-event-listener.handler
     events:
       - sns:
-          arn: 'arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${file(config.js):env.userSignUpEvent}'
-          topicName: ${file(config.js):env.userSignUpEvent}
+          # serverless pseudo parameters plugin syntax doesn't work here.
+          arn: 'arn:aws:sns:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):env.userSignUpEvent}'
 
 resources:
   Resources:
