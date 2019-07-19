@@ -36,9 +36,9 @@ plugins:
 custom:
   serverless-offline:
     port: ${file(config.js):env.usersPort}
-
+  # move this to top level
   serverless-offline-sns:
-    port: ${file(config.js):env.userCreatedEventOfflinePort}
+    port: 9998
     debug: true
 
   webpack:

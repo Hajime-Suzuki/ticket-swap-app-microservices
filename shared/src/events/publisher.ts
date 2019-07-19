@@ -9,7 +9,7 @@ interface PublishEventArgs {
 }
 
 const endpoint = isOffline()
-  ? 'http://localhost:' + shared.userCreatedEventOfflinePort
+  ? 'http://localhost:' + shared.snsOfflinePort
   : undefined
 
 const sns = new SNS({ endpoint })

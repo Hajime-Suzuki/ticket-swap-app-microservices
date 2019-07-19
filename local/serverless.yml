@@ -1,0 +1,12 @@
+service:
+  name: local-environment
+
+provider: aws
+
+plugins:
+  - serverless-offline-sns
+
+custom:
+  serverless-offline-sns:
+    port: ${file(config.js):env.snsOfflinePort}
+    debug: true

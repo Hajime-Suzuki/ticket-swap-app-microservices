@@ -33,7 +33,7 @@ custom:
     port: ${file(config.js):env.ticketsPort}
   serverless-offline-sns:
     port: 9999
-    sns-endpoint: http://localhost:${file(config.js):env.userCreatedEventOfflinePort}
+    sns-endpoint: http://localhost:${file(config.js):env.snsOfflinePort} # port should be accessible before running sls offline start.
     debug: true
 
   webpack:

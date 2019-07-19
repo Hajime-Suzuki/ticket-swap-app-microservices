@@ -14,7 +14,7 @@ const ports = {
   gqlPort: 8080,
   ticketsPort: 8081,
   usersPort: 8082,
-  userCreatedEventOfflinePort: 7000
+  snsOfflinePort: 7000
 }
 
 const dynamo = {
