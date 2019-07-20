@@ -1,5 +1,7 @@
+import { APP_NAME } from './global-config'
+
 export const tableNames = {
-  tickets_tickets_table: 'Ticket-swap-tickets-tickets',
-  tickets_events_table: 'Ticket-swap-tickets-events',
-  tickets_users_table: 'Ticket-swap-tickets-users'
+  tickets_tickets_table: `${APP_NAME}-tickets-tickets`,
+  tickets_events_table: `${APP_NAME}-tickets-events`,
+  tickets_users_table: `${APP_NAME}-tickets-users`
 }

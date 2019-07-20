@@ -1,13 +1,15 @@
 import { secrets } from './.secrets'
 
+export const APP_NAME = 'ticket-swap'
+
 const serviceNames = {
-  ticketServiceName: 'ticket-swap-tickets-service',
-  gqlServiceName: 'ticket-swap-graphql-service',
-  usersServiceName: 'ticket-swap-users-service'
+  ticketServiceName: `${APP_NAME}-tickets`,
+  gqlServiceName: `${APP_NAME}-graphql`,
+  usersServiceName: `${APP_NAME}-users`
 }
 const eventNames = {
-  eventCreated: 'ticket-swap-event-created',
-  userSignUpEvent: 'ticket-swap-user-sign-up'
+  eventCreated: `${APP_NAME}-event-created`,
+  userSignUpEvent: `${APP_NAME}-user-sign-up`
 }
 
 const ports = {
@@ -27,8 +29,8 @@ const awsSettings = {
 }
 
 const functionNames = {
-  ticketsFunc: 'ticket-swap-tickets-handler',
-  usersFunc: 'ticket-swap-users-handler'
+  ticketsFunc: `${serviceNames.ticketServiceName}-handler`,
+  usersFunc: `${serviceNames.usersServiceName}-handler`
 }
 
 export const shared = {

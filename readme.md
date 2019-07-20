@@ -12,3 +12,20 @@ export const secrets = {
   AWS_COGNITO_USER_POOL_ID: <Your User Pool ID> // first deploy users service then you will see that user pool id in AWS console.
 }
 ```
+
+#### resource names
+
+Lambda:
+
+- ticket-swap-_SERVICE_NAME_-_FUNC_NAME_
+- ticket-swap-_SERVICE_NAME_-event-listener-_TARGET_SERVICE_NAME_
+
+DynamoDB:
+
+- ticket-swap-_SERVICE_NAME_-_TABLE_NAME_
+
+---
+
+Todo:
+
+- Separate SNS and SQS resource creation from services.

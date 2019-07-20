@@ -7,10 +7,25 @@ provider:
   region: ${file(config.js):env.region}
   environment: ${file(config.js):env}
   role: mainRole
+  # iamRoleStatements:
+  # - Effect: Allow
+  #   Action:
+  #     - logs:CreateLogGroup
+  #     - logs:CreateLogStream
+  #     - logs:PutLogEvents
+  #   Resource:
+  #     - 'arn:aws:logs:#{AWS::Region}:#{AWS::AccountId}:log-group:/aws/lambda/*:*:*'
+  # - Effect: 'Allow'
+  #   Action:
+  #     - lambda:InvokeFunction
+  #     - lambda:InvokeAsync
+  #   Resource:
+  #     - 'arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:*'
 
 plugins:
   - serverless-webpack
   - serverless-offline
+  - serverless-pseudo-parameters
 
 custom:
   serverless-offline:
@@ -58,22 +73,11 @@ resources:
                     - logs:CreateLogStream
                     - logs:PutLogEvents
                   Resource:
-                    - 'Fn::Join':
-                        - ':'
-                        - - 'arn:aws:logs'
-                          - Ref: 'AWS::Region'
-                          - Ref: 'AWS::AccountId'
-                          - 'log-group:/aws/lambda/*:*:*'
+                    - 'arn:aws:logs:#{AWS::Region}:#{AWS::AccountId}:log-group:/aws/lambda/*:*:*'
 
                 - Effect: 'Allow'
                   Action:
                     - lambda:InvokeFunction
                     - lambda:InvokeAsync
                   Resource:
-                    - 'Fn::Join':
-                        - ':'
-                        - - 'arn:aws:lambda'
-                          - Ref: 'AWS::Region'
-                          - Ref: 'AWS::AccountId'
-                          - 'function'
-                          - ${file(config.js):env.ticketsFunc}
+                    - 'arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:*'
