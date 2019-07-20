@@ -21,6 +21,12 @@ provider:
         - '#{eventTable.Arn}'
         - '#{userTable.Arn}'
 
+    - Effect: Allow
+      Action:
+        - sns:*
+      Resource:
+        - 'arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:*'
+
 plugins:
   - serverless-webpack
   - serverless-dynamodb-local
@@ -61,40 +67,12 @@ functions:
     name: ${self:service.name}-event-listener-users
     handler: src/handlers/users-event-listener.handler
     events:
-      # - sns:
-      #     # serverless pseudo parameters plugin syntax doesn't work here.
-      #     arn: 'arn:aws:sns:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):env.userSignUpEvent}'
-      - sqs: '#{signUpSQS.Arn}'
+      # serverless pseudo parameters plugin syntax doesn't work here.
+      - sqs:
+          arn: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.ticketsUserSignUpTopic}'
 
 resources:
   Resources:
-    signUpSQS:
-      Type: AWS::SQS::Queue
-      Properties:
-        QueueName: ticket-swap-tickets-user-signup
-
-    singUpSubscription:
-      Type: AWS::SNS::Subscription
-      Properties:
-        Endpoint: '#{signUpSQS.Arn}'
-        Protocol: sqs
-        RawMessageDelivery: true
-        TopicArn: 'arn:aws:sns:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):env.userSignUpEvent}'
-
-    signUpSQSPolicy:
-      Type: AWS::SQS::QueuePolicy
-      Properties:
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Sid: 'allow-sns-messages'
-              Effect: Allow
-              Principal: '*'
-              Resource: '#{signUpSQS.Arn}'
-              Action: 'SQS:SendMessage'
-        Queues:
-          - '#{signUpSQS}'
-
     ticketsTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -130,10 +108,10 @@ resources:
       Properties:
         TableName: ${file(config.js):env.tickets_users_table}
         AttributeDefinitions:
-          - AttributeName: email
+          - AttributeName: id
             AttributeType: S
         KeySchema:
-          - AttributeName: email
+          - AttributeName: id
             KeyType: HASH
 
         BillingMode: PAY_PER_REQUEST

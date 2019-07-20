@@ -1,0 +1,51 @@
+service:
+  name: ${file(config.js):env.APP_NAME}-sns-sqs
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: ${file(config.js):env.region}
+
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-offline-sns
+
+custom:
+  serverless-offline-sns:
+    port: ${file(config.js):env.snsOfflinePort}
+    debug: true
+
+resources:
+  Resources:
+    userSignUpTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: ${file(config.js):env.userSignUpEvent}
+        TopicName: ${file(config.js):env.userSignUpEvent}
+
+    signUpSQS:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${file(config.js):SQS.ticketsUserSignUpTopic}
+
+    singUpSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: '#{signUpSQS.Arn}'
+        Protocol: sqs
+        RawMessageDelivery: true
+        TopicArn: '#{userSignUpTopic}'
+
+    signUpSQSPolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'allow-sns-messages'
+              Effect: Allow
+              Principal: '*'
+              Resource: '#{signUpSQS.Arn}'
+              Action: 'SQS:SendMessage'
+        Queues:
+          - '#{signUpSQS}'

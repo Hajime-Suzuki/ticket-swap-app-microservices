@@ -1,6 +1,6 @@
 import { secrets } from './.secrets'
 
-export const APP_NAME = 'ticket-swap'
+const APP_NAME = 'ticket-swap'
 
 const serviceNames = {
   ticketServiceName: `${APP_NAME}-tickets`,
@@ -8,7 +8,7 @@ const serviceNames = {
   usersServiceName: `${APP_NAME}-users`
 }
 const eventNames = {
-  eventCreated: `${APP_NAME}-event-created`,
+  eventCreatedEvent: `${APP_NAME}-event-created`,
   userSignUpEvent: `${APP_NAME}-user-sign-up`
 }
 
@@ -40,6 +40,7 @@ export const shared = {
   ...awsSettings,
   ...dynamo,
   ...functionNames,
-  ...secrets
+  ...secrets,
+  APP_NAME
   // key: ${self:custom.someValue} works too.
 }

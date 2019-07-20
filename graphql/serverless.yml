@@ -5,22 +5,20 @@ provider:
   name: aws
   runtime: nodejs10.x
   region: ${file(config.js):env.region}
-  environment: ${file(config.js):env}
-  role: mainRole
-  # iamRoleStatements:
-  # - Effect: Allow
-  #   Action:
-  #     - logs:CreateLogGroup
-  #     - logs:CreateLogStream
-  #     - logs:PutLogEvents
-  #   Resource:
-  #     - 'arn:aws:logs:#{AWS::Region}:#{AWS::AccountId}:log-group:/aws/lambda/*:*:*'
-  # - Effect: 'Allow'
-  #   Action:
-  #     - lambda:InvokeFunction
-  #     - lambda:InvokeAsync
-  #   Resource:
-  #     - 'arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:*'
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource:
+        - 'arn:aws:logs:#{AWS::Region}:#{AWS::AccountId}:log-group:/aws/lambda/*:*:*'
+    - Effect: 'Allow'
+      Action:
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+      Resource:
+        - 'arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:*'
 
 plugins:
   - serverless-webpack
@@ -37,6 +35,7 @@ custom:
 
 functions:
   graphql:
+    name: ${file(config.js):env.gqlServiceName}-handler
     handler: src/index.graphql
     events:
       - http:
@@ -45,39 +44,3 @@ functions:
       - http:
           method: get
           path: '/graphql'
-    role: mainRole
-
-resources:
-  Resources:
-    mainRole:
-      Type: AWS::IAM::Role
-      Properties:
-        RoleName: ticket-swap-gql-role
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service:
-                  - lambda.amazonaws.com
-              Action: sts:AssumeRole
-
-        Policies:
-          - PolicyName: can-call-lambda
-            PolicyDocument:
-              Version: '2012-10-17'
-              Statement:
-                - Effect: Allow
-                  Action:
-                    - logs:CreateLogGroup
-                    - logs:CreateLogStream
-                    - logs:PutLogEvents
-                  Resource:
-                    - 'arn:aws:logs:#{AWS::Region}:#{AWS::AccountId}:log-group:/aws/lambda/*:*:*'
-
-                - Effect: 'Allow'
-                  Action:
-                    - lambda:InvokeFunction
-                    - lambda:InvokeAsync
-                  Resource:
-                    - 'arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:*'

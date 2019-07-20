@@ -36,10 +36,6 @@ plugins:
 custom:
   serverless-offline:
     port: ${file(config.js):env.usersPort}
-  # move this to top level
-  serverless-offline-sns:
-    port: 9998
-    debug: true
 
   webpack:
     includeModules:
@@ -94,18 +90,13 @@ resources:
         Policies:
           PasswordPolicy:
             MinimumLength: 6
+
     userClient:
       Type: AWS::Cognito::UserPoolClient
       Properties:
         ClientName: ${self:service.name}-user-client
         GenerateSecret: false
         UserPoolId: { Ref: CognitoUserPoolTicketSwapUserPool }
-
-    userSignUpTopic:
-      Type: AWS::SNS::Topic
-      Properties:
-        DisplayName: ${file(config.js):env.userSignUpEvent}
-        TopicName: ${file(config.js):env.userSignUpEvent}
 
     ticketsTable:
       Type: AWS::DynamoDB::Table

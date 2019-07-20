@@ -1,0 +1,15 @@
+{
+  "name": "local",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "serverless offline-sns start",
+    "deploy": "serverless deploy -v"
+  },
+  "devDependencies": {
+    "serverless": "^1.48.2",
+    "serverless-offline-sns": "^0.53.0",
+    "serverless-pseudo-parameters": "^2.4.0"
+  }
+}
