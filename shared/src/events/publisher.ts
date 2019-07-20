@@ -20,6 +20,7 @@ export const publishEvent = ({ subject, message, arn }: PublishEventArgs) => {
     Message: JSON.stringify(message),
     TopicArn: arn
   }
+
   console.log({ endpoint, arn })
 
   return sns.publish(params).promise()

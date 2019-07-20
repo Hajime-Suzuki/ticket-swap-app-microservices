@@ -23,6 +23,12 @@ resources:
         DisplayName: ${file(config.js):env.userSignUpEvent}
         TopicName: ${file(config.js):env.userSignUpEvent}
 
+    ticketCreatedTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: ${file(config.js):env.ticketCreatedEvent}
+        TopicName: ${file(config.js):env.ticketCreatedEvent}
+
     signUpSQS:
       Type: AWS::SQS::Queue
       Properties:
@@ -49,3 +55,31 @@ resources:
               Action: 'SQS:SendMessage'
         Queues:
           - '#{signUpSQS}'
+
+    # ticket created event for users service
+    usersTicketCreatedSQS:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${file(config.js):SQS.usersTicketCreatedTopic}
+
+    usersTicketCreatedSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: '#{usersTicketCreatedSQS.Arn}'
+        Protocol: sqs
+        RawMessageDelivery: true
+        TopicArn: '#{ticketCreatedTopic}'
+
+    usersTicketCreatedSQSPolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'allow-sns-messages'
+              Effect: Allow
+              Principal: '*'
+              Resource: '#{usersTicketCreatedSQS.Arn}'
+              Action: 'SQS:SendMessage'
+        Queues:
+          - '#{usersTicketCreatedSQS}'

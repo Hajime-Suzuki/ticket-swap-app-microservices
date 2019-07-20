@@ -1,5 +1,9 @@
+import { shared } from './global-config'
+const { APP_NAME } = shared
+
 const topics = {
-  ticketsUserSignUpTopic: 'ticket-swap-tickets-user-signup'
+  ticketsUserSignUpTopic: `${APP_NAME}-tickets-user-signup`,
+  usersTicketCreatedTopic: `${APP_NAME}-users-ticket-created`
 }
 
 export const SQS = {

@@ -9,10 +9,10 @@ import { tableNames } from '@ticket-swap-app/config/src/users-config'
 @table(tableNames.users_users_table)
 export class UserModel implements IUser {
   @hashKey()
-  email: string
+  id: string
 
   @attribute()
-  id: string
+  email: string
 
   @attribute()
   createdAt: string

@@ -11,3 +11,10 @@ module.exports.env = () => {
   }
   return output
 }
+
+module.exports.SQS = () => {
+  const { SQS } = require('../../config/src/sns-sqs-config.ts')
+  return {
+    ...SQS
+  }
+}

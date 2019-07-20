@@ -18,7 +18,7 @@ const save = (data: CreateUserArgs) => {
 }
 
 export interface FindUserArgs {
-  email: IUser['email']
+  id: IUser['id']
 }
 const findByKey = async (args: FindUserArgs) => {
   const res = await mapper.query(args)

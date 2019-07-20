@@ -3,7 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "dependencies": {
-    "@aws/dynamodb-data-mapper": "^0.7.3"
+    "@aws/dynamodb-data-mapper": "^0.7.3",
+    "@ticket-swap-app/gql": "1.0.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",

@@ -28,7 +28,7 @@ export const ticketResolvers: IResolvers<ResolverContext> = {
         )
         return ticket
       } catch (err) {
-        console.log(err)
+        console.log('createTicketError', err)
       }
     }
   }
