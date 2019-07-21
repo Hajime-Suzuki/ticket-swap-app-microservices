@@ -7,7 +7,7 @@ import { publishEvent } from '@ticket-swap-app/shared/src/events/publisher'
 import { getSNSARN } from '@ticket-swap-app/shared/src/constants'
 import { shared } from '@ticket-swap-app/config/src/global-config'
 
-const eventCreatedTopic = getSNSARN(shared.ticketCreatedEvent)
+const eventCreatedTopic = getSNSARN(shared.ticketsEvent)
 
 export const createTicketHandler = async (
   event: HandlerEvent<CreateTicketArgs>

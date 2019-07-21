@@ -17,32 +17,32 @@ custom:
 
 resources:
   Resources:
-    userSignUpTopic:
+    usersEvent:
       Type: AWS::SNS::Topic
       Properties:
-        DisplayName: ${file(config.js):env.userSignUpEvent}
-        TopicName: ${file(config.js):env.userSignUpEvent}
+        DisplayName: ${file(config.js):env.usersEvent}
+        TopicName: ${file(config.js):env.usersEvent}
 
-    ticketCreatedTopic:
+    ticketsEvent:
       Type: AWS::SNS::Topic
       Properties:
-        DisplayName: ${file(config.js):env.ticketCreatedEvent}
-        TopicName: ${file(config.js):env.ticketCreatedEvent}
-
-    signUpSQS:
+        DisplayName: ${file(config.js):env.ticketsEvent}
+        TopicName: ${file(config.js):env.ticketsEvent}
+    # users event for tickets
+    ticketsUsersSQS:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: ${file(config.js):SQS.ticketsUserSignUpTopic}
+        QueueName: ${file(config.js):SQS.tickets_userTopic}
 
-    singUpSubscription:
+    ticketsUsersEventSubscription:
       Type: AWS::SNS::Subscription
       Properties:
-        Endpoint: '#{signUpSQS.Arn}'
+        Endpoint: '#{ticketsUsersSQS.Arn}'
         Protocol: sqs
         RawMessageDelivery: true
-        TopicArn: '#{userSignUpTopic}'
+        TopicArn: '#{usersEvent}'
 
-    signUpSQSPolicy:
+    ticketsUsersEventSQSPolicy:
       Type: AWS::SQS::QueuePolicy
       Properties:
         PolicyDocument:
@@ -51,26 +51,26 @@ resources:
             - Sid: 'allow-sns-messages'
               Effect: Allow
               Principal: '*'
-              Resource: '#{signUpSQS.Arn}'
+              Resource: '#{ticketsUsersSQS.Arn}'
               Action: 'SQS:SendMessage'
         Queues:
-          - '#{signUpSQS}'
+          - '#{ticketsUsersSQS}'
 
     # ticket created event for users service
-    usersTicketCreatedSQS:
+    usersTicketsSQS:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: ${file(config.js):SQS.usersTicketCreatedTopic}
+        QueueName: ${file(config.js):SQS.users_ticketTopic}
 
-    usersTicketCreatedSubscription:
+    usersTicketsEventSubscription:
       Type: AWS::SNS::Subscription
       Properties:
-        Endpoint: '#{usersTicketCreatedSQS.Arn}'
+        Endpoint: '#{usersTicketsSQS.Arn}'
         Protocol: sqs
         RawMessageDelivery: true
-        TopicArn: '#{ticketCreatedTopic}'
+        TopicArn: '#{ticketsEvent}'
 
-    usersTicketCreatedSQSPolicy:
+    usersTicketsEventSQSPolicy:
       Type: AWS::SQS::QueuePolicy
       Properties:
         PolicyDocument:
@@ -79,7 +79,7 @@ resources:
             - Sid: 'allow-sns-messages'
               Effect: Allow
               Principal: '*'
-              Resource: '#{usersTicketCreatedSQS.Arn}'
+              Resource: '#{usersTicketsSQS.Arn}'
               Action: 'SQS:SendMessage'
         Queues:
-          - '#{usersTicketCreatedSQS}'
+          - '#{usersTicketsSQS}'

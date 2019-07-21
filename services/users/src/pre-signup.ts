@@ -5,7 +5,7 @@ import * as shortid from 'shortid'
 import { UserRepository } from './repositories/users-repository'
 import { shared } from '@ticket-swap-app/config/src/global-config'
 
-const arn = getSNSARN(shared.userSignUpEvent)
+const arn = getSNSARN(shared.usersEvent)
 
 export const handler: CognitoUserPoolTriggerHandler = async event => {
   console.log('event received', JSON.stringify(event, null, 2))

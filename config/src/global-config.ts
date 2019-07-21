@@ -8,9 +8,9 @@ const serviceNames = {
   usersServiceName: `${APP_NAME}-users`
 }
 const eventNames = {
-  eventCreatedEvent: `${APP_NAME}-event-created`,
-  userSignUpEvent: `${APP_NAME}-user-sign-up`,
-  ticketCreatedEvent: `${APP_NAME}-ticket-created`
+  // eventCreatedEvent: `${APP_NAME}-users-event`,
+  usersEvent: `${APP_NAME}-user-events`,
+  ticketsEvent: `${APP_NAME}-ticket-events`
 }
 
 const ports = {

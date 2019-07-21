@@ -24,6 +24,10 @@ DynamoDB:
 
 - ticket-swap-_SERVICE_NAME_-_TABLE_NAME_
 
+SQS and SNS:
+
+- ticket-swap*SERVICE_NAME*-_SERVICE_NAME_-events
+
 ---
 
 Todo:
