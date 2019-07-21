@@ -1,10 +1,10 @@
+import { shared } from '@ticket-swap-app/config/src/global-config'
 import { SNS } from 'aws-sdk/clients/all'
 import { isOffline } from '../constants'
-import { shared } from '@ticket-swap-app/config/src/global-config'
 
-interface PublishEventArgs {
+interface PublishEventArgs<TBody> {
   subject?: string
-  message: Record<string, string>
+  message: TBody
   arn: string
 }
 
@@ -14,7 +14,11 @@ const endpoint = isOffline()
 
 const sns = new SNS({ endpoint })
 
-export const publishEvent = ({ subject, message, arn }: PublishEventArgs) => {
+export const publishEvent = <TBody>({
+  subject,
+  message,
+  arn
+}: PublishEventArgs<TBody>) => {
   const params = {
     Subject: subject,
     Message: JSON.stringify(message),

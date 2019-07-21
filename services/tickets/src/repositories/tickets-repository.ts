@@ -1,4 +1,7 @@
-import { ITicket } from '@ticket-swap-app/gql/src/generated/graphql'
+import {
+  ITicket,
+  ICreateTicketInput
+} from '@ticket-swap-app/gql/src/generated/graphql'
 import { isOffline } from '@ticket-swap-app/shared/src/constants'
 import { Mapper } from '@ticket-swap-app/shared/src/database'
 import { TicketModel } from '../models/Ticket'
@@ -12,9 +15,7 @@ const mapper = new Mapper<ITicket, typeof TicketModel>({
   model: TicketModel
 })
 
-export type CreateTicketArgs = Pick<TicketModel, 'userId' | 'eventId' | 'price'>
-
-const save = (data: CreateTicketArgs) => {
+const save = (data: ICreateTicketInput) => {
   return mapper.save(data)
 }
 

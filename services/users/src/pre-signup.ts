@@ -4,6 +4,7 @@ import { CognitoUserPoolTriggerHandler } from 'aws-lambda'
 import * as shortid from 'shortid'
 import { UserRepository } from './repositories/users-repository'
 import { shared } from '@ticket-swap-app/config/src/global-config'
+import { UserSignUpEventBody } from '@ticket-swap-app/shared/src/types/events'
 
 const arn = getSNSARN(shared.usersEvent)
 
@@ -14,7 +15,10 @@ export const handler: CognitoUserPoolTriggerHandler = async event => {
   const params = { id: shortid.generate(), email: event.userName }
   await UserRepository.save(params)
 
-  await publishEvent({ message: params, arn })
+  await publishEvent<UserSignUpEventBody>({
+    message: { type: 'userSignUp', payload: params },
+    arn
+  })
 
   return event
 }
