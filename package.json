@@ -1,7 +1,7 @@
 {
   "private": true,
   "workspaces": [
-    "graphql",
+    "services/graphql",
     "services/tickets",
     "services/events",
     "services/users",
