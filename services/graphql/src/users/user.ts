@@ -4,12 +4,12 @@ export const userSchema = gql`
   extend type Query {
     getUser(id: String!): GetUserResponse
   }
-  type User {
-    "id is sub from cognito"
-    id: ID
 
-    "email is hash key of DynamoDB"
-    email: String!
+  type User {
+    id: !String
+    email: !String
+    createdAt: !String
+    updatedAt: String
   }
 
   type GetUserResponse {

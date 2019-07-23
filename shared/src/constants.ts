@@ -9,7 +9,11 @@ export const usersActions = {
   getUser: 'getUser'
 }
 
-export const getSNSARN = (serviceName: string) =>
-  `arn:aws:sns:${shared.region}:${shared.AWS_ACCOUNT_ID}:${serviceName}`
+export const getSNSARN = (serviceName: string) => {
+  if (isOffline()) {
+    return 'arn:aws:sns:eu-central-1:000000000000:' + serviceName
+  }
+  return `arn:aws:sns:${shared.region}:${shared.AWS_ACCOUNT_ID}:${serviceName}`
+}
 
-export const isOffline = () => process.env.IS_OFFLINE
+export const isOffline = () => process.env.IS_OFFLINE || process.env.IS_LOCAL

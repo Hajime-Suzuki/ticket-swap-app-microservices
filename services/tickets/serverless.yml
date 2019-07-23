@@ -69,7 +69,8 @@ functions:
     events:
       # serverless pseudo parameters plugin syntax doesn't work here.
       - sqs:
-          arn: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.tickets_userTopic}'
+          arn: 'arn:aws:sqs:eu-central-1:123456789012:ticket-swap-users-ticket-events'
+      # - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.tickets_userTopic}'
 
 resources:
   Resources:

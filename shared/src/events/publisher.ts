@@ -24,7 +24,6 @@ export const publishEvent = <TBody>({
     Message: JSON.stringify(message),
     TopicArn: arn
   }
-
   console.log({ endpoint, arn })
 
   return sns.publish(params).promise()
