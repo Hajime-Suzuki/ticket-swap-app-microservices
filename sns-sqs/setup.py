@@ -4,8 +4,8 @@ user_event_topic_name = 'ticket-swap-user-events'
 ticket_event_topic_name = 'ticket-swap-ticket-events'
 
 
-ticket_user_queue_name = 'ticket-swap-tickets-user-events'
-user_ticket_queue_name = 'ticket-swap-users-ticket-events'
+ticket_user_queue_name = 'ticket-swap-tickets-user-events-queue'
+user_ticket_queue_name = 'ticket-swap-users-ticket-events-queue'
 
 create_user_events_topic = f'aws --endpoint-url=http://localhost:4575 sns create-topic --name {user_event_topic_name}'.split(
     ' ')
@@ -38,6 +38,7 @@ print('Done!')
 # aws --endpoint-url=http://localhost:4575 sns list-topics
 # aws --endpoint-url=http://localhost:4576 sqs list-queues
 # aws --endpoint-url=http://localhost:4576 sqs send-message --queue-url http://localhost:4576/queue/ticket-swap-users-ticket-events --message-body '{"test":"asht"}'
+# aws --endpoint-url=http://localhost:4576 sqs receive-message --queue-url http://localhost:4576/queue/ticket-swap-users-ticket-events
 
 #  {
 #    endpoint: 'http://localhost:4575',

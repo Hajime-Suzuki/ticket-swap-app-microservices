@@ -12,6 +12,7 @@
     "@ticket-swap-app/config": "1.0.0",
     "@ticket-swap-app/gql": "1.0.0",
     "@ticket-swap-app/shared": "1.0.0",
+    "serverless-offline-sqs": "^2.0.3",
     "tslint": "^5.18.0"
   },
   "devDependencies": {

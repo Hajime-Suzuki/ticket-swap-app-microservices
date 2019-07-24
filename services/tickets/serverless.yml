@@ -30,17 +30,20 @@ provider:
 plugins:
   - serverless-webpack
   - serverless-dynamodb-local
-  - serverless-offline-sns
+  - serverless-offline-sqs
   - serverless-offline
   - serverless-pseudo-parameters
 
 custom:
   serverless-offline:
     port: ${file(config.js):env.ticketsPort}
-  serverless-offline-sns:
+  serverless-offline-sqs:
+    apiVersion: '2012-11-05'
     port: 9999
-    sns-endpoint: http://localhost:${file(config.js):env.snsOfflinePort} # port should be accessible before running sls offline start.
-    debug: true
+    endpoint: http://localhost:${file(config.js):SQS.sqsOfflinePort} # port should be accessible before running sls offline start.
+    accessKeyId: root
+    secretAccessKey: root
+    skipCacheInvalidation: false
 
   webpack:
     includeModules:
@@ -67,10 +70,8 @@ functions:
     name: ${self:service.name}-event-listener-users
     handler: src/handlers/users-event-listener.handler
     events:
-      # serverless pseudo parameters plugin syntax doesn't work here.
-      - sqs:
-          arn: 'arn:aws:sqs:eu-central-1:123456789012:ticket-swap-users-ticket-events'
-      # - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.tickets_userTopic}'
+      # serverless pseudo parameters plugin syntax doesn't work for sqs offline here.
+      - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.tickets_userTopic}'
 
 resources:
   Resources:
