@@ -6,9 +6,9 @@ export const userSchema = gql`
   }
 
   type User {
-    id: !String
-    email: !String
-    createdAt: !String
+    id: String!
+    email: String!
+    createdAt: String!
     updatedAt: String
   }
 

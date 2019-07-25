@@ -22,18 +22,22 @@ const server = new ApolloServer({
       authenticated: AuthenticatedDirective
     }
   }),
-  context: async (args: { event: APIGatewayEvent, context: ResolverContext }) => {
+  context: async (args: {
+    event: APIGatewayEvent
+    context: ResolverContext
+  }) => {
     return {
       authorization: args.event.headers.Authorization,
       user: undefined
     }
   },
-  introspection: true, // by setting this false, you don't allow use graphql playground for this endpoint.
+  debug: true,
+  introspection: true // by setting this false, you don't allow use graphql playground for this endpoint.
 })
 
 export const graphql = server.createHandler({
   cors: {
     origin: true,
-    credentials: true,
-  },
+    credentials: false
+  }
 })

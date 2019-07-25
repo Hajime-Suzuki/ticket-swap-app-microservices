@@ -14,9 +14,9 @@ const eventNames = {
 }
 
 const ports = {
-  gqlPort: 8080,
-  ticketsPort: 8081,
-  usersPort: 8082,
+  gqlPort: 8000,
+  ticketsPort: 8001,
+  usersPort: 8002,
   snsOfflinePort: 4575
 }
 

@@ -68,7 +68,7 @@ functions:
     name: ${self:service.name}-event-listener-tickets
     handler: src/handlers/ticket-event-listener.handler
     events:
-      - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.users_ticketTopic}'
+      - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.users_ticketEventsQueue}'
 
   preSignUp:
     name: ${self:service.name}-pre-signup

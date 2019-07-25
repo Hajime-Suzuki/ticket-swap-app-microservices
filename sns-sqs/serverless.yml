@@ -32,7 +32,7 @@ resources:
     ticketsUsersSQS:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: ${file(config.js):SQS.tickets_userTopic}
+        QueueName: ${file(config.js):SQS.tickets_userEventsQueue}
 
     ticketsUsersEventSubscription:
       Type: AWS::SNS::Subscription
@@ -60,7 +60,7 @@ resources:
     usersTicketsSQS:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: ${file(config.js):SQS.users_ticketTopic}
+        QueueName: ${file(config.js):SQS.users_ticketEventsQueue}
 
     usersTicketsEventSubscription:
       Type: AWS::SNS::Subscription
