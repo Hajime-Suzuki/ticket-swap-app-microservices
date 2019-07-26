@@ -17,11 +17,22 @@ export const newMapper = ({
   })
 }
 
-export class Mapper<T, TModel extends ZeroArgumentsConstructor<StringToAnyObjectMap>> {
+export class Mapper<
+  T,
+  TModel extends ZeroArgumentsConstructor<StringToAnyObjectMap>
+> {
   private mapper: DataMapper
   private model: TModel
 
-  constructor({ region, endpoint, model }: { region: string, endpoint: string, model: TModel }) {
+  constructor({
+    region,
+    endpoint,
+    model
+  }: {
+    region: string
+    endpoint: string
+    model: TModel
+  }) {
     this.model = model
     this.mapper = newMapper({ region, endpoint })
   }
@@ -33,6 +44,11 @@ export class Mapper<T, TModel extends ZeroArgumentsConstructor<StringToAnyObject
   scan() {
     return this.getArrayFromIterable(this.mapper.scan(this.model))
   }
+
+  update(target: any, condition: any) {
+    console.log(target, condition)
+  }
+
   save(data: Partial<T>) {
     const params = this.merge(data)
     console.log('Mapper: will save data:', params)

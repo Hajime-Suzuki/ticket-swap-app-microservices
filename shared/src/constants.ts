@@ -2,7 +2,8 @@ import { shared } from '@ticket-swap-app/config/src/global-config'
 
 export const ticketsActions = {
   createTicket: 'create-ticket',
-  getTicket: 'get-ticket'
+  getTicket: 'get-ticket',
+  updateTicket: 'update-ticket'
 }
 
 export const usersActions = {

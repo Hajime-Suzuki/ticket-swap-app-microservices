@@ -28,12 +28,24 @@ const findByKey = async (args: FindTicketArgs) => {
   return res[0]
 }
 
+// TODO: use interface from GQL generator
+export type UpdateTicketArgs = {
+  eventId: ITicket['eventId']
+  userId: ITicket['userId']
+} & Partial<ITicket>
+
+const update = async (args: UpdateTicketArgs) => {
+  const res = await mapper.update(args, {})
+  console.log(res)
+}
+
 const scan = async () => {
   return mapper.scan()
 }
 
 export const TicketRepository = {
   save,
+  update,
   scan,
   findByKey
 }

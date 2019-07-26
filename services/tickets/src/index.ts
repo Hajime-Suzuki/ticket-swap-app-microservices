@@ -3,6 +3,7 @@ import { handleResponse } from '@ticket-swap-app/shared/src/response'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import { createTicketHandler } from './handlers/create-ticket'
 import { getTicketHandler } from './handlers/get-ticket'
+import { updateTicketHandler } from './handlers/update-ticket'
 
 type ActionTypes = keyof typeof ticketsActions
 
@@ -21,7 +22,10 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
         const res = await getTicketHandler(event)
         return handleResponse.success({ ticket: res })
       }
-
+      case ticketsActions.updateTicket: {
+        const res = await updateTicketHandler(event)
+        return handleResponse.success({ test: res })
+      }
       default: {
         return handleResponse.error(new Error('unknown action'))
       }

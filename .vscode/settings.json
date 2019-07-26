@@ -3,6 +3,8 @@
     "editorError.foreground": "#ff0000",
     "editorWarning.foreground": "#e6d200",
     "editorInfo.foreground": "#27bb58",
+    "terminal.background": "#222e2c",
+    "terminal.border": "#475a57",
     "activityBar.background": "#a2bce6",
     "activityBar.foreground": "#15202b",
     "activityBar.inactiveForeground": "#15202b99",

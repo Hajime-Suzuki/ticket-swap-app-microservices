@@ -1,0 +1,6 @@
+[
+  { "userId": "1", "eventId": "100", "price": "10.12" },
+  { "userId": "2", "eventId": "101", "price": "11.23" },
+  { "userId": "2", "eventId": "102", "price": "12.34" },
+  { "userId": "3", "eventId": "103", "price": "13.45" }
+]

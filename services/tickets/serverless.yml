@@ -54,6 +54,12 @@ custom:
     start:
       port: ${file(config.js):env.ticketsDbPort}
       migrate: true
+      seed: true
+    seed:
+      dev:
+        sources:
+          - table: ${file(config.js):env.tickets_tickets_table}
+            sources: ['./.seeds/tickets.json']
     stages:
       - dev
 
