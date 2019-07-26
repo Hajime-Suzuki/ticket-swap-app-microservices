@@ -43,8 +43,13 @@ const scan = async () => {
   return mapper.scan()
 }
 
+const get = async (args: Partial<ITicket>) => {
+  return mapper.get(args)
+}
+
 export const TicketRepository = {
   save,
+  get,
   update,
   scan,
   findByKey

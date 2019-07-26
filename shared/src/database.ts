@@ -37,6 +37,10 @@ export class Mapper<
     this.mapper = newMapper({ region, endpoint })
   }
 
+  get(args: Partial<T>) {
+    return this.mapper.get(this.merge(args))
+  }
+
   query(args: Partial<T>) {
     return this.getArrayFromIterable(this.mapper.query(this.model, args))
   }
@@ -50,16 +54,13 @@ export class Mapper<
   }
 
   save(data: Partial<T>) {
-    const params = this.merge(data)
+    const params = this.merge({ ...data, createdAt: Date.now().toString() })
     console.log('Mapper: will save data:', params)
     return this.mapper.put(params)
   }
 
   private merge(data: Partial<T>) {
-    return Object.assign(new this.model(), {
-      ...data,
-      createdAt: Date.now().toString()
-    })
+    return Object.assign(new this.model(), data)
   }
 
   private async getArrayFromIterable(iterator: any) {
