@@ -7,9 +7,19 @@ export const handleResponse = {
   },
   error(error: any) {
     console.log(error)
-    return {
-      statusCode: 500,
-      body: error.message
+    if (!error.name) {
+      return {
+        statusCode: 500,
+        body: error.message
+      }
+    }
+    if (error.name === 'ItemNotFoundException') {
+      const tableNameArray = error.itemSought.TableName.split('-')
+      const tableName = tableNameArray[tableNameArray.length - 1]
+      return {
+        statusCode: 500,
+        body: `Not found: ${tableName}`
+      }
     }
   }
 }

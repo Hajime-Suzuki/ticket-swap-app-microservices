@@ -5,7 +5,7 @@ Content-Type: application/json
 {
     "action": "create-ticket",
     "data": {
-      "userId": "1234",
+      "userId": "1235",
       "eventId": "7890",
       "price": "10.55"
     }
@@ -18,8 +18,8 @@ Content-Type: application/json
     "action": "update-ticket",
     "data": {
       "userId": "1",
-      "eventId": "124",
-      "price": "125"
+      "eventId": "100",
+      "price": "8.11"
     }
 }
 

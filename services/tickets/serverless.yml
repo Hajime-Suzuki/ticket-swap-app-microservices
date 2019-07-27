@@ -60,6 +60,8 @@ custom:
         sources:
           - table: ${file(config.js):env.tickets_tickets_table}
             sources: ['./.seeds/tickets.json']
+          - table: ${file(config.js):env.tickets_events_table}
+            sources: ['./.seeds/events.json']
     stages:
       - dev
 

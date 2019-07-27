@@ -37,7 +37,7 @@ export class Mapper<
     this.mapper = newMapper({ region, endpoint })
   }
 
-  get(args: Partial<T>) {
+  find(args: Partial<T>) {
     return this.mapper.get(this.merge(args))
   }
 
@@ -49,8 +49,10 @@ export class Mapper<
     return this.getArrayFromIterable(this.mapper.scan(this.model))
   }
 
-  update(target: any, condition: any) {
-    console.log(target, condition)
+  async findAndUpdate(identifier: Partial<T>, args: Partial<T>) {
+    const data = await this.find(identifier)
+    const updated = Object.assign(data, args)
+    return this.mapper.update(updated)
   }
 
   save(data: Partial<T>) {
