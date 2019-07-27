@@ -1,16 +1,20 @@
 import { shared } from '@ticket-swap-app/config/src/global-config'
 import { ResolverContext } from '..'
-import { IResolvers } from '../generated/graphql'
+import { IResolvers, IEvent } from '../generated/graphql'
 import { LambdaCaller } from '../helpers/lambda-caller'
+import { eventsActions } from '@ticket-swap-app/shared/src/constants'
 
 const eventLambda = new LambdaCaller(shared.eventsPort, shared.eventsFunc)
 
-// TODO: implement
 export const eventResolvers: IResolvers<ResolverContext> = {
   Mutation: {
-    createEvent: (_, args, ctx) => {
-      console.log(args, ctx)
-      return null
+    createEvent: async (_, { data }) => {
+      const res = await eventLambda.invoke<{ event: IEvent }>(
+        eventsActions.createEvent,
+        data
+      )
+      console.log({ res })
+      return res.event
     }
   }
 }

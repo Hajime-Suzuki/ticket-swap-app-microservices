@@ -20,7 +20,7 @@ export const eventSchema = gql`
     getEvents: GetEventsResponse
   }
   extend type Mutation {
-    createEvent(data: CreateEventInput): Event
+    createEvent(data: CreateEventInput!): Event
   }
 
   input CreateEventInput {

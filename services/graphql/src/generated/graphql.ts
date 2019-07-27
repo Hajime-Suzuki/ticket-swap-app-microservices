@@ -73,7 +73,7 @@ export type IMutationCreateTicketArgs = {
 };
 
 export type IMutationCreateEventArgs = {
-  data?: Maybe<ICreateEventInput>;
+  data: ICreateEventInput;
 };
 
 export type IQuery = {

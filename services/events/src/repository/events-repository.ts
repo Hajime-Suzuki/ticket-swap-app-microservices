@@ -16,7 +16,9 @@ const mapper = new Mapper<EventModel, typeof EventModel>({
   model: EventModel
 })
 
-const save = (data: IMutationCreateEventArgs['data']) => {
+const save = (
+  data: IMutationCreateEventArgs['data'] & { id: IEvent['id'] }
+) => {
   return mapper.save(data)
 }
 
