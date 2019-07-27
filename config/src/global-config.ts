@@ -8,7 +8,7 @@ const serviceNames = {
   usersServiceName: `${APP_NAME}-users`,
   eventsServiceName: `${APP_NAME}-events`
 }
-const eventNames = {
+export const eventNames = {
   usersEvent: `${APP_NAME}-user-events`,
   ticketsEvent: `${APP_NAME}-ticket-events`,
   eventsEvent: `${APP_NAME}-event-events`

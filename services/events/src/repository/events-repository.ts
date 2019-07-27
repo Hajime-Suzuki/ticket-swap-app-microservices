@@ -1,7 +1,8 @@
 import {
   IUser,
   IMutationCreateEventArgs,
-  IEvent
+  IEvent,
+  ICreateEventInput
 } from '@ticket-swap-app/gql/src/generated/graphql'
 
 import { Mapper } from '@ticket-swap-app/shared/src/database'
@@ -16,9 +17,7 @@ const mapper = new Mapper<EventModel, typeof EventModel>({
   model: EventModel
 })
 
-const save = (
-  data: IMutationCreateEventArgs['data'] & { id: IEvent['id'] }
-) => {
+const save = (data: ICreateEventInput & { id: IEvent['id'] }) => {
   return mapper.save(data)
 }
 

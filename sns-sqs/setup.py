@@ -2,17 +2,23 @@ import subprocess
 
 user_event_topic_name = 'ticket-swap-user-events'
 ticket_event_topic_name = 'ticket-swap-ticket-events'
+event_event_topic_name = 'ticket-swap-event-events'
 
 
 ticket_user_queue_name = 'ticket-swap-tickets-user-events-queue'
+ticket_event_queue_name = 'ticket-swap-tickets-event-events-queue'
 user_ticket_queue_name = 'ticket-swap-users-ticket-events-queue'
 
 create_user_events_topic = f'aws --endpoint-url=http://localhost:4575 sns create-topic --name {user_event_topic_name}'.split(
     ' ')
 create_ticket_events_topic = f'aws --endpoint-url=http://localhost:4575 sns create-topic --name {ticket_event_topic_name}'.split(
     ' ')
+create_event_events_topic = f'aws --endpoint-url=http://localhost:4575 sns create-topic --name {event_event_topic_name}'.split(
+    ' ')
 
 create_ticket_user_queue = f'aws --endpoint-url=http://localhost:4576 sqs create-queue --queue-name {ticket_user_queue_name}'.split(
+    ' ')
+create_ticket_event_queue = f'aws --endpoint-url=http://localhost:4576 sqs create-queue --queue-name {ticket_event_queue_name}'.split(
     ' ')
 create_user_ticket_queue = f'aws --endpoint-url=http://localhost:4576 sqs create-queue --queue-name {user_ticket_queue_name}'.split(
     ' ')
@@ -20,12 +26,17 @@ create_user_ticket_queue = f'aws --endpoint-url=http://localhost:4576 sqs create
 
 ticket_user_events_subscription = f'aws --endpoint-url=http://localhost:4575 sns subscribe --topic-arn arn:aws:sns:eu-central-1:000000000000:{user_event_topic_name} --protocol sqs --notification-endpoint arn:aws:sqs:eu-central-1:123456789012:{ticket_user_queue_name}'.split(
     ' ')
+ticket_event_events_subscription = f'aws --endpoint-url=http://localhost:4575 sns subscribe --topic-arn arn:aws:sns:eu-central-1:000000000000:{event_event_topic_name} --protocol sqs --notification-endpoint arn:aws:sqs:eu-central-1:123456789012:{ticket_event_queue_name}'.split(
+' ')
 user_ticket_events_subscription = f'aws --endpoint-url=http://localhost:4575 sns subscribe --topic-arn arn:aws:sns:eu-central-1:000000000000:{ticket_event_topic_name} --protocol sqs --notification-endpoint arn:aws:sqs:eu-central-1:123456789012:{user_ticket_queue_name}'.split(
     ' ')
 
+
 commands = [
     create_user_events_topic, create_ticket_user_queue,    ticket_user_events_subscription,
-    create_ticket_events_topic, create_user_ticket_queue, user_ticket_events_subscription
+    create_ticket_events_topic, create_user_ticket_queue, user_ticket_events_subscription,
+    create_event_events_topic, create_ticket_event_queue,
+    user_ticket_events_subscription
 ]
 
 for command in commands:

@@ -1,21 +1,32 @@
-import { shared } from '@ticket-swap-app/config/src/global-config'
+import { shared, eventNames } from '@ticket-swap-app/config/src/global-config'
 import { ICreateEventInput } from '@ticket-swap-app/gql/src/generated/graphql'
 import { getSNSARN } from '@ticket-swap-app/shared/src/constants'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import { EventRepository } from '../repository/events-repository'
 import * as shortid from 'shortid'
+import { publishEvent } from '@ticket-swap-app/shared/src/events/publisher'
+import {
+  EventCreatedEventBody,
+  EventEventTypes
+} from '@ticket-swap-app/shared/src/types/events'
 
-const eventCreatedTopic = getSNSARN(shared.ticketsEvent)
+const eventCreatedTopic = getSNSARN(eventNames.eventsEvent)
 
 export const createEventHandler = async (
   event: HandlerEvent<ICreateEventInput>
 ) => {
   const data = event.body.data
-  const id = shortid.generate()
-  const res = await EventRepository.save({ ...data, id })
-  console.log('ticket saved: ', res)
+  const newEvent = { ...data, id: shortid.generate() }
 
-  // TODO: implement later
-  // publish event!
+  const res = await EventRepository.save(newEvent)
+
+  const params = {
+    message: { type: 'eventCreated' as EventEventTypes, payload: newEvent },
+    arn: eventCreatedTopic
+  }
+
+  console.log('sns will trigger event: ', JSON.stringify(params, null, 2))
+  await publishEvent<EventCreatedEventBody>(params)
+
   return res
 }
