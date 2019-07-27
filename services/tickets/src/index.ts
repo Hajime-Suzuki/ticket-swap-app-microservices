@@ -4,7 +4,6 @@ import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import { createTicketHandler } from './handlers/create-ticket'
 import { getTicketHandler } from './handlers/get-ticket'
 import { updateTicketHandler } from './handlers/update-ticket'
-import { TicketRepository } from './repositories/tickets-repository'
 
 type ActionTypes = keyof typeof ticketsActions
 

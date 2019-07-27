@@ -1,0 +1,127 @@
+service:
+  name: ${file(config.js):env.eventsServiceName}
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: ${file(config.js):env.region}
+  environment: ${file(config.js):env}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchWriteItem
+      Resource:
+        - '#{ticketsTable.Arn}'
+        - '#{eventTable.Arn}'
+        - '#{userTable.Arn}'
+
+    - Effect: Allow
+      Action:
+        - sns:*
+      Resource:
+        - 'arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:*'
+
+plugins:
+  - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-offline-sqs
+  - serverless-offline
+  - serverless-pseudo-parameters
+
+custom:
+  serverless-offline:
+    port: ${file(config.js):env.eventsPort}
+  serverless-offline-sqs:
+    apiVersion: '2012-11-05'
+    port: 9998
+    endpoint: http://localhost:${file(config.js):SQS.sqsOfflinePort} # port should be accessible before running sls offline start.
+    accessKeyId: root
+    secretAccessKey: root
+    skipCacheInvalidation: false
+
+  webpack:
+    includeModules:
+      forceExclude:
+        - aws-sdk
+
+  dynamodb:
+    start:
+      port: ${file(config.js):env.eventsDbPort}
+      migrate: true
+      seed: true
+    seed:
+      dev:
+        sources:
+          - table: ${file(config.js):env.events_tickets_table}
+            sources: ['./.seeds/tickets.json']
+          - table: ${file(config.js):env.events_events_table}
+            sources: ['./.seeds/events.json']
+    stages:
+      - dev
+
+functions:
+  tickets:
+    name: ${file(config.js):env.eventsFunc}
+    handler: src/index.handler
+    events:
+      - http: # this endpoint is test purpose for now
+          method: any
+          path: '/tickets'
+
+  usersEventListener:
+    name: ${self:service.name}-event-listener-tickets
+    handler: src/handlers/tickets-event-listener.handler
+    events:
+      # serverless pseudo parameters plugin syntax doesn't work for sqs offline here.
+      - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.events_ticketEventsQueue}'
+
+resources:
+  Resources:
+    ticketsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${file(config.js):env.events_tickets_table}
+        AttributeDefinitions:
+          - AttributeName: eventId
+            AttributeType: S
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: eventId
+            KeyType: HASH
+          - AttributeName: userId
+            KeyType: RANGE
+
+        BillingMode: PAY_PER_REQUEST
+
+    eventTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${file(config.js):env.events_events_table}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+        BillingMode: PAY_PER_REQUEST
+
+    userTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${file(config.js):env.events_users_table}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+        BillingMode: PAY_PER_REQUEST

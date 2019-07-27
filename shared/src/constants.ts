@@ -6,6 +6,10 @@ export const ticketsActions = {
   updateTicket: 'update-ticket'
 }
 
+export const eventsActions = {
+  createEvent: 'create-event'
+}
+
 export const usersActions = {
   getUser: 'getUser'
 }
