@@ -23,6 +23,7 @@ interface RawAuthResponse {
   email: string
 }
 
+// TODO: return email.
 const authenticationChecker = async (token?: string) => {
   if (!token) throw new Error('login required')
 
