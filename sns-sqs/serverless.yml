@@ -28,6 +28,13 @@ resources:
       Properties:
         DisplayName: ${file(config.js):env.ticketsEvent}
         TopicName: ${file(config.js):env.ticketsEvent}
+
+    eventsEvent:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: ${file(config.js):env.eventsEvent}
+        TopicName: ${file(config.js):env.eventsEvent}
+
     # users event for tickets
     ticketsUsersSQS:
       Type: AWS::SQS::Queue
@@ -56,7 +63,7 @@ resources:
         Queues:
           - '#{ticketsUsersSQS}'
 
-    # ticket created event for users service
+    # ticket event for users service
     usersTicketsSQS:
       Type: AWS::SQS::Queue
       Properties:
@@ -83,3 +90,31 @@ resources:
               Action: 'SQS:SendMessage'
         Queues:
           - '#{usersTicketsSQS}'
+
+    # ticket event for events service
+    eventsTicketsSQS:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${file(config.js):SQS.events_ticketEventsQueue}
+
+    eventsTicketsEventSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: '#{eventsTicketsSQS.Arn}'
+        Protocol: sqs
+        RawMessageDelivery: true
+        TopicArn: '#{eventsEvent}'
+
+    eventsTicketsEventSQSPolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'allow-sns-messages'
+              Effect: Allow
+              Principal: '*'
+              Resource: '#{eventsTicketsSQS.Arn}'
+              Action: 'SQS:SendMessage'
+        Queues:
+          - '#{eventsTicketsSQS}'
