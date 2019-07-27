@@ -1,28 +1,16 @@
+import { shared } from '@ticket-swap-app/config/src/global-config'
+import { ResolverContext } from '..'
 import { IResolvers } from '../generated/graphql'
-import { Lambda } from 'aws-sdk'
+import { LambdaCaller } from '../helpers/lambda-caller'
 
-const lambda = new Lambda({
-  apiVersion: '2015-03-31'
-})
+const eventLambda = new LambdaCaller(shared.eventsPort, shared.eventsFunc)
 
 // TODO: implement
-export const eventResolvers: IResolvers = {
-  Query: {
-    events: async () => {
-      try {
-        const res = await lambda
-          .invoke({
-            FunctionName: 'ticket-swap-tickets-service',
-            InvocationType: 'RequestResponse',
-            Payload: JSON.stringify({ type: 'test!!!!' })
-          })
-          .promise()
-
-        console.log(res)
-        return 'event!!!'
-      } catch (err) {
-        console.log(err)
-      }
+export const eventResolvers: IResolvers<ResolverContext> = {
+  Mutation: {
+    createEvent: (_, args, ctx) => {
+      console.log(args, ctx)
+      return null
     }
   }
 }

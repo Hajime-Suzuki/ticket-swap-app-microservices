@@ -10,10 +10,34 @@ export type Scalars = {
   Float: number;
 };
 
+export type ICreateEventInput = {
+  userId: Scalars["String"];
+  name: Scalars["String"];
+  description: Scalars["String"];
+  date: Scalars["String"];
+  location: ILocationInput;
+};
+
 export type ICreateTicketInput = {
   eventId: Scalars["ID"];
   userId: Scalars["ID"];
   price: Scalars["String"];
+};
+
+export type IEvent = {
+  __typename?: "Event";
+  id: Scalars["String"];
+  name: Scalars["String"];
+  description: Scalars["String"];
+  date: Scalars["String"];
+  location: ILocation;
+  createdAt: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
+};
+
+export type IGetEventsResponse = {
+  __typename?: "GetEventsResponse";
+  events?: Maybe<Array<Maybe<IEvent>>>;
 };
 
 export type IGetTicketResponse = {
@@ -26,19 +50,37 @@ export type IGetUserResponse = {
   user?: Maybe<IUser>;
 };
 
+export type ILocation = {
+  __typename?: "Location";
+  name: Scalars["String"];
+  city: Scalars["String"];
+  address: Scalars["String"];
+};
+
+export type ILocationInput = {
+  name: Scalars["String"];
+  city: Scalars["String"];
+  address: Scalars["String"];
+};
+
 export type IMutation = {
   __typename?: "Mutation";
   createTicket?: Maybe<ITicket>;
+  createEvent?: Maybe<IEvent>;
 };
 
 export type IMutationCreateTicketArgs = {
   data?: Maybe<ICreateTicketInput>;
 };
 
+export type IMutationCreateEventArgs = {
+  data?: Maybe<ICreateEventInput>;
+};
+
 export type IQuery = {
   __typename?: "Query";
   getTicket?: Maybe<IGetTicketResponse>;
-  events?: Maybe<Scalars["String"]>;
+  getEvents?: Maybe<IGetEventsResponse>;
   getUser?: Maybe<IGetUserResponse>;
 };
 
@@ -62,10 +104,10 @@ export type ITicket = {
 
 export type IUser = {
   __typename?: "User";
-  /** id is sub from cognito */
-  id?: Maybe<Scalars["ID"]>;
-  /** email is hash key of DynamoDB */
+  id: Scalars["String"];
   email: Scalars["String"];
+  createdAt: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -144,10 +186,15 @@ export type IResolversTypes = {
   GetTicketResponse: ResolverTypeWrapper<IGetTicketResponse>;
   Ticket: ResolverTypeWrapper<ITicket>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  GetEventsResponse: ResolverTypeWrapper<IGetEventsResponse>;
+  Event: ResolverTypeWrapper<IEvent>;
+  Location: ResolverTypeWrapper<ILocation>;
   GetUserResponse: ResolverTypeWrapper<IGetUserResponse>;
   User: ResolverTypeWrapper<IUser>;
   Mutation: ResolverTypeWrapper<{}>;
   CreateTicketInput: ICreateTicketInput;
+  CreateEventInput: ICreateEventInput;
+  LocationInput: ILocationInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
 };
 
@@ -158,10 +205,15 @@ export type IResolversParentTypes = {
   GetTicketResponse: IGetTicketResponse;
   Ticket: ITicket;
   String: Scalars["String"];
+  GetEventsResponse: IGetEventsResponse;
+  Event: IEvent;
+  Location: ILocation;
   GetUserResponse: IGetUserResponse;
   User: IUser;
   Mutation: {};
   CreateTicketInput: ICreateTicketInput;
+  CreateEventInput: ICreateEventInput;
+  LocationInput: ILocationInput;
   Boolean: Scalars["Boolean"];
 };
 
@@ -171,6 +223,34 @@ export type IAuthenticatedDirectiveResolver<
   ContextType = any,
   Args = {}
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type IEventResolvers<
+  ContextType = any,
+  ParentType = IResolversParentTypes["Event"]
+> = {
+  id?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  name?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  description?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  date?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  location?: Resolver<IResolversTypes["Location"], ParentType, ContextType>;
+  createdAt?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  updatedAt?: Resolver<
+    Maybe<IResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+};
+
+export type IGetEventsResponseResolvers<
+  ContextType = any,
+  ParentType = IResolversParentTypes["GetEventsResponse"]
+> = {
+  events?: Resolver<
+    Maybe<Array<Maybe<IResolversTypes["Event"]>>>,
+    ParentType,
+    ContextType
+  >;
+};
 
 export type IGetTicketResponseResolvers<
   ContextType = any,
@@ -186,6 +266,15 @@ export type IGetUserResponseResolvers<
   user?: Resolver<Maybe<IResolversTypes["User"]>, ParentType, ContextType>;
 };
 
+export type ILocationResolvers<
+  ContextType = any,
+  ParentType = IResolversParentTypes["Location"]
+> = {
+  name?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  city?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  address?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+};
+
 export type IMutationResolvers<
   ContextType = any,
   ParentType = IResolversParentTypes["Mutation"]
@@ -195,6 +284,12 @@ export type IMutationResolvers<
     ParentType,
     ContextType,
     IMutationCreateTicketArgs
+  >;
+  createEvent?: Resolver<
+    Maybe<IResolversTypes["Event"]>,
+    ParentType,
+    ContextType,
+    IMutationCreateEventArgs
   >;
 };
 
@@ -208,7 +303,11 @@ export type IQueryResolvers<
     ContextType,
     IQueryGetTicketArgs
   >;
-  events?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
+  getEvents?: Resolver<
+    Maybe<IResolversTypes["GetEventsResponse"]>,
+    ParentType,
+    ContextType
+  >;
   getUser?: Resolver<
     Maybe<IResolversTypes["GetUserResponse"]>,
     ParentType,
@@ -232,13 +331,22 @@ export type IUserResolvers<
   ContextType = any,
   ParentType = IResolversParentTypes["User"]
 > = {
-  id?: Resolver<Maybe<IResolversTypes["ID"]>, ParentType, ContextType>;
+  id?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   email?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  createdAt?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  updatedAt?: Resolver<
+    Maybe<IResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
 };
 
 export type IResolvers<ContextType = any> = {
+  Event?: IEventResolvers<ContextType>;
+  GetEventsResponse?: IGetEventsResponseResolvers<ContextType>;
   GetTicketResponse?: IGetTicketResponseResolvers<ContextType>;
   GetUserResponse?: IGetUserResponseResolvers<ContextType>;
+  Location?: ILocationResolvers<ContextType>;
   Mutation?: IMutationResolvers<ContextType>;
   Query?: IQueryResolvers<ContextType>;
   Ticket?: ITicketResolvers<ContextType>;

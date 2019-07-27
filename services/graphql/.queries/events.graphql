@@ -1,0 +1,19 @@
+mutation craeteEvent {
+  createEvent(
+    data: {
+      userId: "1"
+      name: "test event"
+      description: "lorem ipsum!"
+      date: "12341234"
+      location: {
+        name: "super location"
+        city: "amsterdahm"
+        address: "test street 1234"
+      }
+    }
+  ) {
+    id
+    name
+    description
+  }
+}
