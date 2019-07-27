@@ -35,7 +35,8 @@ resources:
         DisplayName: ${file(config.js):env.eventsEvent}
         TopicName: ${file(config.js):env.eventsEvent}
 
-    # users event for tickets
+    #### USER EVENTS ####
+    # for tickets service
     ticketsUsersSQS:
       Type: AWS::SQS::Queue
       Properties:
@@ -62,7 +63,35 @@ resources:
               Action: 'SQS:SendMessage'
         Queues:
           - '#{ticketsUsersSQS}'
+    # for events service
+    eventUsersSQS:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${file(config.js):SQS.events_userEventsQueue}
 
+    eventUsersEventSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: '#{eventUsersSQS.Arn}'
+        Protocol: sqs
+        RawMessageDelivery: true
+        TopicArn: '#{usersEvent}'
+
+    eventUsersEventSQSPolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'allow-sns-messages'
+              Effect: Allow
+              Principal: '*'
+              Resource: '#{eventUsersSQS.Arn}'
+              Action: 'SQS:SendMessage'
+        Queues:
+          - '#{eventUsersSQS}'
+
+    #### TICKET EVENTS ####
     # ticket event for users service
     usersTicketsSQS:
       Type: AWS::SQS::Queue
@@ -103,7 +132,7 @@ resources:
         Endpoint: '#{eventsTicketsSQS.Arn}'
         Protocol: sqs
         RawMessageDelivery: true
-        TopicArn: '#{eventsEvent}'
+        TopicArn: '#{ticketsEvent}'
 
     eventsTicketsEventSQSPolicy:
       Type: AWS::SQS::QueuePolicy
@@ -118,3 +147,58 @@ resources:
               Action: 'SQS:SendMessage'
         Queues:
           - '#{eventsTicketsSQS}'
+    #### event EVENTS ####
+    # for users service
+    usesEventsSQS:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${file(config.js):SQS.users_eventEventsQueue}
+
+    usersEventsEventSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: '#{usesEventsSQS.Arn}'
+        Protocol: sqs
+        RawMessageDelivery: true
+        TopicArn: '#{eventsEvent}'
+
+    usersEventsEventSQSPolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'allow-sns-messages'
+              Effect: Allow
+              Principal: '*'
+              Resource: '#{usesEventsSQS.Arn}'
+              Action: 'SQS:SendMessage'
+        Queues:
+          - '#{usesEventsSQS}'
+    # for tickets service
+    ticketsEventsSQS:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${file(config.js):SQS.tickets_eventEventsQueue}
+
+    ticketsEventsEventSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: '#{ticketsEventsSQS.Arn}'
+        Protocol: sqs
+        RawMessageDelivery: true
+        TopicArn: '#{eventsEvent}'
+
+    ticketsEventsEventSQSPolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'allow-sns-messages'
+              Effect: Allow
+              Principal: '*'
+              Resource: '#{ticketsEventsSQS.Arn}'
+              Action: 'SQS:SendMessage'
+        Queues:
+          - '#{ticketsEventsSQS}'
