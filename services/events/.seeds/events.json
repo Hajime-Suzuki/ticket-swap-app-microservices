@@ -1,6 +1,35 @@
 [
-  { "eventId": "100" },
-  { "eventId": "101" },
-  { "eventId": "102" },
-  { "eventId": "103" }
+  {
+    "id": "100",
+    "name": "test event",
+    "description": "lorem ipsum!",
+    "date": "12341234",
+    "location": {
+      "name": "super location",
+      "city": "Amsterdam",
+      "address": "test street 1234"
+    }
+  },
+  {
+    "id": "101",
+    "name": "second event",
+    "description": "this is second",
+    "date": "444444444",
+    "location": {
+      "name": "cool location",
+      "city": "rotterdam",
+      "address": "test street Rotterdam 1234"
+    }
+  },
+  {
+    "id": "102",
+    "name": "third test event",
+    "description": "some test 3",
+    "date": "98759875",
+    "location": {
+      "name": "another nice location",
+      "city": "utrecht",
+      "address": "test street Utrecht"
+    }
+  }
 ]

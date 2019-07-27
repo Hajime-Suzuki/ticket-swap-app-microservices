@@ -11,7 +11,6 @@ export type Scalars = {
 };
 
 export type ICreateEventInput = {
-  userId: Scalars["String"];
   name: Scalars["String"];
   description: Scalars["String"];
   date: Scalars["String"];

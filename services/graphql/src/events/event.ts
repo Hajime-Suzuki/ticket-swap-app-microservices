@@ -24,7 +24,6 @@ export const eventSchema = gql`
   }
 
   input CreateEventInput {
-    userId: String!
     name: String!
     description: String!
     date: String!

@@ -72,7 +72,7 @@ functions:
     events:
       - http: # this endpoint is test purpose for now
           method: any
-          path: '/tickets'
+          path: '/events'
 
   usersEventListener:
     name: ${self:service.name}-event-listener-tickets
