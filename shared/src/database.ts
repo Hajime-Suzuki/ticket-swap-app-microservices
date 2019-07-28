@@ -17,6 +17,12 @@ export const newMapper = ({
   })
 }
 
+export interface MapperConstructorArgs<T> {
+  region: string
+  endpoint: string | undefined
+  model: T
+}
+
 export class Mapper<
   T,
   TModel extends ZeroArgumentsConstructor<StringToAnyObjectMap>
@@ -24,15 +30,7 @@ export class Mapper<
   private mapper: DataMapper
   private model: TModel
 
-  constructor({
-    region,
-    endpoint,
-    model
-  }: {
-    region: string
-    endpoint: string
-    model: TModel
-  }) {
+  constructor({ region, endpoint, model }: MapperConstructorArgs<TModel>) {
     this.model = model
     this.mapper = newMapper({ region, endpoint })
   }
@@ -62,10 +60,11 @@ export class Mapper<
     return this.mapper.update(updated)
   }
 
-  save(data: Partial<T>) {
+  async save(data: Partial<T>) {
     const params = this.merge({ ...data, createdAt: Date.now().toString() })
     console.log('Mapper: will save data:', params)
-    return this.mapper.put(params)
+    const newItem = await this.mapper.put(params)
+    return newItem
   }
 
   private merge(data: Partial<T>) {

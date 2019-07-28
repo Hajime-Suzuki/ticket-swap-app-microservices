@@ -1,7 +1,7 @@
 import { SQSHandler } from 'aws-lambda'
 import { TicketCreatedEventBody } from '@ticket-swap-app/shared/src/types/events'
-import { TicketRepository } from '../repositories/tickets-repository'
 import { ICreateTicketInput } from '@ticket-swap-app/gql/src/generated/graphql'
+import { ticketRepository } from '../repositories/tickets-repository'
 
 export const handler: SQSHandler = async event => {
   const body: TicketCreatedEventBody = JSON.parse(event.Records[0].body)
@@ -21,5 +21,5 @@ export const handler: SQSHandler = async event => {
 }
 
 const saveTicket = (data: ICreateTicketInput) => {
-  return TicketRepository.save(data)
+  return ticketRepository.save(data)
 }

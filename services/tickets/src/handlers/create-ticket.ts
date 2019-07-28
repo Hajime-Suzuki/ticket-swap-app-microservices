@@ -4,7 +4,7 @@ import { getSNSARN } from '@ticket-swap-app/shared/src/constants'
 import { publishEvent } from '@ticket-swap-app/shared/src/events/publisher'
 import { TicketCreatedEventBody } from '@ticket-swap-app/shared/src/types/events'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
-import { TicketRepository } from '../repositories/tickets-repository'
+import { ticketRepository } from '../repositories/tickets-repository'
 
 const eventCreatedTopic = getSNSARN(shared.ticketsEvent)
 
@@ -13,7 +13,7 @@ export const createTicketHandler = async (
 ) => {
   console.log('event:', event)
   const data = event.body.data
-  const res = await TicketRepository.save(data)
+  const res = await ticketRepository.save(data)
   console.log('ticket saved: ', res)
 
   await publishEvent<TicketCreatedEventBody>({

@@ -18,7 +18,7 @@ class EventRepository extends Mapper<EventModel, typeof EventModel> {
 export const eventRepository = new EventRepository({
   region: awsSettings.region,
   endpoint: isOffline()
-    ? 'http://localhost:' + dynamoPorts.eventsDbPort
+    ? 'http://localhost:' + dynamoPorts.ticketsDbPort
     : undefined,
   model: EventModel
 })

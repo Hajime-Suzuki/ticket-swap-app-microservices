@@ -12,7 +12,7 @@ export class Logger {
     })
   }
   log(message?: string, data?: Record<string, any>) {
-    return this.logger.info(message, { data })
+    return this.logger.info(message, data)
   }
   error(error: any) {
     console.log(error)

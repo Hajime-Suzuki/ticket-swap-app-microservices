@@ -10,9 +10,9 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
     event.body = JSON.parse(event.body)
   }
 
-  logger.log('event received: ', {
+  logger.log('event received', {
     action: event.body.action,
-    body: event.body
+    body: event.body.data
   })
 
   try {

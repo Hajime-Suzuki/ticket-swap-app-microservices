@@ -8,7 +8,8 @@ import {
 } from '@ticket-swap-app/shared/src/types/events'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import * as shortid from 'shortid'
-import { EventRepository } from '../repository/event-repository'
+import { eventRepository } from '../repository/event-repository'
+import { logger } from '../utils'
 
 const eventCreatedTopic = getSNSARN(eventNames.eventsEvent)
 
@@ -18,14 +19,15 @@ export const createEventHandler = async (
   const data = event.body.data
   const newEvent = { ...data, id: shortid.generate() }
 
-  const res = await EventRepository.save(newEvent)
+  const res = await eventRepository.save(newEvent)
 
   const params = {
     message: { type: 'eventCreated' as EventEventTypes, payload: newEvent },
     arn: eventCreatedTopic
   }
 
-  console.log('sns will trigger event: ', JSON.stringify(params, null, 2))
+  logger.log('sns will trigger event: ', params)
+
   await publishEvent<EventCreatedEventBody>(params)
 
   return res

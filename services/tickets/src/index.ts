@@ -32,7 +32,7 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
         return responseHandler.success({ test: res })
       }
       default: {
-        return responseHandler.error(new Error('unknown action'))
+        throw new Error('unknown action')
       }
     }
   } catch (error) {

@@ -1,16 +1,16 @@
-import { SQSHandler, SNSMessage } from 'aws-lambda'
 import { UserSignUpEventBody } from '@ticket-swap-app/shared/src/types/events'
+import { SNSMessage, SQSHandler } from 'aws-lambda'
+import { userRepository } from '../repository/user-repository'
 import { logger } from '../utils'
-import { UserRepository } from '../repository/user-repository'
 
 export const handler: SQSHandler = async event => {
   const { Message }: SNSMessage = JSON.parse(event.Records[0].body)
   const { type, payload }: UserSignUpEventBody = JSON.parse(Message)
 
   logger.log('received data: ', { type, payload })
-  const user = await UserRepository.findByEmail({ email: payload.email })
+  const user = await userRepository.findByEmail({ email: payload.email })
   if (!user) {
-    await UserRepository.save(payload)
+    await userRepository.save(payload)
     logger.log('user created')
     return
   }

@@ -8,11 +8,8 @@ import { tableNames } from '@ticket-swap-app/config/src/tickets-config'
 @table(tableNames.tickets_users_table)
 export class UserModel {
   @hashKey()
-  id: string
+  email: string
 
   @attribute()
   createdAt: string
-
-  @attribute()
-  updatedAt?: string
 }
