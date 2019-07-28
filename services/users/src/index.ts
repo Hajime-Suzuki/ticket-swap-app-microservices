@@ -24,7 +24,7 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
         return responseHandler.success({ user })
       }
       default:
-        responseHandler.error(new Error('unknown action'))
+        throw new Error('unknown action')
     }
   } catch (error) {
     return responseHandler.error(error)

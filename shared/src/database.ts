@@ -37,8 +37,15 @@ export class Mapper<
     this.mapper = newMapper({ region, endpoint })
   }
 
-  find(args: Partial<T>) {
-    return this.mapper.get(this.merge(args))
+  async find(args: Partial<T>) {
+    try {
+      return await this.mapper.get(this.merge(args))
+    } catch (e) {
+      if (e.name === 'ItemNotFoundException') {
+        return null
+      }
+      throw e
+    }
   }
 
   query(args: Partial<T>) {

@@ -5,11 +5,12 @@ import * as shortid from 'shortid'
 import { UserRepository } from './repositories/users-repository'
 import { eventNames } from '@ticket-swap-app/config/src/global-config'
 import { UserSignUpEventBody } from '@ticket-swap-app/shared/src/types/events'
+import { logger } from './utils'
 
 const arn = getSNSARN(eventNames.usersEvent)
 
 export const handler: CognitoUserPoolTriggerHandler = async event => {
-  console.log('event received', JSON.stringify(event, null, 2))
+  logger.log('event received', event.response)
   event.response.autoConfirmUser = true
 
   const params = { id: shortid.generate(), email: event.userName }

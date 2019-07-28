@@ -22,13 +22,13 @@ const ports = {
   snsOfflinePort: 4575
 }
 
-const dynamo = {
+export const dynamoPorts = {
   ticketsDbPort: 8000,
   usersDbPort: 8001,
   eventsDbPort: 8002
 }
 
-const awsSettings = {
+export const awsSettings = {
   region: 'eu-central-1'
 }
 
@@ -43,7 +43,7 @@ export const shared = {
   ...eventNames,
   ...ports,
   ...awsSettings,
-  ...dynamo,
+  ...dynamoPorts,
   ...functionNames,
   ...secrets,
   APP_NAME

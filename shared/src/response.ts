@@ -16,7 +16,7 @@ export class ResponseHandler {
       this.logger.error(error)
       return {
         statusCode: 500,
-        body: error.message
+        body: JSON.stringify({ error: error.message })
       }
     }
     if (error.name === 'ItemNotFoundException') {

@@ -1,14 +1,12 @@
-import {
-  IUser,
-  IMutationCreateEventArgs,
-  IEvent,
-  ICreateEventInput
-} from '@ticket-swap-app/gql/src/generated/graphql'
-
-import { Mapper } from '@ticket-swap-app/shared/src/database'
-import { isOffline } from '@ticket-swap-app/shared/src/constants'
 import { shared } from '@ticket-swap-app/config/src/global-config'
+import {
+  ICreateEventInput,
+  IEvent
+} from '@ticket-swap-app/gql/src/generated/graphql'
+import { isOffline } from '@ticket-swap-app/shared/src/constants'
+import { Mapper } from '@ticket-swap-app/shared/src/database'
 import { EventModel } from '../models/Event'
+
 const { eventsDbPort, region } = shared
 
 const mapper = new Mapper<EventModel, typeof EventModel>({

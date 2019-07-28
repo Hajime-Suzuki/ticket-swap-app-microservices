@@ -4,9 +4,10 @@ import {
   table
 } from '@aws/dynamodb-data-mapper-annotations'
 import { tableNames } from '@ticket-swap-app/config/src/events-config'
+import { IEvent } from '@ticket-swap-app/gql/src/generated/graphql'
 
 @table(tableNames.events_events_table)
-export class EventModel {
+export class EventModel implements IEvent {
   @hashKey()
   id: string
 

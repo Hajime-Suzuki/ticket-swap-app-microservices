@@ -139,10 +139,10 @@ resources:
       Properties:
         TableName: ${file(config.js):env.users_users_table}
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: email
             AttributeType: S
         KeySchema:
-          - AttributeName: id
+          - AttributeName: email
             KeyType: HASH
 
         BillingMode: PAY_PER_REQUEST

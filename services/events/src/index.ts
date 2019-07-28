@@ -21,9 +21,8 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
         const res = await createEventHandler(event)
         return responseHandler.success({ event: res })
       }
-      default: {
-        return responseHandler.error(new Error('unknown action'))
-      }
+      default:
+        throw new Error('unknown action')
     }
   } catch (error) {
     return responseHandler.error(error)
