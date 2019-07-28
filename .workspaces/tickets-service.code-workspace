@@ -1,19 +1,19 @@
 {
   "folders": [
     {
-      "path": "services/tickets"
+      "path": "../services/tickets"
     },
     {
-      "path": "sns-sqs"
+      "path": "../sns-sqs"
     },
     {
-      "path": "config"
+      "path": "../config"
     },
     {
-      "path": "shared"
+      "path": "../shared"
     },
     {
-      "path": "requests"
+      "path": "../requests"
     }
   ],
   "settings": {

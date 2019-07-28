@@ -66,7 +66,7 @@ custom:
       - dev
 
 functions:
-  tickets:
+  main:
     name: ${file(config.js):env.ticketsFunc}
     handler: src/index.handler
     events:
@@ -80,6 +80,13 @@ functions:
     events:
       # serverless pseudo parameters plugin syntax doesn't work for sqs offline here.
       - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.tickets_userEventsQueue}'
+
+  eventsEventListener:
+    name: ${self:service.name}-event-listener-events
+    handler: src/handlers/events-event-listener.handler
+    events:
+      # serverless pseudo parameters plugin syntax doesn't work for sqs offline here.
+      - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.tickets_eventEventsQueue}'
 
 resources:
   Resources:

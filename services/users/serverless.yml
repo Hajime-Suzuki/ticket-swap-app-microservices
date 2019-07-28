@@ -56,7 +56,7 @@ custom:
       - dev
 
 functions:
-  users:
+  main:
     name: ${file(config.js):env.usersFunc}
     handler: src/index.handler
     events:

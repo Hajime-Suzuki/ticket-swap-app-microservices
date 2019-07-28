@@ -10,8 +10,8 @@ def main():
     ticket_event_queue = 'ticket-swap-tickets-event-events-queue'
     user_ticket_queue = 'ticket-swap-users-ticket-events-queue'
     user_event_queue = 'ticket-swap-users-event-events-queue'
-    event_user_queue = 'ticket-swap-event-user-events-queue'
-    event_ticket_queue = 'ticket-swap-event-ticket-events-queue'
+    event_user_queue = 'ticket-swap-events-user-events-queue'
+    event_ticket_queue = 'ticket-swap-events-ticket-events-queue'
 
     for topic in [user_event_topic, ticket_event_topic, event_event_topic]:
         create_topic(topic)
@@ -60,3 +60,9 @@ def subscribe(topic_name, queue_name):
 if __name__ == "__main__":
     main()
     print('Done!')
+
+
+# aws --endpoint-url=http://localhost:4575 sns list-topics
+# aws --endpoint-url=http://localhost:4576 sqs list-queues
+# aws --endpoint-url=http://localhost:4576 sqs send-message --queue-url http://localhost:4576/queue/ticket-swap-users-ticket-events --message-body '{"test":"asht"}'
+# aws --endpoint-url=http://localhost:4576 sqs receive-message --queue-url http://localhost:4576/queue/ticket-swap-users-ticket-events

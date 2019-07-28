@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "docker-compose up --build -d",
-    "setup": "python3 setup.py",
+    "subscribe": "python3 setup.py",
     "logs": "docker-compose logs -t",
     "deploy": "serverless deploy -v"
   },

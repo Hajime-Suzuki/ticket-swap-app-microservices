@@ -1,16 +1,16 @@
 {
   "folders": [
 	{
-		"path": "services/graphql"
+		"path": "../services/graphql"
 	},
 	{
-		"path": "shared"
+		"path": "../shared"
 	},
 	{
-		"path": "config"
+		"path": "../config"
 	},
 	{
-		"path": "requests"
+		"path": "../requests"
 	}
 ],
   "settings": {

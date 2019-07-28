@@ -66,19 +66,27 @@ custom:
       - dev
 
 functions:
-  tickets:
+  main:
     name: ${file(config.js):env.eventsFunc}
     handler: src/index.handler
     events:
       - http: # this endpoint is test purpose for now
           method: any
           path: '/events'
-  # usersEventListener:
-  #   name: ${self:service.name}-event-listener-tickets
-  #   handler: src/handlers/tickets-event-listener.handler
-  #   events:
-  #     # serverless pseudo parameters plugin syntax doesn't work for sqs offline here.
-  #     - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.events_ticketEventsQueue}'
+
+  usersEventListener:
+    name: ${self:service.name}-event-listener-users
+    handler: src/handlers/users-event-listener.handler
+    events:
+      # serverless pseudo parameters plugin syntax doesn't work for sqs offline here.
+      - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.events_userEventsQueue}'
+
+  ticketsEventListener:
+    name: ${self:service.name}-event-listener-tickets
+    handler: src/handlers/tickets-event-listener.handler
+    events:
+      # serverless pseudo parameters plugin syntax doesn't work for sqs offline here.
+      - sqs: 'arn:aws:sqs:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):SQS.events_ticketEventsQueue}'
 
 resources:
   Resources:
