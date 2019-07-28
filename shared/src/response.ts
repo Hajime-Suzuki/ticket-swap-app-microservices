@@ -1,13 +1,19 @@
-export const handleResponse = {
+import { Logger } from './logger'
+
+export class ResponseHandler {
+  logger: Logger
+  constructor(logger: Logger) {
+    this.logger = logger
+  }
   success(res: any) {
     return {
       statusCode: 200,
       body: JSON.stringify(res)
     }
-  },
+  }
   error(error: any) {
-    console.log(error)
-    if (!error.name) {
+    if (error.name === 'Error') {
+      this.logger.error(error)
       return {
         statusCode: 500,
         body: error.message
