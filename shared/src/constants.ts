@@ -1,4 +1,5 @@
-import { shared } from '@ticket-swap-app/config/src/global-config'
+import { shared, awsSettings } from '@ticket-swap-app/config/src/global-config'
+import { secrets } from '@ticket-swap-app/config/src/.secrets'
 
 export const ticketsActions = {
   createTicket: 'create-ticket',
@@ -16,7 +17,7 @@ export const usersActions = {
 
 export const getSNSARN = (serviceName: string) => {
   if (isOffline()) {
-    return 'arn:aws:sns:eu-central-1:000000000000:' + serviceName
+    return `arn:aws:sns:${awsSettings.region}:${secrets.AWS_ACCOUNT_ID}:${serviceName}`
   }
   return `arn:aws:sns:${shared.region}:${shared.AWS_ACCOUNT_ID}:${serviceName}`
 }

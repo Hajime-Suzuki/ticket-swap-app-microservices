@@ -1,10 +1,11 @@
 import { TicketCreatedEventBody } from '@ticket-swap-app/shared/src/types/events'
-import { SNSMessage, SQSHandler } from 'aws-lambda'
-import { logger } from '../utils'
+import { SNSHandler } from 'aws-lambda'
 import { ticketRepository } from '../repository/ticket-repository'
+import { logger } from '../utils'
 
-export const handler: SQSHandler = async event => {
-  const { Message }: SNSMessage = JSON.parse(event.Records[0].body)
+export const handler: SNSHandler = async event => {
+  // TODO: make body handler that returns type and payload
+  const { Message } = event.Records[0].Sns
   const { type, payload }: TicketCreatedEventBody = JSON.parse(Message)
   logger.log('received data', { type, payload })
 
