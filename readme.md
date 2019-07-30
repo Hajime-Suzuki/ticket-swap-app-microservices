@@ -1,8 +1,17 @@
+## ticket swap app
+
+### this is a project for my learning. Try to clone the basic functionality of ticket swap. (in progress)
+
+- Fully serverless
 - Monorepo: In order to share code.
 - GraphQL: Apollo + Lambda. I don't use AppSync this time. I wouldn't like to write business logic in mapping templates.
 - DynamoDB: This is for the sake of price. I don't want to pay for the idle time for DB.
 - SNS: Trigger Lambda functions when certain event happens.
-- Authentication: Authentication is handled by Cognito + Amplify in frontend. Backend takes only care of validation of tokens.
+- Authentication: Authentication will be handled by Cognito + Amplify in frontend. Backend takes only care of validation of tokens.
+
+Communication between services is done by SNS + Lambda. Initially I use SNS + SQS => Lambda, but since Lambda functions poll SQS every 20 seconds or so, SQS requests got too big... So I decided to use SNS and will add dead letter queues to Lambda in case of multiple failures.
+
+### set up
 
 create config/src/.secrets.ts file and set
 
@@ -12,6 +21,15 @@ export const secrets = {
   AWS_COGNITO_USER_POOL_ID: <Your User Pool ID> // first deploy users service then you will see that user pool id in AWS console.
 }
 ```
+
+#### run service
+
+Before running service, make user serverless-offline-sns is running. Go to `sns` then run `yarn install` then run `yarn start`
+
+- Go to services/_service name_.
+- Run `yarn install`
+- Install dynamodb local by `yarn sls dynamodb install`
+- Run `yarn dev`
 
 #### resource names
 
@@ -24,12 +42,6 @@ DynamoDB:
 
 - ticket-swap-_SERVICE_NAME_-_TABLE_NAME_
 
-SQS and SNS:
+SNS:
 
 - ticket-swap*SERVICE_NAME*-_SERVICE_NAME_-events
-
----
-
-Todo:
-
-- Separate SNS and SQS resource creation from services.
