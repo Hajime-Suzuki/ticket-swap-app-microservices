@@ -38,6 +38,7 @@ custom:
   serverless-offline:
     port: ${file(config.js):env.eventsPort}
   serverless-offline-sns:
+    port: 9997
     sns-endpoint: http://localhost:${file(config.js):env.snsOfflinePort}
 
   webpack:

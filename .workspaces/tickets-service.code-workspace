@@ -4,7 +4,7 @@
       "path": "../services/tickets"
     },
     {
-      "path": "../sns-sqs"
+      "path": "../sns"
     },
     {
       "path": "../config"

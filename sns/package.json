@@ -4,9 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "docker-compose up --build -d",
-    "subscribe": "python3 setup.py",
-    "logs": "docker-compose logs -t",
+    "start": "serverless offline-sns start",
     "deploy": "serverless deploy -v"
   },
   "devDependencies": {

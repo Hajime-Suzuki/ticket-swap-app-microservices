@@ -1,25 +1,20 @@
 {
   "folders": [
-    {
-      "name": "events",
-      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/services/events"
-    },
-    {
-      "name": "sns-sqs",
-      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/sns-sqs"
-    },
-    {
-      "name": "shared",
-      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/shared"
-    },
-    {
-      "name": "config",
-      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/config"
-    },
-    {
-      "name": "requests",
-      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/requests"
-    }
+	{
+		"path": "../services/events"
+	},
+	{
+		"path": "../shared"
+	},
+	{
+		"path": "../config"
+	},
+	{
+		"path": "../sns"
+	},
+	{
+		"path": "../requests"
+	}
   ],
   "settings": {
     "workbench.colorCustomizations": {

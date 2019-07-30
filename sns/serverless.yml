@@ -12,7 +12,7 @@ plugins:
 
 custom:
   serverless-offline-sns:
-    port: ${file(config.js):env.snsOfflinePort}
+    port: 9999
     debug: true
 
 resources:
