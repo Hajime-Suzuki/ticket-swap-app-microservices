@@ -1,6 +1,6 @@
 import { extractSNSMessage } from '@ticket-swap-app/shared/src/events/extract-sns-message'
 import {
-  TicketEventPayload,
+  TicketCreatedEventBody,
   TicketEventTypes
 } from '@ticket-swap-app/shared/src/types/events'
 import { SNSHandler } from 'aws-lambda'
@@ -17,7 +17,7 @@ export const handler: SNSHandler = async event => {
 }
 
 const ticketCreatedHandler = async (
-  data: TicketEventPayload<'ticketCreated'>
+  data: TicketCreatedEventBody['payload']
 ) => {
   await ticketRepository.save(data)
 }

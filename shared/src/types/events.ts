@@ -16,7 +16,6 @@ export interface EventHandlerBody<TEventType extends EventTypes, TPayload> {
   payload: TPayload
 }
 
-// TODO: remove these
 export type UserSignUpEventBody = EventHandlerBody<
   UserEventTypes,
   Pick<IUser, 'id' | 'email'>
@@ -31,12 +30,3 @@ export type EventCreatedEventBody = EventHandlerBody<
   EventEventTypes,
   ICreateEventInput & { id: IEvent['id'] }
 >
-
-// TODO: use these
-export type TicketEventPayload<
-  TKey extends TicketEventTypes
-> = TKey extends 'ticketCreated' ? ICreateTicketInput : any
-
-export type UserEventPayload<
-  TKey extends UserEventTypes
-> = TKey extends 'userSignUp' ? Pick<IUser, 'id' | 'email'> : any

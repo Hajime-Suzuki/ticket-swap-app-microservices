@@ -1,7 +1,7 @@
 import { extractSNSMessage } from '@ticket-swap-app/shared/src/events/extract-sns-message'
 import {
-  UserEventPayload,
-  UserEventTypes
+  UserEventTypes,
+  UserSignUpEventBody
 } from '@ticket-swap-app/shared/src/types/events'
 import { SNSHandler } from 'aws-lambda'
 import { userRepository } from '../repository/user-repository'
@@ -17,7 +17,7 @@ export const handler: SNSHandler = async event => {
   }
 }
 
-const userSignUpHandler = async (data: UserEventPayload<'userSignUp'>) => {
+const userSignUpHandler = async (data: UserSignUpEventBody['payload']) => {
   const user = await userRepository.findByEmail({ email: data.email })
 
   if (!user) {

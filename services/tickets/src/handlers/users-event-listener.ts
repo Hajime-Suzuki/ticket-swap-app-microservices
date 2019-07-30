@@ -1,13 +1,31 @@
-import { UserSignUpEventBody } from '@ticket-swap-app/shared/src/types/events'
-import { SNSMessage, SQSHandler } from 'aws-lambda'
+import { extractSNSMessage } from '@ticket-swap-app/shared/src/events/extract-sns-message'
+import {
+  UserEventPayload,
+  UserEventTypes,
+  UserSignUpEventBody
+} from '@ticket-swap-app/shared/src/types/events'
+import { SNSHandler } from 'aws-lambda'
 import { userRepository } from '../repositories/users-repository'
 import { logger } from '../utils'
 
-export const handler: SQSHandler = async event => {
-  const { Message }: SNSMessage = JSON.parse(event.Records[0].body)
-  const { type, payload }: UserSignUpEventBody = JSON.parse(Message)
+export const handler: SNSHandler = async event => {
+  const { type, payload } = extractSNSMessage<UserEventTypes>(event)
 
-  logger.log('received data', { type, payload })
+  switch (type) {
+    case 'userSignUp': {
+      await userSignUpHandler(payload)
+    }
+  }
+}
 
-  await userRepository.save(payload)
+const userSignUpHandler = async (data: UserSignUpEventBody['payload']) => {
+  const user = await userRepository.find({ email: data.email })
+
+  if (!user) {
+    await userRepository.save(data)
+    logger.log('user created')
+    return
+  }
+
+  logger.log('user already exists')
 }
