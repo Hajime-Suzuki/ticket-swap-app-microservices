@@ -1,5 +1,6 @@
 import { Lambda } from 'aws-sdk'
 import { isOffline } from '@ticket-swap-app/shared/src/constants'
+import { logger } from '../utils'
 
 export class LambdaCaller {
   lambda: Lambda
@@ -14,23 +15,25 @@ export class LambdaCaller {
   }
 
   async invoke<TRes = any>(actionName: string, data: any) {
+    const body = {
+      action: actionName,
+      data
+    }
     const params = {
       FunctionName: this.functionName,
       InvocationType: 'RequestResponse',
-      Payload: JSON.stringify({
-        body: {
-          action: actionName,
-          data
-        }
-      })
+      Payload: JSON.stringify({ body })
     }
-    console.log('will invoke lambda: ', params)
+
+    logger.log('will invoke lambda', { ...params, Payload: body })
     const res = await this.lambda.invoke(params).promise()
-    console.log('invoked lambda: ', res)
-    if (res.StatusCode !== 200)
+    console.log(res)
+    const response = JSON.parse(res.Payload.toString())
+    logger.log('invoked lambda', response)
+    if (response.statusCode !== 200)
       throw new Error(
         `lambda function ${this.functionName}.${actionName} failed`
       )
-    return JSON.parse(JSON.parse(res.Payload.toString()).body) as TRes
+    return JSON.parse(response.body) as TRes
   }
 }

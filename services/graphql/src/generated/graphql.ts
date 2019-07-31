@@ -34,6 +34,11 @@ export type IEvent = {
   updatedAt?: Maybe<Scalars["String"]>;
 };
 
+export type IGetEventResponse = {
+  __typename?: "GetEventResponse";
+  event?: Maybe<IEvent>;
+};
+
 export type IGetEventsResponse = {
   __typename?: "GetEventsResponse";
   events?: Maybe<Array<Maybe<IEvent>>>;
@@ -79,13 +84,17 @@ export type IMutationCreateEventArgs = {
 export type IQuery = {
   __typename?: "Query";
   getTicket?: Maybe<IGetTicketResponse>;
-  getEvents?: Maybe<IGetEventsResponse>;
+  getEvent?: Maybe<IGetEventResponse>;
   getUser?: Maybe<IGetUserResponse>;
 };
 
 export type IQueryGetTicketArgs = {
   eventId: Scalars["ID"];
   userId: Scalars["ID"];
+};
+
+export type IQueryGetEventArgs = {
+  id: Scalars["ID"];
 };
 
 export type IQueryGetUserArgs = {
@@ -96,6 +105,7 @@ export type ITicket = {
   __typename?: "Ticket";
   eventId: Scalars["ID"];
   userId: Scalars["ID"];
+  id: Scalars["ID"];
   price: Scalars["String"];
   createdAt: Scalars["String"];
   soldAt?: Maybe<Scalars["String"]>;
@@ -185,7 +195,7 @@ export type IResolversTypes = {
   GetTicketResponse: ResolverTypeWrapper<IGetTicketResponse>;
   Ticket: ResolverTypeWrapper<ITicket>;
   String: ResolverTypeWrapper<Scalars["String"]>;
-  GetEventsResponse: ResolverTypeWrapper<IGetEventsResponse>;
+  GetEventResponse: ResolverTypeWrapper<IGetEventResponse>;
   Event: ResolverTypeWrapper<IEvent>;
   Location: ResolverTypeWrapper<ILocation>;
   GetUserResponse: ResolverTypeWrapper<IGetUserResponse>;
@@ -195,6 +205,7 @@ export type IResolversTypes = {
   CreateEventInput: ICreateEventInput;
   LocationInput: ILocationInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  GetEventsResponse: ResolverTypeWrapper<IGetEventsResponse>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -204,7 +215,7 @@ export type IResolversParentTypes = {
   GetTicketResponse: IGetTicketResponse;
   Ticket: ITicket;
   String: Scalars["String"];
-  GetEventsResponse: IGetEventsResponse;
+  GetEventResponse: IGetEventResponse;
   Event: IEvent;
   Location: ILocation;
   GetUserResponse: IGetUserResponse;
@@ -214,6 +225,7 @@ export type IResolversParentTypes = {
   CreateEventInput: ICreateEventInput;
   LocationInput: ILocationInput;
   Boolean: Scalars["Boolean"];
+  GetEventsResponse: IGetEventsResponse;
 };
 
 export type IAuthenticatedDirectiveResolver<
@@ -238,6 +250,13 @@ export type IEventResolvers<
     ParentType,
     ContextType
   >;
+};
+
+export type IGetEventResponseResolvers<
+  ContextType = any,
+  ParentType = IResolversParentTypes["GetEventResponse"]
+> = {
+  event?: Resolver<Maybe<IResolversTypes["Event"]>, ParentType, ContextType>;
 };
 
 export type IGetEventsResponseResolvers<
@@ -302,10 +321,11 @@ export type IQueryResolvers<
     ContextType,
     IQueryGetTicketArgs
   >;
-  getEvents?: Resolver<
-    Maybe<IResolversTypes["GetEventsResponse"]>,
+  getEvent?: Resolver<
+    Maybe<IResolversTypes["GetEventResponse"]>,
     ParentType,
-    ContextType
+    ContextType,
+    IQueryGetEventArgs
   >;
   getUser?: Resolver<
     Maybe<IResolversTypes["GetUserResponse"]>,
@@ -321,6 +341,7 @@ export type ITicketResolvers<
 > = {
   eventId?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
   userId?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
+  id?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
   price?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   createdAt?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   soldAt?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
@@ -342,6 +363,7 @@ export type IUserResolvers<
 
 export type IResolvers<ContextType = any> = {
   Event?: IEventResolvers<ContextType>;
+  GetEventResponse?: IGetEventResponseResolvers<ContextType>;
   GetEventsResponse?: IGetEventsResponseResolvers<ContextType>;
   GetTicketResponse?: IGetTicketResponseResolvers<ContextType>;
   GetUserResponse?: IGetUserResponseResolvers<ContextType>;

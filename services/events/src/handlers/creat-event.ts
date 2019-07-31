@@ -26,7 +26,7 @@ export const createEventHandler = async (
     arn: eventCreatedTopic
   }
 
-  logger.log('sns will trigger event: ', params)
+  logger.log('sns will trigger event', params)
 
   await publishEvent<EventCreatedEventBody>(params)
 

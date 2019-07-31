@@ -6,6 +6,7 @@ export const ticketSchema = gql`
   type Ticket {
     eventId: ID!
     userId: ID!
+    id: ID!
     price: String!
     createdAt: String!
     soldAt: String

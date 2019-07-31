@@ -17,7 +17,8 @@ export const eventSchema = gql`
     address: String!
   }
   extend type Query {
-    getEvents: GetEventsResponse
+    # getEvents: GetEventsResponse
+    getEvent(id: ID!): GetEventResponse
   }
   extend type Mutation {
     createEvent(data: CreateEventInput!): Event
@@ -38,5 +39,8 @@ export const eventSchema = gql`
 
   type GetEventsResponse {
     events: [Event]
+  }
+  type GetEventResponse {
+    event: Event
   }
 `

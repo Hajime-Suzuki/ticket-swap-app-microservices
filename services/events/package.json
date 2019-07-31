@@ -12,6 +12,8 @@
     "@ticket-swap-app/config": "1.0.0",
     "@ticket-swap-app/gql": "1.0.0",
     "@ticket-swap-app/shared": "1.0.0",
+    "@types/http-errors": "^1.6.1",
+    "http-errors": "^1.7.3",
     "serverless-offline-sqs": "^2.0.3",
     "serverless-plugin-lambda-dead-letter": "^1.2.1",
     "shortid": "^2.2.14",

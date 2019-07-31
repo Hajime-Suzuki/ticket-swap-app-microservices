@@ -16,3 +16,16 @@ mutation craeteEvent {
     description
   }
 }
+
+query getEvent {
+  getEvent(id: "102") {
+    event {
+      id
+      location {
+        name
+        city
+        address
+      }
+    }
+  }
+}

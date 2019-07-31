@@ -79,7 +79,7 @@ functions:
 
   usersEventListener:
     name: ${self:service.name}-event-listener-users
-    handler: src/handlers/users-event-listener.handler
+    handler: src/event-listeners/users-event-listener.handler
     deadLetter:
       sqs: ${self:service.name}-event-listener-users-dlq
     events:
@@ -88,7 +88,7 @@ functions:
 
   ticketsEventListener:
     name: ${self:service.name}-event-listener-tickets
-    handler: src/handlers/tickets-event-listener.handler
+    handler: src/event-listeners/tickets-event-listener.handler
     deadLetter:
       sqs: ${self:service.name}-event-listener-tickets-dlq
     events:

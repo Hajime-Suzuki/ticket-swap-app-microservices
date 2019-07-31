@@ -12,13 +12,8 @@ export class ResponseHandler {
     }
   }
   error(error: any) {
-    if (error.name === 'Error') {
-      this.logger.error(error)
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: error.message })
-      }
-    }
+    this.logger.error(error)
+
     if (error.name === 'ItemNotFoundException') {
       const tableNameArray = error.itemSought.TableName.split('-')
       const tableName = tableNameArray[tableNameArray.length - 1]
@@ -26,6 +21,11 @@ export class ResponseHandler {
         statusCode: 500,
         body: `Not found: ${tableName}`
       }
+    }
+
+    return {
+      statusCode: error.status || 500,
+      body: JSON.stringify({ error: error.message })
     }
   }
 }

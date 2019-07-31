@@ -16,6 +16,9 @@ export class TicketModel implements ITicket {
   userId: string
 
   @attribute()
+  id: string
+
+  @attribute()
   price: string
 
   @attribute()

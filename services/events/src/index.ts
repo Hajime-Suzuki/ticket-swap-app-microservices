@@ -2,6 +2,7 @@ import { eventsActions } from '@ticket-swap-app/shared/src/constants'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import { createEventHandler } from './handlers/creat-event'
 import { logger, responseHandler } from './utils'
+import { getEventHandler } from './handlers/get-event'
 
 type ActionTypes = keyof typeof eventsActions
 
@@ -19,6 +20,10 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
     switch (event.body.action) {
       case eventsActions.createEvent: {
         const res = await createEventHandler(event)
+        return responseHandler.success({ event: res })
+      }
+      case eventsActions.getEvent: {
+        const res = await getEventHandler(event)
         return responseHandler.success({ event: res })
       }
       default:

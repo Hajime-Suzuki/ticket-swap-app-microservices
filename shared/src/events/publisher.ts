@@ -1,6 +1,7 @@
 import { shared } from '@ticket-swap-app/config/src/global-config'
 import { SNS } from 'aws-sdk/clients/all'
 import { isOffline } from '../constants'
+import { logger } from '../../../services/tickets/src/utils'
 
 interface PublishEventArgs<TBody> {
   subject?: string
@@ -24,7 +25,7 @@ export const publishEvent = <TBody>({
     Message: JSON.stringify(message),
     TopicArn: arn
   }
-  console.log({ endpoint, arn })
+  logger.log('publish event', { endpoint, arn })
 
   return sns.publish(params).promise()
 }
