@@ -1,6 +1,6 @@
 ## ticket swap app
 
-### this is a project for my learning. Try to clone the basic functionality of ticket swap. (in progress)
+### this is a project for my learning. Try to clone the basic functionalities of ticket swap. (in progress)
 
 - Fully serverless
 - Monorepo: In order to share code.
@@ -9,7 +9,7 @@
 - SNS: Trigger Lambda functions when certain event happens.
 - Authentication: Authentication will be handled by Cognito + Amplify in frontend. Backend takes only care of validation of tokens.
 
-Communication between services is done by SNS + Lambda. Initially I use SNS + SQS => Lambda, but since Lambda functions poll SQS every 20 seconds or so, SQS requests got too big... So I decided to use SNS and will add dead letter queues to Lambda in case of multiple failures.
+Communication between services is done by SNS + Lambda. Initially I use SNS + SQS => Lambda, but since Lambda functions poll SQS every 20 seconds or so, the amount of SQS requests got too big... So I decided to use SNS and add dead letter queues to Lambda in case of multiple failures.
 
 ### set up
 

@@ -17,8 +17,6 @@ provider:
         - dynamodb:DeleteItem
         - dynamodb:BatchWriteItem
       Resource:
-        - { Fn::GetAtt: [ticketsTable, Arn] }
-        - { Fn::GetAtt: [eventsTable, Arn] }
         - { Fn::GetAtt: [usersTable, Arn] }
     - Effect: Allow
       Action:

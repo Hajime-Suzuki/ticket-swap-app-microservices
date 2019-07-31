@@ -27,12 +27,19 @@ provider:
       Resource:
         - 'arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:*'
 
+    - Effect: Allow
+      Action:
+        - sqs:SendMessage
+      Resource:
+        - 'arn:aws:sqs:#{AWS::Region}:#{AWS::AccountId}:*'
+
 plugins:
   - serverless-webpack
   - serverless-dynamodb-local
   - serverless-offline-sns
   - serverless-offline
   - serverless-pseudo-parameters
+  - serverless-plugin-lambda-dead-letter
 
 custom:
   serverless-offline:
@@ -73,6 +80,8 @@ functions:
   usersEventListener:
     name: ${self:service.name}-event-listener-users
     handler: src/handlers/users-event-listener.handler
+    deadLetter:
+      sqs: ${self:service.name}-event-listener-users-dlq
     events:
       - sns:
           arn: arn:aws:sns:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):env.usersEvent}
@@ -80,6 +89,8 @@ functions:
   eventsEventListener:
     name: ${self:service.name}-event-listener-events
     handler: src/handlers/events-event-listener.handler
+    deadLetter:
+      sqs: ${self:service.name}-event-listener-events-dlq
     events:
       - sns: # serverless-offline-sns docs says "- sns: <arn>" is also valid syntax, but it doesn't work
           arn: arn:aws:sns:${file(config.js):env.region}:${file(config.js):env.AWS_ACCOUNT_ID}:${file(config.js):env.eventsEvent}

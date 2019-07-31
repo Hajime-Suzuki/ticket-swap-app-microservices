@@ -1,6 +1,5 @@
 import { extractSNSMessage } from '@ticket-swap-app/shared/src/events/extract-sns-message'
 import {
-  UserEventPayload,
   UserEventTypes,
   UserSignUpEventBody
 } from '@ticket-swap-app/shared/src/types/events'

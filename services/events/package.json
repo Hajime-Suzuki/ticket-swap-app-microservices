@@ -13,6 +13,7 @@
     "@ticket-swap-app/gql": "1.0.0",
     "@ticket-swap-app/shared": "1.0.0",
     "serverless-offline-sqs": "^2.0.3",
+    "serverless-plugin-lambda-dead-letter": "^1.2.1",
     "shortid": "^2.2.14",
     "tslint": "^5.18.0"
   },

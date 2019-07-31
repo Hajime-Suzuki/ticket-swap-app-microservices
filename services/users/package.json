@@ -12,6 +12,7 @@
     "@ticket-swap-app/config": "1.0.0",
     "@ticket-swap-app/gql": "1.0.0",
     "@ticket-swap-app/shared": "1.0.0",
+    "serverless-plugin-lambda-dead-letter": "^1.2.1",
     "shortid": "^2.2.14"
   },
   "devDependencies": {
