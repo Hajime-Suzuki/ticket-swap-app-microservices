@@ -5,6 +5,7 @@
     "services/tickets",
     "services/events",
     "services/users",
+    "frontend",
     "shared",
     "config"
   ]

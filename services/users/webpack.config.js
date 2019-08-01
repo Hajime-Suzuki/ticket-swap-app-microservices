@@ -5,7 +5,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 module.exports = {
   mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
   entry: slsw.lib.entries,
-  devtool: 'source-map',
+  // devtool: 'source-map',
   resolve: {
     extensions: ['.mjs', '.js', '.json', '.graphql', '.gql', '.ts']
   },
