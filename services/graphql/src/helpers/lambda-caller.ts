@@ -14,7 +14,7 @@ export class LambdaCaller {
     this.functionName = functionName
   }
 
-  async invoke<TRes = any>(actionName: string, data: any) {
+  async invoke<TRes = any>(actionName: string, data?: any) {
     const body = {
       action: actionName,
       data

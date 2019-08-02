@@ -5,7 +5,6 @@ provider:
   name: aws
   runtime: nodejs10.x
   region: ${file(config.js):env.region}
-  environment: ${file(config.js):env}
   iamRoleStatements:
     - Effect: Allow
       Action:

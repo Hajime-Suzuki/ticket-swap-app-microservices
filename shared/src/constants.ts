@@ -9,7 +9,8 @@ export const ticketsActions = {
 
 export const eventsActions = {
   createEvent: 'create-event',
-  getEvent: 'get-event'
+  getEvent: 'get-event',
+  getEvents: 'get-events'
 }
 
 export const usersActions = {

@@ -84,6 +84,7 @@ export type IMutationCreateEventArgs = {
 export type IQuery = {
   __typename?: "Query";
   getTicket?: Maybe<IGetTicketResponse>;
+  getEvents?: Maybe<IGetEventsResponse>;
   getEvent?: Maybe<IGetEventResponse>;
   getUser?: Maybe<IGetUserResponse>;
 };
@@ -195,9 +196,10 @@ export type IResolversTypes = {
   GetTicketResponse: ResolverTypeWrapper<IGetTicketResponse>;
   Ticket: ResolverTypeWrapper<ITicket>;
   String: ResolverTypeWrapper<Scalars["String"]>;
-  GetEventResponse: ResolverTypeWrapper<IGetEventResponse>;
+  GetEventsResponse: ResolverTypeWrapper<IGetEventsResponse>;
   Event: ResolverTypeWrapper<IEvent>;
   Location: ResolverTypeWrapper<ILocation>;
+  GetEventResponse: ResolverTypeWrapper<IGetEventResponse>;
   GetUserResponse: ResolverTypeWrapper<IGetUserResponse>;
   User: ResolverTypeWrapper<IUser>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -205,7 +207,6 @@ export type IResolversTypes = {
   CreateEventInput: ICreateEventInput;
   LocationInput: ILocationInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
-  GetEventsResponse: ResolverTypeWrapper<IGetEventsResponse>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -215,9 +216,10 @@ export type IResolversParentTypes = {
   GetTicketResponse: IGetTicketResponse;
   Ticket: ITicket;
   String: Scalars["String"];
-  GetEventResponse: IGetEventResponse;
+  GetEventsResponse: IGetEventsResponse;
   Event: IEvent;
   Location: ILocation;
+  GetEventResponse: IGetEventResponse;
   GetUserResponse: IGetUserResponse;
   User: IUser;
   Mutation: {};
@@ -225,7 +227,6 @@ export type IResolversParentTypes = {
   CreateEventInput: ICreateEventInput;
   LocationInput: ILocationInput;
   Boolean: Scalars["Boolean"];
-  GetEventsResponse: IGetEventsResponse;
 };
 
 export type IAuthenticatedDirectiveResolver<
@@ -320,6 +321,11 @@ export type IQueryResolvers<
     ParentType,
     ContextType,
     IQueryGetTicketArgs
+  >;
+  getEvents?: Resolver<
+    Maybe<IResolversTypes["GetEventsResponse"]>,
+    ParentType,
+    ContextType
   >;
   getEvent?: Resolver<
     Maybe<IResolversTypes["GetEventResponse"]>,

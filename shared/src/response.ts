@@ -5,7 +5,7 @@ export class ResponseHandler {
   constructor(logger: Logger) {
     this.logger = logger
   }
-  success(res: any) {
+  success<TData = any>(res: TData) {
     return {
       statusCode: 200,
       body: JSON.stringify(res)

@@ -35,9 +35,10 @@ export class Mapper<
     this.mapper = newMapper({ region, endpoint })
   }
 
-  async find(args: Partial<T>) {
+  async find<TReturn = Partial<T>>(args: Partial<T>): Promise<TReturn> {
     try {
-      return await this.mapper.get(this.merge(args))
+      const res = await this.mapper.get(this.merge(args))
+      return res as TReturn
     } catch (e) {
       if (e.name === 'ItemNotFoundException') {
         return null

@@ -43,6 +43,18 @@
             "deprecationReason": null
           },
           {
+            "name": "getEvents",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "GetEventsResponse",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getEvent",
             "description": null,
             "args": [
@@ -218,14 +230,18 @@
       },
       {
         "kind": "OBJECT",
-        "name": "GetEventResponse",
+        "name": "GetEventsResponse",
         "description": null,
         "fields": [
           {
-            "name": "event",
+            "name": "events",
             "description": null,
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Event", "ofType": null },
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "Event", "ofType": null }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -364,6 +380,25 @@
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
             },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "GetEventResponse",
+        "description": null,
+        "fields": [
+          {
+            "name": "event",
+            "description": null,
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Event", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -1337,29 +1372,6 @@
             "deprecationReason": null
           }
         ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "GetEventsResponse",
-        "description": null,
-        "fields": [
-          {
-            "name": "events",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Event", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
         "possibleTypes": null
       }
     ],
