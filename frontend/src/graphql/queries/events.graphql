@@ -1,0 +1,30 @@
+query getEvent($id: ID!) {
+  getEvent(id: $id) {
+    event {
+      id
+      name
+      description
+      date
+      location {
+        name
+        city
+        address
+      }
+    }
+  }
+}
+
+mutation createEvent($data: CreateEventInput!) {
+  createEvent(data: $data) {
+    id
+    name
+    description
+    date
+    location {
+      name
+      city
+      address
+    }
+    createdAt
+  }
+}

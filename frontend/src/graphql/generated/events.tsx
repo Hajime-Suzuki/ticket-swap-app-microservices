@@ -1,4 +1,6 @@
 import gql from "graphql-tag";
+import * as ReactApolloHooks from "react-apollo-hooks";
+import * as ReactApollo from "react-apollo";
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -117,3 +119,105 @@ export type User = {
   createdAt: Scalars["String"];
   updatedAt?: Maybe<Scalars["String"]>;
 };
+export type GetEventQueryVariables = {
+  id: Scalars["ID"];
+};
+
+export type GetEventQuery = { __typename?: "Query" } & {
+  getEvent: Maybe<
+    { __typename?: "GetEventResponse" } & {
+      event: Maybe<
+        { __typename?: "Event" } & Pick<
+          Event,
+          "id" | "name" | "description" | "date"
+        > & {
+            location: { __typename?: "Location" } & Pick<
+              Location,
+              "name" | "city" | "address"
+            >;
+          }
+      >;
+    }
+  >;
+};
+
+export type CreateEventMutationVariables = {
+  data: CreateEventInput;
+};
+
+export type CreateEventMutation = { __typename?: "Mutation" } & {
+  createEvent: Maybe<
+    { __typename?: "Event" } & Pick<
+      Event,
+      "id" | "name" | "description" | "date" | "createdAt"
+    > & {
+        location: { __typename?: "Location" } & Pick<
+          Location,
+          "name" | "city" | "address"
+        >;
+      }
+  >;
+};
+
+export const GetEventDocument = gql`
+  query getEvent($id: ID!) {
+    getEvent(id: $id) {
+      event {
+        id
+        name
+        description
+        date
+        location {
+          name
+          city
+          address
+        }
+      }
+    }
+  }
+`;
+
+export function useGetEventQuery(
+  baseOptions?: ReactApolloHooks.QueryHookOptions<GetEventQueryVariables>
+) {
+  return ReactApolloHooks.useQuery<GetEventQuery, GetEventQueryVariables>(
+    GetEventDocument,
+    baseOptions
+  );
+}
+export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
+export const CreateEventDocument = gql`
+  mutation createEvent($data: CreateEventInput!) {
+    createEvent(data: $data) {
+      id
+      name
+      description
+      date
+      location {
+        name
+        city
+        address
+      }
+      createdAt
+    }
+  }
+`;
+export type CreateEventMutationFn = ReactApollo.MutationFn<
+  CreateEventMutation,
+  CreateEventMutationVariables
+>;
+
+export function useCreateEventMutation(
+  baseOptions?: ReactApolloHooks.MutationHookOptions<
+    CreateEventMutation,
+    CreateEventMutationVariables
+  >
+) {
+  return ReactApolloHooks.useMutation<
+    CreateEventMutation,
+    CreateEventMutationVariables
+  >(CreateEventDocument, baseOptions);
+}
+export type CreateEventMutationHookResult = ReturnType<
+  typeof useCreateEventMutation
+>;
