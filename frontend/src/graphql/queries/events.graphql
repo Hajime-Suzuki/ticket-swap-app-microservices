@@ -14,6 +14,20 @@ query getEvent($id: ID!) {
   }
 }
 
+query getEvents {
+  getEvents {
+    events {
+      id
+      name
+      date
+      description
+      location {
+        city
+      }
+    }
+  }
+}
+
 mutation createEvent($data: CreateEventInput!) {
   createEvent(data: $data) {
     id

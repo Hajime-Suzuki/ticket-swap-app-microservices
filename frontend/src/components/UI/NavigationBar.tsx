@@ -1,7 +1,6 @@
-import { Grid } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { pathNames } from 'routes/paths'
@@ -17,10 +16,17 @@ const NavigationBar: React.FC = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Grid container justify="flex-end">
-          <StyledLink to={pathNames.events}>
-            <Typography variant="h6">events</Typography>
-          </StyledLink>
+        <Grid container justify="flex-end" spacing={2}>
+          <Grid item>
+            <StyledLink to={pathNames.top}>
+              <Button color="inherit">home</Button>
+            </StyledLink>
+          </Grid>
+          <Grid item>
+            <StyledLink to={pathNames.events}>
+              <Button color="inherit">events</Button>
+            </StyledLink>
+          </Grid>
         </Grid>
       </Toolbar>
     </AppBar>

@@ -29,3 +29,15 @@ query getEvent {
     }
   }
 }
+
+query getEvents {
+  getEvents {
+    events {
+      id
+      name
+      location {
+        city
+      }
+    }
+  }
+}

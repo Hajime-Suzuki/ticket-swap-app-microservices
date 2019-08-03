@@ -42,7 +42,7 @@ export interface GetEventResponse {
 
 export interface GetEventsResponse {
   __typename?: 'GetEventsResponse'
-  events?: Maybe<Array<Maybe<Event>>>
+  events: Array<Event>
 }
 
 export interface GetTicketResponse {
@@ -85,6 +85,7 @@ export interface MutationCreateEventArgs {
 export interface Query {
   __typename?: 'Query'
   getTicket?: Maybe<GetTicketResponse>
+  getEvents?: Maybe<GetEventsResponse>
   getEvent?: Maybe<GetEventResponse>
   getUser?: Maybe<GetUserResponse>
 }
@@ -141,6 +142,21 @@ export type GetEventQuery = { __typename?: 'Query' } & {
   >
 }
 
+export interface GetEventsQueryVariables {}
+
+export type GetEventsQuery = { __typename?: 'Query' } & {
+  getEvents: Maybe<
+    { __typename?: 'GetEventsResponse' } & {
+      events: Array<
+        { __typename?: 'Event' } & Pick<
+          Event,
+          'id' | 'name' | 'date' | 'description'
+        > & { location: { __typename?: 'Location' } & Pick<Location, 'city'> }
+      >
+    }
+  >
+}
+
 export interface CreateEventMutationVariables {
   data: CreateEventInput
 }
@@ -186,6 +202,31 @@ export function useGetEventQuery(
   )
 }
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>
+export const GetEventsDocument = gql`
+  query getEvents {
+    getEvents {
+      events {
+        id
+        name
+        date
+        description
+        location {
+          city
+        }
+      }
+    }
+  }
+`
+
+export function useGetEventsQuery(
+  baseOptions?: ReactApolloHooks.QueryHookOptions<GetEventsQueryVariables>
+) {
+  return ReactApolloHooks.useQuery<GetEventsQuery, GetEventsQueryVariables>(
+    GetEventsDocument,
+    baseOptions
+  )
+}
+export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>
 export const CreateEventDocument = gql`
   mutation createEvent($data: CreateEventInput!) {
     createEvent(data: $data) {
