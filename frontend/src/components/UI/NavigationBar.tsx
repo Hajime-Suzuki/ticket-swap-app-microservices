@@ -18,12 +18,12 @@ const NavigationBar: React.FC = () => {
       <Toolbar>
         <Grid container justify="flex-end" spacing={2}>
           <Grid item>
-            <StyledLink to={pathNames.top}>
+            <StyledLink to={pathNames.top()}>
               <Button color="inherit">home</Button>
             </StyledLink>
           </Grid>
           <Grid item>
-            <StyledLink to={pathNames.events}>
+            <StyledLink to={pathNames.events()}>
               <Button color="inherit">events</Button>
             </StyledLink>
           </Grid>

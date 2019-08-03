@@ -16,7 +16,6 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <CardMedia
         style={{ width: '100%', height: '20vh' }}
         image="https://source.unsplash.com/random/400x300"
-        title="asihten"
       >
         <OverlayGrid
           container
