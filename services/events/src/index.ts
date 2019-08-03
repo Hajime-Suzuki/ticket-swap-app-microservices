@@ -1,14 +1,13 @@
+import {
+  IGetEventResponse,
+  IGetEventsResponse
+} from '@ticket-swap-app/gql/src/generated/graphql'
 import { eventsActions } from '@ticket-swap-app/shared/src/constants'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import { createEventHandler } from './handlers/creat-event'
-import { logger, responseHandler } from './utils'
 import { getEventHandler } from './handlers/get-event'
 import { getEventsHandler } from './handlers/get-events'
-import {
-  IGetEventsResponse,
-  IGetEventResponse,
-  IEvent
-} from '@ticket-swap-app/gql/src/generated/graphql'
+import { logger, responseHandler } from './utils'
 
 type ActionTypes = keyof typeof eventsActions
 

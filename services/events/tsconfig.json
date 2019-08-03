@@ -1,14 +1,3 @@
 {
-  "compilerOptions": {
-    "lib": ["es2017", "esnext.asynciterable"],
-    "moduleResolution": "node",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "sourceMap": true,
-    "target": "es2017",
-    "outDir": "lib",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  },
-  "exclude": ["node_modules"]
+  "extends": "../../config/tsconfig.json"
 }

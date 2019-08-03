@@ -1,7 +1,7 @@
 import { shared } from '@ticket-swap-app/config/src/global-config'
 import { eventsActions } from '@ticket-swap-app/shared/src/constants'
 import { ResolverContext } from '..'
-import { IEvent, IResolvers, IGetEventsResponse } from '../generated/graphql'
+import { IEvent, IResolvers } from '../generated/graphql'
 import { LambdaCaller } from '../helpers/lambda-caller'
 
 const eventLambda = new LambdaCaller(shared.eventsPort, shared.eventsFunc)

@@ -1,4 +1,4 @@
-import { SNSHandler, SNSEvent } from 'aws-lambda'
+import { SNSEvent } from 'aws-lambda'
 import { Logger } from '../logger'
 import { EventHandlerBody, EventTypes } from '../types/events'
 
