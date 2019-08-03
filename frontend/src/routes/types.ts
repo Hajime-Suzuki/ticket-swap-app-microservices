@@ -1,4 +1,3 @@
-import { RouteComponentProps } from 'react-router'
-export type SingleEventRouteProps = RouteComponentProps<{
+export interface SingleEventRouteProps {
   eventId: string
-}>
+}

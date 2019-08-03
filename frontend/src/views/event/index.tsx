@@ -1,25 +1,31 @@
 import ErrorMessage from 'components/messages/ErrorMessage'
 import LoadingIcon from 'components/UI/LoadingIcon'
-import { useGetEventQuery } from 'graphql/generated/events'
-import React from 'react'
+import { useGetEventAndTicketsQuery } from 'graphql/generated/events'
+import React, { FC } from 'react'
 import { SingleEventRouteProps } from 'routes/types'
+import useRouter from 'use-react-router'
+import EventSection from './EventSection'
+import TicketSection from './TicketSection'
 
-const EventPage: React.FC<SingleEventRouteProps> = props => {
+const EventPage: FC = () => {
   const {
     match: { params }
-  } = props
-  const { data, loading, error } = useGetEventQuery({
+  } = useRouter<SingleEventRouteProps>()
+
+  const { data, loading, error } = useGetEventAndTicketsQuery({
     variables: { id: params.eventId }
   })
 
   if (loading) return <LoadingIcon />
   if (error) return <ErrorMessage text={error.message} />
-  if (!data || !data.getEvent || !data.getEvent.event)
-    return <div>No Event Found</div>
+  if (!data || !data.getEvent) return <ErrorMessage text="No Data Found" />
 
-  const event = data!.getEvent!.event!
-
-  return <div>{event.name}</div>
+  return (
+    <>
+      <EventSection data={data.getEvent} />
+      <TicketSection tickets={data.getTickets.tickets} />
+    </>
+  )
 }
 
 export default EventPage
