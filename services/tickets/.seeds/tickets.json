@@ -1,6 +1,7 @@
 [
-  { "userId": "1", "eventId": "100", "price": "10.12" },
-  { "userId": "2", "eventId": "101", "price": "11.23" },
-  { "userId": "2", "eventId": "102", "price": "12.34" },
-  { "userId": "3", "eventId": "103", "price": "13.45" }
+  { "id": "1", "eventId": "100", "userId": "1", "price": "10.12" },
+  { "id": "2", "eventId": "100", "userId": "4", "price": "20.12" },
+  { "id": "3", "eventId": "101", "userId": "2", "price": "11.23" },
+  { "id": "4", "eventId": "102", "userId": "2", "price": "12.34" },
+  { "id": "5", "eventId": "103", "userId": "3", "price": "13.45" }
 ]

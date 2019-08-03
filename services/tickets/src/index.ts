@@ -1,7 +1,7 @@
 import { ticketsActions } from '@ticket-swap-app/shared/src/constants'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import { createTicketHandler } from './handlers/create-ticket'
-import { getTicketHandler } from './handlers/get-ticket'
+import { getTicketsHandler } from './handlers/get-tickets'
 import { updateTicketHandler } from './handlers/update-ticket'
 import { logger, responseHandler } from './utils'
 
@@ -23,9 +23,9 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
         const res = await createTicketHandler(event)
         return responseHandler.success({ ticket: res })
       }
-      case ticketsActions.getTicket: {
-        const res = await getTicketHandler(event)
-        return responseHandler.success({ ticket: res })
+      case ticketsActions.getTickets: {
+        const res = await getTicketsHandler(event)
+        return responseHandler.success({ tickets: res })
       }
       case ticketsActions.updateTicket: {
         const res = await updateTicketHandler(event)

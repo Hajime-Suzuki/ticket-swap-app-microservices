@@ -2,7 +2,6 @@ import {
   awsSettings,
   dynamoPorts
 } from '@ticket-swap-app/config/src/global-config'
-import { ITicket } from '@ticket-swap-app/gql/src/generated/graphql'
 import { isOffline } from '@ticket-swap-app/shared/src/constants'
 import {
   Mapper,

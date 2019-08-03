@@ -13,11 +13,11 @@ export const ticketSchema = gql`
   }
 
   type Query {
-    getTicket(eventId: ID!, userId: ID!): GetTicketResponse
+    getTickets(args: GetTicketsArgs!): GetTicketsResponse!
   }
 
   type Mutation {
-    createTicket(data: CreateTicketInput): Ticket
+    createTicket(data: CreateTicketInput!): Ticket
   }
 
   input CreateTicketInput {
@@ -26,8 +26,13 @@ export const ticketSchema = gql`
     price: String!
   }
 
-  type GetTicketResponse {
-    ticket: Ticket
+  input GetTicketsArgs {
+    eventId: ID
+    id: ID
+    # need to be able to find by userId too
   }
 
+  type GetTicketsResponse {
+    tickets: [Ticket!]!
+  }
 `

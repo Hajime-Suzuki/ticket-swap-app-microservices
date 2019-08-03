@@ -38,7 +38,7 @@ export const eventSchema = gql`
   }
 
   type GetEventsResponse {
-    events: [Event]
+    events: [Event!]!
   }
   type GetEventResponse {
     event: Event

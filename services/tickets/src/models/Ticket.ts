@@ -4,19 +4,19 @@ import {
   table,
   rangeKey
 } from '@aws/dynamodb-data-mapper-annotations'
-import { ITicket } from '@ticket-swap-app/gql/src/generated/graphql'
 import { tableNames } from '@ticket-swap-app/config/src/tickets-config'
+import { ITicket } from '@ticket-swap-app/gql/src/generated/graphql'
 
 @table(tableNames.tickets_tickets_table)
 export class TicketModel implements ITicket {
+  @rangeKey()
+  id: string
+
   @hashKey()
   eventId: string
 
-  @rangeKey()
-  userId: string
-
   @attribute()
-  id: string
+  userId: string
 
   @attribute()
   price: string
