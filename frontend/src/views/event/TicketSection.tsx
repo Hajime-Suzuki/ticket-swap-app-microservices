@@ -1,13 +1,15 @@
-import { List, ListItem, ListItemText } from '@material-ui/core'
+import { List } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import ErrorMessage from 'components/messages/ErrorMessage'
 import LoadingIcon from 'components/UI/LoadingIcon'
 import { useGetTicketsQuery } from 'graphql/generated/tickets'
 import React, { FC } from 'react'
-import { Link } from 'react-router-dom'
 import { SingleEventTicketSectionRouteProps } from 'routes/types'
 import useRouter from 'use-react-router'
+import TicketListItem from './components/TicketListItem'
+import { pathNames } from 'routes/paths'
+import { Link } from 'react-router-dom'
 
 const TicketSection: FC = () => {
   const {
@@ -20,10 +22,11 @@ const TicketSection: FC = () => {
     }
   })
 
-  const tickets = data && data.getTickets.tickets
-
   if (loading) return <LoadingIcon />
   if (error) return <ErrorMessage text={error.message} />
+
+  const tickets = data && data.getTickets.tickets
+
   if (!tickets || !tickets.length)
     return <ErrorMessage text="No ticket available" />
 
@@ -32,13 +35,14 @@ const TicketSection: FC = () => {
       <Grid item>
         <Typography variant="h4">Available Tickets</Typography>
       </Grid>
-      <List>
+      <List style={{ width: '100%' }}>
         {tickets.map(ticket => (
-          <ListItem key={ticket.id}>
-            <ListItemText>
-              <Link to="/">test</Link>
-            </ListItemText>
-          </ListItem>
+          <Link
+            key={ticket.id}
+            to={pathNames.singleTicket(params.eventId, params.date, ticket.id)}
+          >
+            <TicketListItem ticket={ticket}></TicketListItem>
+          </Link>
         ))}
       </List>
     </Grid>
