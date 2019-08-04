@@ -15,6 +15,9 @@ export class UserModel implements IUser {
   id: string
 
   @attribute()
+  username: string
+
+  @attribute()
   createdAt: string
 
   @attribute()

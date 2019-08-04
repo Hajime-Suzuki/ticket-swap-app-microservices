@@ -9,6 +9,7 @@ query getTickets {
       eventId
       price
       date
+      username
     }
   }
 }
@@ -27,6 +28,7 @@ query getTicket {
       id
       price
       date
+      username
     }
   }
 }

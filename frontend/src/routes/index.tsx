@@ -4,8 +4,12 @@ import EventsPage from 'views/events'
 import TopPage from 'views/top'
 import { pathNames } from './paths'
 import EventPage from 'views/event'
+import { EventFromQueryRes } from 'views/event/types'
+import EventDateListSection from 'views/event/EventDateListSection'
+import TicketListSection from 'views/event/TicketListSection'
+import SingleTicketSection from 'views/event/SingleTicketSection'
 
-const Routes = () => {
+export const Routes = () => {
   return (
     <>
       <Route path={pathNames.top()} exact component={TopPage} />
@@ -17,4 +21,16 @@ const Routes = () => {
   )
 }
 
-export default Routes
+export const EventPageSubRoutes = (event: EventFromQueryRes) => {
+  return (
+    <>
+      <Route
+        path={pathNames.singleEvent()}
+        exact
+        component={() => <EventDateListSection event={event}></EventDateListSection>}
+      />
+      <Route path={pathNames.tickets()} exact component={() => <TicketListSection />} />
+      <Route path={pathNames.singleTicket()} exact component={() => <SingleTicketSection />} />
+    </>
+  )
+}

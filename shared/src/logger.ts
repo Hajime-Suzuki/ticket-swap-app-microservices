@@ -8,6 +8,7 @@ export class Logger {
   constructor(label: string) {
     this.logger = createLogger({
       format: isOffline() ? localFormat() : customFormat(label),
+      // format: isOffline() ? localFormat() : customFormat(label),
       transports: [new transports.Console()]
     })
   }

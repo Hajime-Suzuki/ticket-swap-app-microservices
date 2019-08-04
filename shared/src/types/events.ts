@@ -18,7 +18,7 @@ export interface EventHandlerBody<TEventType extends EventTypes, TPayload> {
 
 export type UserSignUpEventBody = EventHandlerBody<
   UserEventTypes,
-  Pick<IUser, 'id' | 'email'>
+  Pick<IUser, 'id' | 'email' | 'username'>
 >
 
 export type TicketCreatedEventBody = EventHandlerBody<

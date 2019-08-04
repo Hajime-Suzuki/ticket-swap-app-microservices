@@ -4,18 +4,18 @@ import ContentWrapper from 'components/space/ContentWrapper'
 import LoadingIcon from 'components/UI/LoadingIcon'
 import { useGetEventQuery } from 'graphql/generated/events'
 import React, { FC } from 'react'
+import { EventPageSubRoutes } from 'routes'
 import { SingleEventRouteProps } from 'routes/types'
 import useRouter from 'use-react-router'
 import EventDetailsSection from './EventDetailsSection'
-import { subRoutes } from './subroutes'
 
 const EventPage: FC = () => {
   const {
-    match: { params }
+    match: { params },
   } = useRouter<SingleEventRouteProps>()
 
   const { data, loading, error } = useGetEventQuery({
-    variables: { id: params.eventId }
+    variables: { id: params.eventId },
   })
 
   if (loading) return <LoadingIcon />
@@ -30,7 +30,7 @@ const EventPage: FC = () => {
             <EventDetailsSection event={event} />
           </Grid>
           <Grid item xs={12} md={6}>
-            {subRoutes(event)}
+            {EventPageSubRoutes(event)}
           </Grid>
         </Grid>
       </ContentWrapper>

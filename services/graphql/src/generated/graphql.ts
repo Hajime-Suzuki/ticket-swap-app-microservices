@@ -66,7 +66,7 @@ export type IGetTicketArgs = {
 
 export type IGetTicketResponse = {
   __typename?: "GetTicketResponse";
-  ticket: ITicket;
+  ticket?: Maybe<ITicket>;
 };
 
 export type IGetTicketsArgs = {
@@ -160,6 +160,7 @@ export type IUser = {
   __typename?: "User";
   id: Scalars["String"];
   email: Scalars["String"];
+  username: Scalars["String"];
   createdAt: Scalars["String"];
   updatedAt?: Maybe<Scalars["String"]>;
 };
@@ -342,7 +343,7 @@ export type IGetTicketResponseResolvers<
   ContextType = any,
   ParentType = IResolversParentTypes["GetTicketResponse"]
 > = {
-  ticket?: Resolver<IResolversTypes["Ticket"], ParentType, ContextType>;
+  ticket?: Resolver<Maybe<IResolversTypes["Ticket"]>, ParentType, ContextType>;
 };
 
 export type IGetTicketsResponseResolvers<
@@ -440,6 +441,7 @@ export type IUserResolvers<
 > = {
   id?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   email?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  username?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   createdAt?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   updatedAt?: Resolver<
     Maybe<IResolversTypes["String"]>,

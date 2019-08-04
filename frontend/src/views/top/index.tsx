@@ -1,6 +1,6 @@
-import React from 'react'
-import ContentWrapper from 'components/space/ContentWrapper'
 import Typography from '@material-ui/core/Typography'
+import ContentWrapper from 'components/space/ContentWrapper'
+import React from 'react'
 
 const TopPage: React.FC = () => {
   return (

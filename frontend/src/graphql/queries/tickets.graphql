@@ -1,11 +1,12 @@
-query getTickets($args: GetTicketsArgs!) {
-  getTickets(args: $args) {
+query getTickets($keys: GetTicketsKeys!, $filter: GetTicketsFilter!) {
+  getTickets(args: { keys: $keys, filter: $filter }) {
     tickets {
       id
       eventId
       userId
       price
       date
+      username
     }
   }
 }
@@ -16,6 +17,7 @@ query getTicket($eventId: ID!, $ticketId: ID!) {
       id
       price
       date
+      username
     }
   }
 }
