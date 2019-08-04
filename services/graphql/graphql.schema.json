@@ -17,17 +17,25 @@
                 "name": "args",
                 "description": null,
                 "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "GetTicketsArgs",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "GetTicketsArgs",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }
             ],
             "type": {
-              "kind": "OBJECT",
-              "name": "GetTicketsResponse",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "GetTicketsResponse",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -113,7 +121,7 @@
             "defaultValue": null
           },
           {
-            "name": "userId",
+            "name": "id",
             "description": null,
             "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
             "defaultValue": null
@@ -211,6 +219,18 @@
           },
           {
             "name": "price",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "date",
             "description": null,
             "args": [],
             "type": {
@@ -340,7 +360,15 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "Date", "ofType": null }
+                }
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -374,6 +402,53 @@
             "description": null,
             "args": [],
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Date",
+        "description": null,
+        "fields": [
+          {
+            "name": "date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "startTime",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "endTime",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -536,9 +611,13 @@
                 "name": "data",
                 "description": null,
                 "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "CreateTicketInput",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "CreateTicketInput",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }
@@ -649,7 +728,19 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "DateInput",
+                    "ofType": null
+                  }
+                }
+              }
             },
             "defaultValue": null
           },
@@ -664,6 +755,47 @@
                 "name": "LocationInput",
                 "ofType": null
               }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "DateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "date",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "startTime",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "endTime",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
             },
             "defaultValue": null
           }

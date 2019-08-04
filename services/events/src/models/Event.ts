@@ -18,7 +18,11 @@ export class EventModel implements IEvent {
   description: string
 
   @attribute()
-  date: string
+  date: {
+    date: string
+    startTime: string
+    endTime: string
+  }[]
 
   @attribute()
   location: Location

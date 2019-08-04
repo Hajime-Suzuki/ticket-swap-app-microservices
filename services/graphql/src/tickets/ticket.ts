@@ -8,6 +8,7 @@ export const ticketSchema = gql`
     userId: ID!
     id: ID!
     price: String!
+    date: String!
     createdAt: String!
     soldAt: String
   }

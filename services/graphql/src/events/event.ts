@@ -5,7 +5,7 @@ export const eventSchema = gql`
     id: String!
     name: String!
     description: String!
-    date: String!
+    date: [Date!]!
     location: Location!
     createdAt: String!
     updatedAt: String
@@ -16,6 +16,13 @@ export const eventSchema = gql`
     city: String!
     address: String!
   }
+
+  type Date {
+    date: String!
+    startTime: String!
+    endTime: String!
+  }
+
   extend type Query {
     getEvents: GetEventsResponse
     getEvent(id: ID!): GetEventResponse
@@ -27,8 +34,14 @@ export const eventSchema = gql`
   input CreateEventInput {
     name: String!
     description: String!
-    date: String!
+    date: [DateInput!]!
     location: LocationInput!
+  }
+
+  input DateInput {
+    date: String!
+    startTime: String!
+    endTime: String!
   }
 
   input LocationInput {

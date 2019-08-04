@@ -1,9 +1,12 @@
 mutation craeteEvent {
   createEvent(
     data: {
-      name: "test event"
+      name: "test event22222"
       description: "lorem ipsum!"
-      date: "12341234"
+      date: [
+        { date: "2019-09-01", startTime: "9:00", endTime: "20:00" }
+        { date: "2019-09-02", startTime: "12:00", endTime: "21:00" }
+      ]
       location: {
         name: "super location"
         city: "amsterdahm"
@@ -21,6 +24,11 @@ query getEvent {
   getEvent(id: "102") {
     event {
       id
+      date {
+        date
+        startTime
+        endTime
+      }
       location {
         name
         city
@@ -35,6 +43,11 @@ query getEvents {
     events {
       id
       name
+      date {
+        date
+        startTime
+        endTime
+      }
       location {
         city
       }
