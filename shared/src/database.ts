@@ -1,6 +1,10 @@
-import { DynamoDB } from 'aws-sdk'
-import { DataMapper, StringToAnyObjectMap } from '@aws/dynamodb-data-mapper'
+import {
+  DataMapper,
+  QueryOptions,
+  StringToAnyObjectMap
+} from '@aws/dynamodb-data-mapper'
 import { ZeroArgumentsConstructor } from '@aws/dynamodb-data-marshaller'
+import { DynamoDB } from 'aws-sdk'
 
 export const newMapper = ({
   endpoint,
@@ -47,8 +51,10 @@ export class Mapper<
     }
   }
 
-  query(args: Partial<T>) {
-    return this.getArrayFromIterable(this.mapper.query(this.model, args))
+  query(args: Partial<T>, options?: QueryOptions) {
+    return this.getArrayFromIterable(
+      this.mapper.query(this.model, args, options)
+    )
   }
 
   scan() {

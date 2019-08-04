@@ -4,6 +4,7 @@ import { secrets } from '@ticket-swap-app/config/src/.secrets'
 export const ticketsActions = {
   createTicket: 'create-ticket',
   getTickets: 'get-tickets',
+  getTicket: 'get-ticket',
   updateTicket: 'update-ticket'
 }
 

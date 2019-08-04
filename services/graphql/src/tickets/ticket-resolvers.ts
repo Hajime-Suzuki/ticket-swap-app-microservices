@@ -16,20 +16,25 @@ export const ticketResolvers: IResolvers<ResolverContext> = {
         args
       )
       return res
+    },
+    getTicket: async (_, { args }) => {
+      logger.log('getTicket', args)
+      const res = await ticketLambda.invoke<{ ticket: ITicket }>(
+        ticketsActions.getTicket,
+        args
+      )
+      return res
     }
   },
   Mutation: {
     createTicket: async (_, { data }) => {
       logger.log('createTicket', data)
-      try {
-        const { ticket } = await ticketLambda.invoke<{ ticket: ITicket }>(
-          ticketsActions.createTicket,
-          data
-        )
-        return ticket
-      } catch (err) {
-        console.log('createTicketError', err)
-      }
+
+      const res = await ticketLambda.invoke<{ ticket: ITicket }>(
+        ticketsActions.createTicket,
+        data
+      )
+      return res
     }
   }
 }

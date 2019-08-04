@@ -1,3 +1,4 @@
+/* tslint:disable */
 import { GraphQLResolveInfo } from "graphql";
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -58,8 +59,27 @@ export type IGetEventsResponse = {
   events: Array<IEvent>;
 };
 
+export type IGetTicketArgs = {
+  eventId: Scalars["ID"];
+  id: Scalars["ID"];
+};
+
+export type IGetTicketResponse = {
+  __typename?: "GetTicketResponse";
+  ticket: ITicket;
+};
+
 export type IGetTicketsArgs = {
-  eventId?: Maybe<Scalars["ID"]>;
+  keys: IGetTicketsKeys;
+  filter?: Maybe<IGetTicketsFilter>;
+};
+
+export type IGetTicketsFilter = {
+  date: Scalars["String"];
+};
+
+export type IGetTicketsKeys = {
+  eventId: Scalars["ID"];
   id?: Maybe<Scalars["ID"]>;
 };
 
@@ -88,7 +108,7 @@ export type ILocationInput = {
 
 export type IMutation = {
   __typename?: "Mutation";
-  createTicket?: Maybe<ITicket>;
+  createTicket: IGetTicketResponse;
   createEvent?: Maybe<IEvent>;
 };
 
@@ -103,6 +123,7 @@ export type IMutationCreateEventArgs = {
 export type IQuery = {
   __typename?: "Query";
   getTickets: IGetTicketsResponse;
+  getTicket: IGetTicketResponse;
   getEvents?: Maybe<IGetEventsResponse>;
   getEvent?: Maybe<IGetEventResponse>;
   getUser?: Maybe<IGetUserResponse>;
@@ -110,6 +131,10 @@ export type IQuery = {
 
 export type IQueryGetTicketsArgs = {
   args: IGetTicketsArgs;
+};
+
+export type IQueryGetTicketArgs = {
+  args: IGetTicketArgs;
 };
 
 export type IQueryGetEventArgs = {
@@ -212,10 +237,14 @@ export type DirectiveResolverFn<
 export type IResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   GetTicketsArgs: IGetTicketsArgs;
+  GetTicketsKeys: IGetTicketsKeys;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
+  GetTicketsFilter: IGetTicketsFilter;
+  String: ResolverTypeWrapper<Scalars["String"]>;
   GetTicketsResponse: ResolverTypeWrapper<IGetTicketsResponse>;
   Ticket: ResolverTypeWrapper<ITicket>;
-  String: ResolverTypeWrapper<Scalars["String"]>;
+  GetTicketArgs: IGetTicketArgs;
+  GetTicketResponse: ResolverTypeWrapper<IGetTicketResponse>;
   GetEventsResponse: ResolverTypeWrapper<IGetEventsResponse>;
   Event: ResolverTypeWrapper<IEvent>;
   EventDate: ResolverTypeWrapper<IEventDate>;
@@ -235,10 +264,14 @@ export type IResolversTypes = {
 export type IResolversParentTypes = {
   Query: {};
   GetTicketsArgs: IGetTicketsArgs;
+  GetTicketsKeys: IGetTicketsKeys;
   ID: Scalars["ID"];
+  GetTicketsFilter: IGetTicketsFilter;
+  String: Scalars["String"];
   GetTicketsResponse: IGetTicketsResponse;
   Ticket: ITicket;
-  String: Scalars["String"];
+  GetTicketArgs: IGetTicketArgs;
+  GetTicketResponse: IGetTicketResponse;
   GetEventsResponse: IGetEventsResponse;
   Event: IEvent;
   EventDate: IEventDate;
@@ -305,6 +338,13 @@ export type IGetEventsResponseResolvers<
   events?: Resolver<Array<IResolversTypes["Event"]>, ParentType, ContextType>;
 };
 
+export type IGetTicketResponseResolvers<
+  ContextType = any,
+  ParentType = IResolversParentTypes["GetTicketResponse"]
+> = {
+  ticket?: Resolver<IResolversTypes["Ticket"], ParentType, ContextType>;
+};
+
 export type IGetTicketsResponseResolvers<
   ContextType = any,
   ParentType = IResolversParentTypes["GetTicketsResponse"]
@@ -333,7 +373,7 @@ export type IMutationResolvers<
   ParentType = IResolversParentTypes["Mutation"]
 > = {
   createTicket?: Resolver<
-    Maybe<IResolversTypes["Ticket"]>,
+    IResolversTypes["GetTicketResponse"],
     ParentType,
     ContextType,
     IMutationCreateTicketArgs
@@ -355,6 +395,12 @@ export type IQueryResolvers<
     ParentType,
     ContextType,
     IQueryGetTicketsArgs
+  >;
+  getTicket?: Resolver<
+    IResolversTypes["GetTicketResponse"],
+    ParentType,
+    ContextType,
+    IQueryGetTicketArgs
   >;
   getEvents?: Resolver<
     Maybe<IResolversTypes["GetEventsResponse"]>,
@@ -407,6 +453,7 @@ export type IResolvers<ContextType = any> = {
   EventDate?: IEventDateResolvers<ContextType>;
   GetEventResponse?: IGetEventResponseResolvers<ContextType>;
   GetEventsResponse?: IGetEventsResponseResolvers<ContextType>;
+  GetTicketResponse?: IGetTicketResponseResolvers<ContextType>;
   GetTicketsResponse?: IGetTicketsResponseResolvers<ContextType>;
   GetUserResponse?: IGetUserResponseResolvers<ContextType>;
   Location?: ILocationResolvers<ContextType>;
