@@ -1,7 +1,79 @@
 [
-  { "id": "1", "eventId": "100", "userId": "1", "price": "10.12" },
-  { "id": "2", "eventId": "100", "userId": "4", "price": "20.12" },
-  { "id": "3", "eventId": "101", "userId": "2", "price": "11.23" },
-  { "id": "4", "eventId": "102", "userId": "2", "price": "12.34" },
-  { "id": "5", "eventId": "103", "userId": "3", "price": "13.45" }
+  {
+    "eventId": "100",
+    "id": "1",
+    "userId": "1",
+    "price": "10.12",
+    "date": "2019-09-01"
+  },
+  {
+    "eventId": "100",
+    "id": "2",
+    "userId": "4",
+    "price": "11.12",
+    "date": "2019-09-01"
+  },
+  {
+    "eventId": "100",
+    "id": "3",
+    "userId": "4",
+    "price": "25.12",
+    "date": "2019-09-02"
+  },
+  {
+    "eventId": "101",
+    "id": "4",
+    "userId": "2",
+    "price": "26.23",
+    "date": "2019-09-03"
+  },
+  {
+    "eventId": "101",
+    "id": "5",
+    "userId": "2",
+    "price": "12.23",
+    "date": "2019-09-04"
+  },
+  {
+    "eventId": "101",
+    "id": "6",
+    "userId": "2",
+    "price": "55.23",
+    "date": "2019-09-04"
+  },
+  {
+    "eventId": "101",
+    "id": "7",
+    "userId": "2",
+    "price": "25.23",
+    "date": "2019-09-04"
+  },
+  {
+    "eventId": "102",
+    "id": "8",
+    "userId": "2",
+    "price": "8.34",
+    "date": "2019-09-05"
+  },
+  {
+    "eventId": "102",
+    "id": "9",
+    "userId": "2",
+    "price": "9.34",
+    "date": "2019-09-05"
+  },
+  {
+    "eventId": "102",
+    "id": "10",
+    "userId": "3",
+    "price": "16.45",
+    "date": "2019-09-06"
+  },
+  {
+    "eventId": "102",
+    "id": "11",
+    "userId": "3",
+    "price": "14.45",
+    "date": "2019-09-06"
+  }
 ]

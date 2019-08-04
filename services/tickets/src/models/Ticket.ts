@@ -22,6 +22,9 @@ export class TicketModel implements ITicket {
   price: string
 
   @attribute()
+  date: string
+
+  @attribute()
   createdAt: string
 
   @attribute()

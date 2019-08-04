@@ -1,17 +1,20 @@
 # for developing purpose
 
-query getTicket {
-  getTicket(eventId: "124", userId: "1") {
-    ticket {
-      userId
-      createdAt
+query getTickets {
+  getTickets(args: { eventId: "100" }) {
+    tickets {
+      id
+      eventId
       price
+      date
     }
   }
 }
 
 mutation createTicket {
-  createTicket(data: { userId: "1", eventId: "124", price: "15.09" }) {
+  createTicket(
+    data: { userId: "1", eventId: "124", price: "15.09", date: "2019-08-15" }
+  ) {
     userId
   }
 }

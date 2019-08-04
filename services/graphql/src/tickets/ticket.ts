@@ -24,6 +24,7 @@ export const ticketSchema = gql`
   input CreateTicketInput {
     eventId: ID!
     userId: ID!
+    date: String!
     price: String!
   }
 
