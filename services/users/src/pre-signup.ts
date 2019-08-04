@@ -10,10 +10,14 @@ import { userRepository } from './repositories/users-repository'
 const arn = getSNSARN(eventNames.usersEvent)
 
 export const handler: CognitoUserPoolTriggerHandler = async event => {
-  logger.log('event received', event.response)
+  logger.log('event received', event)
   event.response.autoConfirmUser = true
 
-  const params = { id: shortid.generate(), email: event.userName }
+  const params = {
+    id: shortid.generate(),
+    email: event.userName,
+    userName: event.request.userAttributes.preferred_username
+  }
   await userRepository.save(params)
 
   await publishEvent<UserSignUpEventBody>({

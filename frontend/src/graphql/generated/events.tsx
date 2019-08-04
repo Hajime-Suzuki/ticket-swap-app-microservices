@@ -1,188 +1,227 @@
-import gql from 'graphql-tag'
-import * as ReactApolloHooks from 'react-apollo-hooks'
-import * as ReactApollo from 'react-apollo'
-export type Maybe<T> = T | null
+/* tslint:disable */
+import gql from "graphql-tag";
+import * as ReactApolloHooks from "react-apollo-hooks";
+import * as ReactApollo from "react-apollo";
+export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
-export interface Scalars {
-  ID: string
-  String: string
-  Boolean: boolean
-  Int: number
-  Float: number
-}
+export type Scalars = {
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+};
 
-export interface CreateEventInput {
-  name: Scalars['String']
-  description: Scalars['String']
-  date: Scalars['String']
-  location: LocationInput
-}
+export type CreateEventInput = {
+  name: Scalars["String"];
+  description: Scalars["String"];
+  dates: Array<EventDateInput>;
+  location: LocationInput;
+};
 
-export interface CreateTicketInput {
-  eventId: Scalars['ID']
-  userId: Scalars['ID']
-  price: Scalars['String']
-}
+export type CreateTicketInput = {
+  eventId: Scalars["ID"];
+  userId: Scalars["ID"];
+  date: Scalars["String"];
+  price: Scalars["String"];
+};
 
-export interface Event {
-  __typename?: 'Event'
-  id: Scalars['String']
-  name: Scalars['String']
-  description: Scalars['String']
-  date: Scalars['String']
-  location: Location
-  createdAt: Scalars['String']
-  updatedAt?: Maybe<Scalars['String']>
-}
+export type Event = {
+  __typename?: "Event";
+  id: Scalars["String"];
+  name: Scalars["String"];
+  description: Scalars["String"];
+  dates: Array<EventDate>;
+  location: Location;
+  createdAt: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
+};
 
-export interface GetEventResponse {
-  __typename?: 'GetEventResponse'
-  event?: Maybe<Event>
-}
+export type EventDate = {
+  __typename?: "EventDate";
+  date: Scalars["String"];
+  startTime: Scalars["String"];
+  endTime: Scalars["String"];
+};
 
-export interface GetEventsResponse {
-  __typename?: 'GetEventsResponse'
-  events: Array<Event>
-}
+export type EventDateInput = {
+  date: Scalars["String"];
+  startTime: Scalars["String"];
+  endTime: Scalars["String"];
+};
 
-export interface GetTicketsArgs {
-  eventId?: Maybe<Scalars['ID']>
-  id?: Maybe<Scalars['ID']>
-}
+export type GetEventResponse = {
+  __typename?: "GetEventResponse";
+  event?: Maybe<Event>;
+};
 
-export interface GetTicketsResponse {
-  __typename?: 'GetTicketsResponse'
-  tickets: Array<Ticket>
-}
+export type GetEventsResponse = {
+  __typename?: "GetEventsResponse";
+  events: Array<Event>;
+};
 
-export interface GetUserResponse {
-  __typename?: 'GetUserResponse'
-  user?: Maybe<User>
-}
+export type GetTicketsArgs = {
+  eventId?: Maybe<Scalars["ID"]>;
+  id?: Maybe<Scalars["ID"]>;
+};
 
-export interface Location {
-  __typename?: 'Location'
-  name: Scalars['String']
-  city: Scalars['String']
-  address: Scalars['String']
-}
+export type GetTicketsResponse = {
+  __typename?: "GetTicketsResponse";
+  tickets: Array<Ticket>;
+};
 
-export interface LocationInput {
-  name: Scalars['String']
-  city: Scalars['String']
-  address: Scalars['String']
-}
+export type GetUserResponse = {
+  __typename?: "GetUserResponse";
+  user?: Maybe<User>;
+};
 
-export interface Mutation {
-  __typename?: 'Mutation'
-  createTicket?: Maybe<Ticket>
-  createEvent?: Maybe<Event>
-}
+export type Location = {
+  __typename?: "Location";
+  name: Scalars["String"];
+  city: Scalars["String"];
+  address: Scalars["String"];
+};
 
-export interface MutationCreateTicketArgs {
-  data: CreateTicketInput
-}
+export type LocationInput = {
+  name: Scalars["String"];
+  city: Scalars["String"];
+  address: Scalars["String"];
+};
 
-export interface MutationCreateEventArgs {
-  data: CreateEventInput
-}
+export type Mutation = {
+  __typename?: "Mutation";
+  createTicket?: Maybe<Ticket>;
+  createEvent?: Maybe<Event>;
+};
 
-export interface Query {
-  __typename?: 'Query'
-  getTickets: GetTicketsResponse
-  getEvents?: Maybe<GetEventsResponse>
-  getEvent?: Maybe<GetEventResponse>
-  getUser?: Maybe<GetUserResponse>
-}
+export type MutationCreateTicketArgs = {
+  data: CreateTicketInput;
+};
 
-export interface QueryGetTicketsArgs {
-  args: GetTicketsArgs
-}
+export type MutationCreateEventArgs = {
+  data: CreateEventInput;
+};
 
-export interface QueryGetEventArgs {
-  id: Scalars['ID']
-}
+export type Query = {
+  __typename?: "Query";
+  getTickets: GetTicketsResponse;
+  getEvents?: Maybe<GetEventsResponse>;
+  getEvent?: Maybe<GetEventResponse>;
+  getUser?: Maybe<GetUserResponse>;
+};
 
-export interface QueryGetUserArgs {
-  id: Scalars['String']
-}
+export type QueryGetTicketsArgs = {
+  args: GetTicketsArgs;
+};
 
-export interface Ticket {
-  __typename?: 'Ticket'
-  eventId: Scalars['ID']
-  userId: Scalars['ID']
-  id: Scalars['ID']
-  price: Scalars['String']
-  createdAt: Scalars['String']
-  soldAt?: Maybe<Scalars['String']>
-}
+export type QueryGetEventArgs = {
+  id: Scalars["ID"];
+};
 
-export interface User {
-  __typename?: 'User'
-  id: Scalars['String']
-  email: Scalars['String']
-  createdAt: Scalars['String']
-  updatedAt?: Maybe<Scalars['String']>
-}
-export interface GetEventAndTicketsQueryVariables {
-  id: Scalars['ID']
-}
+export type QueryGetUserArgs = {
+  id: Scalars["String"];
+};
 
-export type GetEventAndTicketsQuery = { __typename?: 'Query' } & {
+export type Ticket = {
+  __typename?: "Ticket";
+  eventId: Scalars["ID"];
+  userId: Scalars["ID"];
+  id: Scalars["ID"];
+  price: Scalars["String"];
+  date: Scalars["String"];
+  createdAt: Scalars["String"];
+  soldAt?: Maybe<Scalars["String"]>;
+};
+
+export type User = {
+  __typename?: "User";
+  id: Scalars["String"];
+  email: Scalars["String"];
+  createdAt: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
+};
+export type GetEventAndTicketsQueryVariables = {
+  id: Scalars["ID"];
+};
+
+export type GetEventAndTicketsQuery = { __typename?: "Query" } & {
   getEvent: Maybe<
-    { __typename?: 'GetEventResponse' } & {
+    { __typename?: "GetEventResponse" } & {
       event: Maybe<
-        { __typename?: 'Event' } & Pick<
+        { __typename?: "Event" } & Pick<
           Event,
-          'id' | 'name' | 'description' | 'date'
+          "id" | "name" | "description"
         > & {
-            location: { __typename?: 'Location' } & Pick<
+            dates: Array<
+              { __typename?: "EventDate" } & Pick<
+                EventDate,
+                "date" | "startTime" | "endTime"
+              >
+            >;
+            location: { __typename?: "Location" } & Pick<
               Location,
-              'name' | 'city' | 'address'
-            >
+              "name" | "city" | "address"
+            >;
           }
-      >
+      >;
     }
-  >
-  getTickets: { __typename?: 'GetTicketsResponse' } & {
+  >;
+  getTickets: { __typename?: "GetTicketsResponse" } & {
     tickets: Array<
-      { __typename?: 'Ticket' } & Pick<Ticket, 'id' | 'price' | 'userId'>
-    >
-  }
-}
-
-export interface GetEventsQueryVariables {}
-
-export type GetEventsQuery = { __typename?: 'Query' } & {
-  getEvents: Maybe<
-    { __typename?: 'GetEventsResponse' } & {
-      events: Array<
-        { __typename?: 'Event' } & Pick<
-          Event,
-          'id' | 'name' | 'date' | 'description'
-        > & { location: { __typename?: 'Location' } & Pick<Location, 'city'> }
+      { __typename?: "Ticket" } & Pick<
+        Ticket,
+        "id" | "price" | "userId" | "date"
       >
+    >;
+  };
+};
+
+export type GetEventsQueryVariables = {};
+
+export type GetEventsQuery = { __typename?: "Query" } & {
+  getEvents: Maybe<
+    { __typename?: "GetEventsResponse" } & {
+      events: Array<
+        { __typename?: "Event" } & Pick<
+          Event,
+          "id" | "name" | "description"
+        > & {
+            dates: Array<
+              { __typename?: "EventDate" } & Pick<
+                EventDate,
+                "date" | "startTime" | "endTime"
+              >
+            >;
+            location: { __typename?: "Location" } & Pick<Location, "city">;
+          }
+      >;
     }
-  >
-}
+  >;
+};
 
-export interface CreateEventMutationVariables {
-  data: CreateEventInput
-}
+export type CreateEventMutationVariables = {
+  data: CreateEventInput;
+};
 
-export type CreateEventMutation = { __typename?: 'Mutation' } & {
+export type CreateEventMutation = { __typename?: "Mutation" } & {
   createEvent: Maybe<
-    { __typename?: 'Event' } & Pick<
+    { __typename?: "Event" } & Pick<
       Event,
-      'id' | 'name' | 'description' | 'date' | 'createdAt'
+      "id" | "name" | "description" | "createdAt"
     > & {
-        location: { __typename?: 'Location' } & Pick<
+        location: { __typename?: "Location" } & Pick<
           Location,
-          'name' | 'city' | 'address'
-        >
+          "name" | "city" | "address"
+        >;
+        dates: Array<
+          { __typename?: "EventDate" } & Pick<
+            EventDate,
+            "date" | "startTime" | "endTime"
+          >
+        >;
       }
-  >
-}
+  >;
+};
 
 export const GetEventAndTicketsDocument = gql`
   query getEventAndTickets($id: ID!) {
@@ -191,7 +230,11 @@ export const GetEventAndTicketsDocument = gql`
         id
         name
         description
-        date
+        dates {
+          date
+          startTime
+          endTime
+        }
         location {
           name
           city
@@ -204,10 +247,11 @@ export const GetEventAndTicketsDocument = gql`
         id
         price
         userId
+        date
       }
     }
   }
-`
+`;
 
 export function useGetEventAndTicketsQuery(
   baseOptions?: ReactApolloHooks.QueryHookOptions<
@@ -217,18 +261,22 @@ export function useGetEventAndTicketsQuery(
   return ReactApolloHooks.useQuery<
     GetEventAndTicketsQuery,
     GetEventAndTicketsQueryVariables
-  >(GetEventAndTicketsDocument, baseOptions)
+  >(GetEventAndTicketsDocument, baseOptions);
 }
 export type GetEventAndTicketsQueryHookResult = ReturnType<
   typeof useGetEventAndTicketsQuery
->
+>;
 export const GetEventsDocument = gql`
   query getEvents {
     getEvents {
       events {
         id
         name
-        date
+        dates {
+          date
+          startTime
+          endTime
+        }
         description
         location {
           city
@@ -236,7 +284,7 @@ export const GetEventsDocument = gql`
       }
     }
   }
-`
+`;
 
 export function useGetEventsQuery(
   baseOptions?: ReactApolloHooks.QueryHookOptions<GetEventsQueryVariables>
@@ -244,29 +292,33 @@ export function useGetEventsQuery(
   return ReactApolloHooks.useQuery<GetEventsQuery, GetEventsQueryVariables>(
     GetEventsDocument,
     baseOptions
-  )
+  );
 }
-export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>
+export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
 export const CreateEventDocument = gql`
   mutation createEvent($data: CreateEventInput!) {
     createEvent(data: $data) {
       id
       name
       description
-      date
       location {
         name
         city
         address
       }
+      dates {
+        date
+        startTime
+        endTime
+      }
       createdAt
     }
   }
-`
+`;
 export type CreateEventMutationFn = ReactApollo.MutationFn<
   CreateEventMutation,
   CreateEventMutationVariables
->
+>;
 
 export function useCreateEventMutation(
   baseOptions?: ReactApolloHooks.MutationHookOptions<
@@ -277,8 +329,8 @@ export function useCreateEventMutation(
   return ReactApolloHooks.useMutation<
     CreateEventMutation,
     CreateEventMutationVariables
-  >(CreateEventDocument, baseOptions)
+  >(CreateEventDocument, baseOptions);
 }
 export type CreateEventMutationHookResult = ReturnType<
   typeof useCreateEventMutation
->
+>;

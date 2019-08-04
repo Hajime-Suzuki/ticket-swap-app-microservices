@@ -354,7 +354,7 @@
             "deprecationReason": null
           },
           {
-            "name": "date",
+            "name": "dates",
             "description": null,
             "args": [],
             "type": {
@@ -366,7 +366,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "Date", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "EventDate",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -413,7 +417,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "Date",
+        "name": "EventDate",
         "description": null,
         "fields": [
           {
@@ -682,6 +686,16 @@
             "defaultValue": null
           },
           {
+            "name": "date",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "defaultValue": null
+          },
+          {
             "name": "price",
             "description": null,
             "type": {
@@ -723,7 +737,7 @@
             "defaultValue": null
           },
           {
-            "name": "date",
+            "name": "dates",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -736,7 +750,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "DateInput",
+                    "name": "EventDateInput",
                     "ofType": null
                   }
                 }
@@ -765,7 +779,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "DateInput",
+        "name": "EventDateInput",
         "description": null,
         "fields": null,
         "inputFields": [

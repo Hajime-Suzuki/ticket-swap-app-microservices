@@ -4,7 +4,11 @@ query getEventAndTickets($id: ID!) {
       id
       name
       description
-      date
+      dates {
+        date
+        startTime
+        endTime
+      }
       location {
         name
         city
@@ -17,6 +21,7 @@ query getEventAndTickets($id: ID!) {
       id
       price
       userId
+      date
     }
   }
 }
@@ -26,7 +31,11 @@ query getEvents {
     events {
       id
       name
-      date
+      dates {
+        date
+        startTime
+        endTime
+      }
       description
       location {
         city
@@ -40,11 +49,15 @@ mutation createEvent($data: CreateEventInput!) {
     id
     name
     description
-    date
     location {
       name
       city
       address
+    }
+    dates {
+      date
+      startTime
+      endTime
     }
     createdAt
   }

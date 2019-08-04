@@ -84,6 +84,12 @@ resources:
             Mutable: true
             Required: true
 
+          - Name: preferred_username
+            AttributeDataType: String
+            DeveloperOnlyAttribute: false
+            Mutable: true
+            Required: true
+
         Policies:
           PasswordPolicy:
             MinimumLength: 6

@@ -3,7 +3,7 @@
     "id": "100",
     "name": "test event",
     "description": "lorem ipsum!",
-    "date": [
+    "dates": [
       {
         "date": "2019-09-01",
         "startTime": "9:00",
@@ -25,7 +25,7 @@
     "id": "101",
     "name": "second event",
     "description": "this is second",
-    "date": [
+    "dates": [
       {
         "date": "2019-09-03",
         "startTime": "9:00",
@@ -47,7 +47,7 @@
     "id": "102",
     "name": "third test event",
     "description": "some test 3",
-    "date": [
+    "dates": [
       {
         "date": "2019-09-05",
         "startTime": "9:00",

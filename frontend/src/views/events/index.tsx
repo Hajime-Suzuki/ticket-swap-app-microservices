@@ -6,6 +6,7 @@ import EventCard from './components/EventCard'
 import { pathNames } from 'routes/paths'
 import ErrorMessage from 'components/messages/ErrorMessage'
 import LoadingIcon from 'components/UI/LoadingIcon'
+import ContentWrapper from 'components/space/ContentWrapper'
 
 const EventsPage: React.FC = () => {
   const { data, error, loading } = useGetEventsQuery()
@@ -14,17 +15,19 @@ const EventsPage: React.FC = () => {
   if (!data || !data.getEvents) return null
 
   return (
-    <Grid container spacing={2} justify="center">
-      {data.getEvents.events.map(event => {
-        return (
-          <Grid item xs={12} md={4} key={event.id}>
-            <Link to={`${pathNames.singleEvent(event.id)}`}>
-              <EventCard event={event}></EventCard>
-            </Link>
-          </Grid>
-        )
-      })}
-    </Grid>
+    <ContentWrapper>
+      <Grid container spacing={2} justify="center">
+        {data.getEvents.events.map(event => {
+          return (
+            <Grid item xs={12} md={4} key={event.id}>
+              <Link to={`${pathNames.singleEvent(event.id)}`}>
+                <EventCard event={event}></EventCard>
+              </Link>
+            </Grid>
+          )
+        })}
+      </Grid>
+    </ContentWrapper>
   )
 }
 

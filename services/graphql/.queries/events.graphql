@@ -3,7 +3,7 @@ mutation craeteEvent {
     data: {
       name: "test event22222"
       description: "lorem ipsum!"
-      date: [
+      dates: [
         { date: "2019-09-01", startTime: "9:00", endTime: "20:00" }
         { date: "2019-09-02", startTime: "12:00", endTime: "21:00" }
       ]
@@ -24,7 +24,7 @@ query getEvent {
   getEvent(id: "102") {
     event {
       id
-      date {
+      dates {
         date
         startTime
         endTime
@@ -43,7 +43,7 @@ query getEvents {
     events {
       id
       name
-      date {
+      dates {
         date
         startTime
         endTime

@@ -13,27 +13,15 @@ export type Scalars = {
 export type ICreateEventInput = {
   name: Scalars["String"];
   description: Scalars["String"];
-  date: Array<IDateInput>;
+  dates: Array<IEventDateInput>;
   location: ILocationInput;
 };
 
 export type ICreateTicketInput = {
   eventId: Scalars["ID"];
   userId: Scalars["ID"];
+  date: Scalars["String"];
   price: Scalars["String"];
-};
-
-export type IDate = {
-  __typename?: "Date";
-  date: Scalars["String"];
-  startTime: Scalars["String"];
-  endTime: Scalars["String"];
-};
-
-export type IDateInput = {
-  date: Scalars["String"];
-  startTime: Scalars["String"];
-  endTime: Scalars["String"];
 };
 
 export type IEvent = {
@@ -41,10 +29,23 @@ export type IEvent = {
   id: Scalars["String"];
   name: Scalars["String"];
   description: Scalars["String"];
-  date: Array<IDate>;
+  dates: Array<IEventDate>;
   location: ILocation;
   createdAt: Scalars["String"];
   updatedAt?: Maybe<Scalars["String"]>;
+};
+
+export type IEventDate = {
+  __typename?: "EventDate";
+  date: Scalars["String"];
+  startTime: Scalars["String"];
+  endTime: Scalars["String"];
+};
+
+export type IEventDateInput = {
+  date: Scalars["String"];
+  startTime: Scalars["String"];
+  endTime: Scalars["String"];
 };
 
 export type IGetEventResponse = {
@@ -217,7 +218,7 @@ export type IResolversTypes = {
   String: ResolverTypeWrapper<Scalars["String"]>;
   GetEventsResponse: ResolverTypeWrapper<IGetEventsResponse>;
   Event: ResolverTypeWrapper<IEvent>;
-  Date: ResolverTypeWrapper<IDate>;
+  EventDate: ResolverTypeWrapper<IEventDate>;
   Location: ResolverTypeWrapper<ILocation>;
   GetEventResponse: ResolverTypeWrapper<IGetEventResponse>;
   GetUserResponse: ResolverTypeWrapper<IGetUserResponse>;
@@ -225,7 +226,7 @@ export type IResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   CreateTicketInput: ICreateTicketInput;
   CreateEventInput: ICreateEventInput;
-  DateInput: IDateInput;
+  EventDateInput: IEventDateInput;
   LocationInput: ILocationInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
 };
@@ -240,7 +241,7 @@ export type IResolversParentTypes = {
   String: Scalars["String"];
   GetEventsResponse: IGetEventsResponse;
   Event: IEvent;
-  Date: IDate;
+  EventDate: IEventDate;
   Location: ILocation;
   GetEventResponse: IGetEventResponse;
   GetUserResponse: IGetUserResponse;
@@ -248,7 +249,7 @@ export type IResolversParentTypes = {
   Mutation: {};
   CreateTicketInput: ICreateTicketInput;
   CreateEventInput: ICreateEventInput;
-  DateInput: IDateInput;
+  EventDateInput: IEventDateInput;
   LocationInput: ILocationInput;
   Boolean: Scalars["Boolean"];
 };
@@ -260,15 +261,6 @@ export type IAuthenticatedDirectiveResolver<
   Args = {}
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type IDateResolvers<
-  ContextType = any,
-  ParentType = IResolversParentTypes["Date"]
-> = {
-  date?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
-  startTime?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
-  endTime?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
-};
-
 export type IEventResolvers<
   ContextType = any,
   ParentType = IResolversParentTypes["Event"]
@@ -276,7 +268,11 @@ export type IEventResolvers<
   id?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   name?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   description?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
-  date?: Resolver<Array<IResolversTypes["Date"]>, ParentType, ContextType>;
+  dates?: Resolver<
+    Array<IResolversTypes["EventDate"]>,
+    ParentType,
+    ContextType
+  >;
   location?: Resolver<IResolversTypes["Location"], ParentType, ContextType>;
   createdAt?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   updatedAt?: Resolver<
@@ -284,6 +280,15 @@ export type IEventResolvers<
     ParentType,
     ContextType
   >;
+};
+
+export type IEventDateResolvers<
+  ContextType = any,
+  ParentType = IResolversParentTypes["EventDate"]
+> = {
+  date?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  startTime?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  endTime?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
 };
 
 export type IGetEventResponseResolvers<
@@ -398,8 +403,8 @@ export type IUserResolvers<
 };
 
 export type IResolvers<ContextType = any> = {
-  Date?: IDateResolvers<ContextType>;
   Event?: IEventResolvers<ContextType>;
+  EventDate?: IEventDateResolvers<ContextType>;
   GetEventResponse?: IGetEventResponseResolvers<ContextType>;
   GetEventsResponse?: IGetEventsResponseResolvers<ContextType>;
   GetTicketsResponse?: IGetTicketsResponseResolvers<ContextType>;

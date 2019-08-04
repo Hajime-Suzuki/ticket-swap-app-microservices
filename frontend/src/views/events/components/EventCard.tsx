@@ -1,16 +1,19 @@
 import Card from '@material-ui/core/Card'
-import React from 'react'
-import { Event } from 'graphql/generated/events'
-import CardMedia from '@material-ui/core/CardMedia'
-import Typography, { TypographyProps } from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
 import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Grid from '@material-ui/core/Grid'
+import Typography, { TypographyProps } from '@material-ui/core/Typography'
+import { GetEventsQuery } from 'graphql/generated/events'
+import React from 'react'
 import styled from 'styled-components'
+import { extractStartDateAndEndDate } from 'helpers/date'
 
 interface EventCardProps {
-  event: Partial<Event>
+  event: NonNullable<GetEventsQuery['getEvents']>['events'][number]
 }
+
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
+  const { startDate, endDate } = extractStartDateAndEndDate(event)
   return (
     <Card>
       <CardMedia
@@ -25,7 +28,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
         >
           <OverlayGridItem text={event.name} variant="h5" />
           <OverlayGridItem text={event.location && event.location.city} />
-          <OverlayGridItem text={event.date} />
+          <OverlayGridItem text={`${startDate} - ${endDate}`} />
         </OverlayGrid>
       </CardMedia>
       <CardContent>{event.description}</CardContent>
