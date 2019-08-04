@@ -5,17 +5,9 @@ import LoadingIcon from 'components/UI/LoadingIcon'
 import { useGetEventAndTicketsQuery } from 'graphql/generated/events'
 import React, { FC } from 'react'
 import { SingleEventRouteProps } from 'routes/types'
-import styled from 'styled-components'
 import useRouter from 'use-react-router'
-import EventDetailsSection from './EventDetailsSection'
 import EventDateListSection from './EventDateListSection'
-
-const FullWidthImage = styled.div`
-  width: 100%;
-  height: 30vh;
-  background-image: url('https://source.unsplash.com/random/400x300');
-  background-size: cover;
-`
+import EventDetailsSection from './EventDetailsSection'
 
 const EventPage: FC = () => {
   const {
@@ -32,7 +24,6 @@ const EventPage: FC = () => {
   const event = data.getEvent.event
   return (
     <>
-      {/* <FullWidthImage /> */}
       <ContentWrapper>
         <Grid container>
           <Grid item xs={12} md={6}>

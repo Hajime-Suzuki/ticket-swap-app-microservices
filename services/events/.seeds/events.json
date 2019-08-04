@@ -1,8 +1,8 @@
 [
   {
     "id": "100",
-    "name": "test event",
-    "description": "lorem ipsum!",
+    "name": "Test Event",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "dates": [
       {
         "date": "2019-09-01",
@@ -16,15 +16,15 @@
       }
     ],
     "location": {
-      "name": "super location",
+      "name": "Super Location",
       "city": "Amsterdam",
-      "address": "test street 1234"
+      "address": "Station, Zuidplein 10, 1077 XV Amsterdam"
     }
   },
   {
     "id": "101",
-    "name": "second event",
-    "description": "this is second",
+    "name": "Second Event",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "dates": [
       {
         "date": "2019-09-03",
@@ -38,15 +38,15 @@
       }
     ],
     "location": {
-      "name": "cool location",
-      "city": "rotterdam",
-      "address": "test street Rotterdam 1234"
+      "name": "Cool Location",
+      "city": "Rotterdam",
+      "address": "Straatweg 99, 3054 AB Rotterdam"
     }
   },
   {
     "id": "102",
-    "name": "third test event",
-    "description": "some test 3",
+    "name": "Third Test Event",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "dates": [
       {
         "date": "2019-09-05",
@@ -60,9 +60,9 @@
       }
     ],
     "location": {
-      "name": "another nice location",
-      "city": "utrecht",
-      "address": "test street Utrecht"
+      "name": "Another Nice Location",
+      "city": "Utrecht",
+      "address": "Overste Den Oudenlaan 2, 3527 KW Utrecht"
     }
   }
 ]
