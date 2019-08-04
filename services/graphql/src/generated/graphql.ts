@@ -51,7 +51,7 @@ export type IEventDateInput = {
 
 export type IGetEventResponse = {
   __typename?: "GetEventResponse";
-  event?: Maybe<IEvent>;
+  event: IEvent;
 };
 
 export type IGetEventsResponse = {
@@ -124,8 +124,8 @@ export type IQuery = {
   __typename?: "Query";
   getTickets: IGetTicketsResponse;
   getTicket: IGetTicketResponse;
-  getEvents?: Maybe<IGetEventsResponse>;
-  getEvent?: Maybe<IGetEventResponse>;
+  getEvents: IGetEventsResponse;
+  getEvent: IGetEventResponse;
   getUser?: Maybe<IGetUserResponse>;
 };
 
@@ -328,7 +328,7 @@ export type IGetEventResponseResolvers<
   ContextType = any,
   ParentType = IResolversParentTypes["GetEventResponse"]
 > = {
-  event?: Resolver<Maybe<IResolversTypes["Event"]>, ParentType, ContextType>;
+  event?: Resolver<IResolversTypes["Event"], ParentType, ContextType>;
 };
 
 export type IGetEventsResponseResolvers<
@@ -403,12 +403,12 @@ export type IQueryResolvers<
     IQueryGetTicketArgs
   >;
   getEvents?: Resolver<
-    Maybe<IResolversTypes["GetEventsResponse"]>,
+    IResolversTypes["GetEventsResponse"],
     ParentType,
     ContextType
   >;
   getEvent?: Resolver<
-    Maybe<IResolversTypes["GetEventResponse"]>,
+    IResolversTypes["GetEventResponse"],
     ParentType,
     ContextType,
     IQueryGetEventArgs

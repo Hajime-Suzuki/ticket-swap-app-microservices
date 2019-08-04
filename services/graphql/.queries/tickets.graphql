@@ -1,7 +1,9 @@
 # for developing purpose
 
 query getTickets {
-  getTickets(args: { eventId: "100" }) {
+  getTickets(
+    args: { keys: { eventId: "100" }, filter: { date: "2019-09-01" } }
+  ) {
     tickets {
       id
       eventId

@@ -1,23 +1,18 @@
 import { faClock, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Grid, Typography } from '@material-ui/core'
-import ErrorMessage from 'components/messages/ErrorMessage'
 import { GrayText } from 'components/UI/Typography'
-import { GetEventAndTicketsQuery } from 'graphql/generated/events'
 import { extractStartDateAndEndDate } from 'helpers/date'
 import React, { FC } from 'react'
 import styled from 'styled-components'
+import { EventFromQueryRes } from './types'
 
-type EventQueryResult = NonNullable<
-  GetEventAndTicketsQuery['getEvent']
->['event']
 interface Props {
-  event: EventQueryResult
+  event: EventFromQueryRes
 }
 
 const EventDetailsSection: FC<Props> = props => {
   const { event } = props
-  if (!event) return <ErrorMessage text="No Data Found" />
   return (
     <Grid container direction="column" spacing={3}>
       <Grid item>
@@ -46,9 +41,8 @@ const Image = styled.div`
   background-size: cover;
 `
 
-type Event = NonNullable<EventQueryResult>
 interface ChildProps {
-  event: Event
+  event: EventFromQueryRes
 }
 const Date: FC<ChildProps> = ({ event }) => {
   const { startDate, endDate } = extractStartDateAndEndDate(event, {

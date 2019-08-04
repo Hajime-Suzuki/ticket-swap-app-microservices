@@ -1,0 +1,11 @@
+query getTickets($args: GetTicketsArgs!) {
+  getTickets(args: $args) {
+    tickets {
+      id
+      eventId
+      userId
+      price
+      date
+    }
+  }
+}

@@ -1,20 +1,20 @@
-import ErrorMessage from 'components/messages/ErrorMessage'
-import { GetEventAndTicketsQuery } from 'graphql/generated/events'
-import React, { FC } from 'react'
 import {
+  Grid,
   List,
   ListItem,
   ListItemText,
-  Grid,
   Typography
 } from '@material-ui/core'
-import { getDate } from 'helpers/date'
+import ErrorMessage from 'components/messages/ErrorMessage'
 import { getYear } from 'date-fns'
+import { getDate } from 'helpers/date'
+import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { pathNames } from 'routes/paths'
+import { EventFromQueryRes } from './types'
 
 interface Props {
-  event: NonNullable<GetEventAndTicketsQuery['getEvent']>['event']
+  event: EventFromQueryRes
 }
 
 const EventDateListSection: FC<Props> = props => {
@@ -24,7 +24,7 @@ const EventDateListSection: FC<Props> = props => {
   return (
     <Grid container direction="column" justify="center" alignItems="center">
       <Grid item>
-        <Typography variant="h4">available dates</Typography>
+        <Typography variant="h4">Available Dates</Typography>
       </Grid>
       <Grid item>
         <List>

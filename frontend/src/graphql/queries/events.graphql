@@ -1,4 +1,4 @@
-query getEventAndTickets($id: ID!) {
+query getEvent($id: ID!) {
   getEvent(id: $id) {
     event {
       id
@@ -14,14 +14,6 @@ query getEventAndTickets($id: ID!) {
         city
         address
       }
-    }
-  }
-  getTickets(args: { eventId: $id }) {
-    tickets {
-      id
-      price
-      userId
-      date
     }
   }
 }

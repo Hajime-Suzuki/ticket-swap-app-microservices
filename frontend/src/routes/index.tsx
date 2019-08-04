@@ -4,7 +4,6 @@ import EventsPage from 'views/events'
 import TopPage from 'views/top'
 import { pathNames } from './paths'
 import EventPage from 'views/event'
-import TicketsPage from 'views/tickets'
 
 const Routes = () => {
   return (
@@ -12,7 +11,7 @@ const Routes = () => {
       <Route path={pathNames.top()} exact component={TopPage} />
       <Route path={pathNames.events()} exact component={EventsPage} />
       <Route path={pathNames.singleEvent()} exact component={EventPage} />
-      <Route path={pathNames.tickets()} exact component={TicketsPage} />
+      <Route path={pathNames.tickets()} exact component={EventPage} />
     </>
   )
 }
