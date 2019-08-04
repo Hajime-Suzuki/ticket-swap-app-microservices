@@ -27,7 +27,6 @@ export class LambdaCaller {
 
     logger.log('will invoke lambda', { ...params, Payload: body })
     const res = await this.lambda.invoke(params).promise()
-    console.log(res)
     const response = JSON.parse(res.Payload.toString())
     logger.log('invoked lambda', response)
     if (response.statusCode !== 200)

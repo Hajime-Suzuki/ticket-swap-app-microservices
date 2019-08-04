@@ -9,3 +9,13 @@ query getTickets($args: GetTicketsArgs!) {
     }
   }
 }
+
+query getTicket($eventId: ID!, $ticketId: ID!) {
+  getTicket(args: { eventId: $eventId, id: $ticketId }) {
+    ticket {
+      id
+      price
+      date
+    }
+  }
+}

@@ -66,7 +66,11 @@ const Location: FC<ChildProps> = ({ event: { location } }) => {
 }
 
 const Description: FC<ChildProps> = ({ event: { description } }) => {
-  return <Typography variant="body1">{description}</Typography>
+  return (
+    <Typography variant="body1" align="justify">
+      {description}
+    </Typography>
+  )
 }
 
 export default EventDetailsSection

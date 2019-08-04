@@ -12,6 +12,7 @@ const Routes = () => {
       <Route path={pathNames.events()} exact component={EventsPage} />
       <Route path={pathNames.singleEvent()} exact component={EventPage} />
       <Route path={pathNames.tickets()} exact component={EventPage} />
+      <Route path={pathNames.singleTicket()} exact component={EventPage} />
     </>
   )
 }

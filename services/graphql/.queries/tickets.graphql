@@ -20,3 +20,13 @@ mutation createTicket {
     userId
   }
 }
+
+query getTicket {
+  getTicket(args: { eventId: "100", id: "1" }) {
+    ticket {
+      id
+      price
+      date
+    }
+  }
+}

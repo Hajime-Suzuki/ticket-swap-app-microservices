@@ -3,13 +3,13 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Grid from '@material-ui/core/Grid'
 import Typography, { TypographyProps } from '@material-ui/core/Typography'
-import { GetEventsQuery } from 'graphql/generated/events'
+import { extractStartDateAndEndDate } from 'helpers/date'
 import React from 'react'
 import styled from 'styled-components'
-import { extractStartDateAndEndDate } from 'helpers/date'
+import { EventsFromQueryRes } from '../types'
 
 interface EventCardProps {
-  event: NonNullable<GetEventsQuery['getEvents']>['events'][number]
+  event: EventsFromQueryRes[number]
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {

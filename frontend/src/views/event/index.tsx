@@ -6,16 +6,13 @@ import { useGetEventQuery } from 'graphql/generated/events'
 import React, { FC } from 'react'
 import { SingleEventRouteProps } from 'routes/types'
 import useRouter from 'use-react-router'
-import EventDateListSection from './EventDateListSection'
 import EventDetailsSection from './EventDetailsSection'
-import TicketSection from './TicketSection'
+import { subRoutes } from './subroutes'
 
 const EventPage: FC = () => {
   const {
     match: { params }
   } = useRouter<SingleEventRouteProps>()
-
-  const isTicketsSection = !!params.date
 
   const { data, loading, error } = useGetEventQuery({
     variables: { id: params.eventId }
@@ -28,13 +25,12 @@ const EventPage: FC = () => {
   return (
     <>
       <ContentWrapper>
-        <Grid container>
+        <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             <EventDetailsSection event={event} />
           </Grid>
           <Grid item xs={12} md={6}>
-            {!isTicketsSection && <EventDateListSection event={event} />}
-            {isTicketsSection && <TicketSection />}
+            {subRoutes(event)}
           </Grid>
         </Grid>
       </ContentWrapper>

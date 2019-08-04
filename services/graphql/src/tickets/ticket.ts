@@ -54,6 +54,6 @@ export const ticketSchema = gql`
   }
 
   type GetTicketResponse {
-    ticket: Ticket!
+    ticket: Ticket
   }
 `
