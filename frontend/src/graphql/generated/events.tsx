@@ -24,6 +24,7 @@ export type CreateTicketInput = {
   userId: Scalars["ID"];
   date: Scalars["String"];
   price: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
 };
 
 export type Event = {
@@ -154,6 +155,7 @@ export type Ticket = {
   price: Scalars["String"];
   date: Scalars["String"];
   username: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
   createdAt: Scalars["String"];
   soldAt?: Maybe<Scalars["String"]>;
 };

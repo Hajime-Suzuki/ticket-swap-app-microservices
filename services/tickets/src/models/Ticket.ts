@@ -28,6 +28,9 @@ export class TicketModel implements ITicket {
   username: string
 
   @attribute()
+  description: string
+
+  @attribute()
   createdAt: string
 
   @attribute()

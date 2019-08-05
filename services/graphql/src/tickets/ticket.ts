@@ -10,6 +10,7 @@ export const ticketSchema = gql`
     price: String!
     date: String!
     username: String!
+    description: String
     createdAt: String!
     soldAt: String
   }
@@ -28,6 +29,7 @@ export const ticketSchema = gql`
     userId: ID!
     date: String!
     price: String!
+    description: String
   }
 
   input GetTicketsArgs {

@@ -23,6 +23,7 @@ export type ICreateTicketInput = {
   userId: Scalars["ID"];
   date: Scalars["String"];
   price: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
 };
 
 export type IEvent = {
@@ -152,6 +153,8 @@ export type ITicket = {
   id: Scalars["ID"];
   price: Scalars["String"];
   date: Scalars["String"];
+  username: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
   createdAt: Scalars["String"];
   soldAt?: Maybe<Scalars["String"]>;
 };
@@ -431,6 +434,12 @@ export type ITicketResolvers<
   id?: Resolver<IResolversTypes["ID"], ParentType, ContextType>;
   price?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   date?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  username?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  description?: Resolver<
+    Maybe<IResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
   createdAt?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   soldAt?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
 };

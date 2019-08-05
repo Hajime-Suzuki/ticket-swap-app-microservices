@@ -18,6 +18,7 @@ query getTicket($eventId: ID!, $ticketId: ID!) {
       price
       date
       username
+      description
     }
   }
 }

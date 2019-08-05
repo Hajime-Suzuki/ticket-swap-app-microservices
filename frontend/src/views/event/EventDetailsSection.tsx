@@ -46,7 +46,7 @@ interface ChildProps {
 }
 const Date: FC<ChildProps> = ({ event }) => {
   const { startDate, endDate } = extractStartDateAndEndDate(event, {
-    format: 'MMM DD'
+    format: 'MMM DD',
   })
   return (
     <GrayText variant="body2">
