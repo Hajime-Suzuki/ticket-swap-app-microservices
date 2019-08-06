@@ -11,7 +11,7 @@ import { getDate } from 'helpers/date'
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { pathNames } from 'routes/paths'
-import { EventFromQueryRes } from './types'
+import { EventFromQueryRes } from '../types'
 
 interface Props {
   event: EventFromQueryRes

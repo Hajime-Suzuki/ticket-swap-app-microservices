@@ -193,7 +193,7 @@ export type GetTicketQuery = { __typename?: "Query" } & {
     ticket: Maybe<
       { __typename?: "Ticket" } & Pick<
         Ticket,
-        "id" | "price" | "date" | "username" | "description"
+        "id" | "price" | "date" | "userId" | "username" | "description"
       >
     >;
   };
@@ -230,6 +230,7 @@ export const GetTicketDocument = gql`
         id
         price
         date
+        userId
         username
         description
       }

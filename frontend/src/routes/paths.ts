@@ -10,5 +10,10 @@ export const pathNames = {
   singleTicket: (eventId?: string, date?: string, ticketId?: string) =>
     eventId && ticketId
       ? `/events/${eventId}/${date}/tickets/${ticketId}`
-      : '/events/:eventId/:date/tickets/:ticketId'
+      : '/events/:eventId/:date/tickets/:ticketId',
+  orderTicket: (eventId?: string, ticketId?: string) =>
+    eventId && ticketId
+      ? `/order/${eventId}/${ticketId}`
+      : `/order/:eventId/:ticketId`,
+  user: (userId?: string) => (userId ? `/user/${userId}` : `user/:userId`)
 }

@@ -1,4 +1,7 @@
+import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 import ErrorMessage from 'components/messages/ErrorMessage'
 import LoadingIcon from 'components/UI/LoadingIcon'
 import { GetTicketQuery, useGetTicketQuery } from 'graphql/generated/tickets'
@@ -8,17 +11,17 @@ import { SingleEventSingleTicketSectionRouteProps } from 'routes/types'
 import styled from 'styled-components'
 import { theme } from 'theme'
 import useRouter from 'use-react-router'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
+import Avatar from '@material-ui/core/Avatar'
+import { Link } from 'react-router-dom'
+import { pathNames } from 'routes/paths'
 
 const SingleTicketSection: FC = () => {
   const {
-    match: { params },
+    match: { params }
   } = useRouter<SingleEventSingleTicketSectionRouteProps>()
 
   const { data, loading, error } = useGetTicketQuery({
-    variables: { eventId: params.eventId, ticketId: params.ticketId },
+    variables: { eventId: params.eventId, ticketId: params.ticketId }
   })
 
   if (loading) return <LoadingIcon />
@@ -29,11 +32,20 @@ const SingleTicketSection: FC = () => {
 
   return (
     <>
-      <Grid container direction="column" justify="center" alignItems="stretch" spacing={3}>
+      <Grid
+        container
+        direction="column"
+        justify="center"
+        alignItems="stretch"
+        spacing={3}
+      >
         <Grid item>
           <Typography variant="h4" align="center">
-            Ticket Detail
+            Ticket Details
           </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <UserBlock ticket={ticket} />
         </Grid>
         <Grid item xs={12}>
           <Typography align="justify">{ticket.description}</Typography>
@@ -42,21 +54,31 @@ const SingleTicketSection: FC = () => {
           <Ticket ticket={ticket} />
         </Grid>
         <OrderButtonGrid item>
-          <Button variant="outlined" color="primary">
-            Order
-          </Button>
+          <Link to={pathNames.orderTicket(params.eventId, params.ticketId)}>
+            <Button variant="outlined" color="primary">
+              Order
+            </Button>
+          </Link>
         </OrderButtonGrid>
       </Grid>
     </>
   )
 }
 
-const OrderButtonGrid = styled(Grid)`
-  && {
-    text-align: center;
-    margin-top: 2em;
-  }
-`
+const UserBlock: FC<TicketProps> = ({ ticket }) => {
+  return (
+    <Link to={pathNames.user(ticket.userId)}>
+      <Grid container justify="center" alignItems="center" spacing={1}>
+        <Grid item>
+          <Avatar>{ticket.username[0].toUpperCase()}</Avatar>
+        </Grid>
+        <Grid item>
+          <Typography>{ticket.username}</Typography>
+        </Grid>
+      </Grid>
+    </Link>
+  )
+}
 
 type Ticket = NonNullable<GetTicketQuery['getTicket']['ticket']>
 interface TicketProps {
@@ -94,4 +116,12 @@ const DateBlock = styled(Card)`
     font-weight: bold;
   }
 `
+
+const OrderButtonGrid = styled(Grid)`
+  && {
+    text-align: center;
+    margin-top: 2em;
+  }
+`
+
 export default SingleTicketSection

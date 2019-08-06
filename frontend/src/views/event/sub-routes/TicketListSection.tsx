@@ -7,20 +7,20 @@ import { useGetTicketsQuery } from 'graphql/generated/tickets'
 import React, { FC } from 'react'
 import { SingleEventTicketSectionRouteProps } from 'routes/types'
 import useRouter from 'use-react-router'
-import TicketListItem from './components/TicketListItem'
+import TicketListItem from '../components/TicketListItem'
 import { pathNames } from 'routes/paths'
 import { Link } from 'react-router-dom'
 
 const TicketListSection: FC = () => {
   const {
-    match: { params },
+    match: { params }
   } = useRouter<SingleEventTicketSectionRouteProps>()
 
   const { data, loading, error } = useGetTicketsQuery({
     variables: {
       keys: { eventId: params.eventId },
-      filter: { date: params.date },
-    },
+      filter: { date: params.date }
+    }
   })
 
   if (loading) return <LoadingIcon />
@@ -28,7 +28,8 @@ const TicketListSection: FC = () => {
 
   const tickets = data && data.getTickets.tickets
 
-  if (!tickets || !tickets.length) return <ErrorMessage text="No ticket available" />
+  if (!tickets || !tickets.length)
+    return <ErrorMessage text="No ticket available" />
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
@@ -37,7 +38,10 @@ const TicketListSection: FC = () => {
       </Grid>
       <List style={{ width: '100%' }}>
         {tickets.map(ticket => (
-          <Link key={ticket.id} to={pathNames.singleTicket(params.eventId, params.date, ticket.id)}>
+          <Link
+            key={ticket.id}
+            to={pathNames.singleTicket(params.eventId, params.date, ticket.id)}
+          >
             <TicketListItem ticket={ticket}></TicketListItem>
           </Link>
         ))}
