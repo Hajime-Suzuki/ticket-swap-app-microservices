@@ -15,5 +15,7 @@ export const pathNames = {
     eventId && ticketId
       ? `/order/${eventId}/${ticketId}`
       : `/order/:eventId/:ticketId`,
-  user: (userId?: string) => (userId ? `/user/${userId}` : `user/:userId`)
+  user: (userId?: string) => (userId ? `/user/${userId}` : `user/:userId`),
+  login: () => '/login',
+  signup: () => '/signup'
 }

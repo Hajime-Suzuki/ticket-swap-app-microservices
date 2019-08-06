@@ -27,6 +27,16 @@ const NavigationBar: React.FC = () => {
               <Button color="inherit">events</Button>
             </StyledLink>
           </Grid>
+          <Grid item>
+            <StyledLink to={pathNames.login()}>
+              <Button color="inherit">Login</Button>
+            </StyledLink>
+          </Grid>
+          <Grid item>
+            <StyledLink to={pathNames.signup()}>
+              <Button color="inherit">Signup</Button>
+            </StyledLink>
+          </Grid>
         </Grid>
       </Toolbar>
     </AppBar>
