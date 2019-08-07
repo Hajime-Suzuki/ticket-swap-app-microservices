@@ -1,4 +1,5 @@
 import Amplify, { Auth } from 'aws-amplify'
+import { CognitoUser } from 'amazon-cognito-identity-js'
 
 const config = {
   Auth: {
@@ -10,7 +11,12 @@ const config = {
 
 Amplify.configure(config)
 
-export const signUp = async ({username, email, password}: {username: string, email: string, password: string}) => {
+interface SignUpArgs {
+  username: string
+  email: string
+  password: string
+}
+export const signUp = async ({ username, email, password }: SignUpArgs) => {
   const res = await Auth.signUp({
     username: email,
     password,
@@ -19,6 +25,23 @@ export const signUp = async ({username, email, password}: {username: string, ema
       email
     }
   })
-  console.log({res})
   return res
+}
+
+type LoginArgs = Pick<SignUpArgs, 'email' | 'password'>
+
+export const login = async ({ email, password }: LoginArgs) => {
+  const user = await Auth.signIn({ username: email, password })
+  return user
+}
+
+export const getCurrentUserInfo = async (): Promise<
+  CognitoUser | undefined
+> => {
+  const res = await Auth.currentAuthenticatedUser()
+  return res
+}
+
+export const logout = async () => {
+  return Auth.signOut()
 }

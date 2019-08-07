@@ -1,6 +1,7 @@
 import { Button, Grid } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
+import { useUser } from 'hooks/useUser'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { pathNames } from 'routes/paths'
@@ -13,6 +14,8 @@ const StyledLink = styled(Link)`
 `
 
 const NavigationBar: React.FC = () => {
+  const { user, logout } = useUser()
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -27,16 +30,29 @@ const NavigationBar: React.FC = () => {
               <Button color="inherit">events</Button>
             </StyledLink>
           </Grid>
-          <Grid item>
-            <StyledLink to={pathNames.login()}>
-              <Button color="inherit">Login</Button>
-            </StyledLink>
-          </Grid>
-          <Grid item>
-            <StyledLink to={pathNames.signup()}>
-              <Button color="inherit">Signup</Button>
-            </StyledLink>
-          </Grid>
+          {!user && (
+            <>
+              <Grid item>
+                <StyledLink to={pathNames.login()}>
+                  <Button color="inherit">Login</Button>
+                </StyledLink>
+              </Grid>
+              <Grid item>
+                <StyledLink to={pathNames.signup()}>
+                  <Button color="inherit">Signup</Button>
+                </StyledLink>
+              </Grid>
+            </>
+          )}
+          {user && (
+            <Grid item>
+              <StyledLink to={pathNames.top()}>
+                <Button color="inherit" onClick={logout}>
+                  Logout
+                </Button>
+              </StyledLink>
+            </Grid>
+          )}
         </Grid>
       </Toolbar>
     </AppBar>

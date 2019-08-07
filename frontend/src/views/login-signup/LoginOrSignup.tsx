@@ -8,22 +8,37 @@ import React, { FC } from 'react'
 import { RouteComponentProps } from 'react-router'
 import { pathNames } from 'routes/paths'
 import styled from 'styled-components'
+import { signUp } from 'auth/amplify'
+import { useUser } from 'hooks/useUser'
 
-const initialValues = { username: '', email: '', password: '' }
+const initialSignupValues = { username: '', email: '', password: '' }
+const initialLoginValues = { email: '', password: '' }
 const LoginOrSignUp: FC<RouteComponentProps> = props => {
-  const isLogin = props.location.pathname.includes(pathNames.login())
-  const handleSubmit = (values: typeof initialValues) => {
-    console.log(values)
+  const isLoginPage = props.location.pathname.includes(pathNames.login())
+  const { login } = useUser()
+
+  const handleSubmit = async (values: typeof initialSignupValues) => {
+    await signUp(values)
+    await login({ email: values.email, password: values.password })
+    props.history.push(pathNames.events())
+  }
+  const handleLogin = async (values: typeof initialLoginValues) => {
+    await login(values)
   }
   return (
     <Wrapper>
       <Grid container direction="column" spacing={4}>
         <Grid item>
           <Typography variant="h4" gutterBottom>
-            {isLogin ? 'Login' : 'Signup'}
+            {isLoginPage ? 'Login' : 'Signup'}
           </Typography>
         </Grid>
-        <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+        <Formik
+          onSubmit={isLoginPage ? handleLogin : handleSubmit}
+          initialValues={
+            isLoginPage ? initialLoginValues : (initialSignupValues as any)
+          }
+        >
           {({ handleChange }) => (
             <Form>
               <Grid
@@ -33,7 +48,7 @@ const LoginOrSignUp: FC<RouteComponentProps> = props => {
                 direction="column"
                 alignItems="center"
               >
-                {isLogin && (
+                {!isLoginPage && (
                   <Grid item>
                     <TextField name="username" onChange={handleChange} />
                   </Grid>
