@@ -6,20 +6,30 @@ import {
   Typography
 } from '@material-ui/core'
 import ErrorMessage from 'components/messages/ErrorMessage'
+import LoadingIcon from 'components/UI/LoadingIcon'
 import { getYear } from 'date-fns'
+import { useGetEventQuery } from 'graphql/generated/events'
 import { getDate } from 'helpers/date'
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { pathNames } from 'routes/paths'
-import { EventFromQueryRes } from '../types'
+import { SingleEventRouteProps } from 'routes/types'
+import useRouter from 'use-react-router'
 
-interface Props {
-  event: EventFromQueryRes
-}
+const EventDateListSection: FC = () => {
+  const {
+    match: { params }
+  } = useRouter<SingleEventRouteProps>()
 
-const EventDateListSection: FC<Props> = props => {
-  const { event } = props
-  if (!event) return <ErrorMessage text="No Data Found" />
+  const { data, loading, error } = useGetEventQuery({
+    variables: { id: params.eventId }
+  })
+
+  if (loading) return <LoadingIcon />
+  if (error) return <ErrorMessage text={error.message} />
+  if (!data) return <ErrorMessage text="No Data Found" />
+  const event = data.getEvent.event
+
   const { dates } = event
   return (
     <Grid container direction="column" justify="center" alignItems="center">

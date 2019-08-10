@@ -1,14 +1,13 @@
 import React from 'react'
 import { Route } from 'react-router'
+import EventPage from 'views/event'
+import EventDateListSection from 'views/event/sub-routes/EventDateListSection'
+import SingleTicketSection from 'views/event/sub-routes/SingleTicketSection'
+import TicketListSection from 'views/event/sub-routes/TicketListSection'
 import EventsPage from 'views/events'
+import LoginOrSignUp from 'views/login-signup/LoginOrSignup'
 import TopPage from 'views/top'
 import { pathNames } from './paths'
-import EventPage from 'views/event'
-import { EventFromQueryRes } from 'views/event/types'
-import EventDateListSection from 'views/event/sub-routes/EventDateListSection'
-import TicketListSection from 'views/event/sub-routes/TicketListSection'
-import SingleTicketSection from 'views/event/sub-routes/SingleTicketSection'
-import LoginOrSignUp from 'views/login-signup/LoginOrSignup'
 
 export const Routes = () => {
   return (
@@ -26,13 +25,13 @@ export const Routes = () => {
   )
 }
 
-export const EventPageSubRoutes = (event: EventFromQueryRes) => {
+export const EventPageSubRoutes = () => {
   return (
     <>
       <Route
         path={pathNames.singleEvent()}
         exact
-        component={() => <EventDateListSection event={event} />}
+        component={() => <EventDateListSection />}
       />
       <Route
         path={pathNames.tickets()}

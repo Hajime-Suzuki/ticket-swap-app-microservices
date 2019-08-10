@@ -6,13 +6,26 @@ import { extractStartDateAndEndDate } from 'helpers/date'
 import React, { FC } from 'react'
 import styled from 'styled-components'
 import { EventFromQueryRes } from './types'
+import useRouter from 'use-react-router'
+import { SingleEventRouteProps } from 'routes/types'
+import { useGetEventQuery } from 'graphql/generated/events'
+import LoadingIcon from 'components/UI/LoadingIcon'
+import ErrorMessage from 'components/messages/ErrorMessage'
 
-interface Props {
-  event: EventFromQueryRes
-}
+const EventDetailsSection: FC = props => {
+  const {
+    match: { params }
+  } = useRouter<SingleEventRouteProps>()
 
-const EventDetailsSection: FC<Props> = props => {
-  const { event } = props
+  const { data, loading, error } = useGetEventQuery({
+    variables: { id: params.eventId }
+  })
+
+  if (loading) return <LoadingIcon />
+  if (error) return <ErrorMessage text={error.message} />
+  if (!data) return <ErrorMessage text="No Data Found" />
+  const event = data.getEvent.event
+
   return (
     <Grid container direction="column" spacing={3}>
       <Grid item>
@@ -46,7 +59,7 @@ interface ChildProps {
 }
 const Date: FC<ChildProps> = ({ event }) => {
   const { startDate, endDate } = extractStartDateAndEndDate(event, {
-    format: 'MMM DD',
+    format: 'MMM DD'
   })
   return (
     <GrayText variant="body2">

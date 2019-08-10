@@ -26,10 +26,10 @@ export const useUser = () => {
     password: string
   }) => {
     const loggedInUser = await _login({ email, password })
-    console.log(loggedInUser)
     setUser(loggedInUser)
   }
 
+  // TODO: user isn't updated in nav bar component
   return {
     user,
     login,

@@ -15,7 +15,6 @@ const StyledLink = styled(Link)`
 
 const NavigationBar: React.FC = () => {
   const { user, logout } = useUser()
-
   return (
     <AppBar position="static">
       <Toolbar>
