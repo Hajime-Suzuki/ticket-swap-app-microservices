@@ -1,32 +1,34 @@
 import TextField from '@material-ui/core/TextField'
-import { TimePicker as MUITimePicker } from '@material-ui/pickers'
-import { Field, FormikProps, FieldProps } from 'formik'
+import { KeyboardTimePicker, MaterialUiPickersDate } from '@material-ui/pickers'
+import { Field, FieldProps } from 'formik'
 import React, { FC } from 'react'
+
 interface Props {
-  onChange: FormikProps<any>['handleChange']
-  value: string
   name: string
   label: string
 }
 
 const TimePicker: FC<Props> = props => {
-  const { onChange: handleChangeDate, ...rest } = props
-  return <Field component={DP} {...rest}></Field>
+  return <Field component={FormComponent} {...props}></Field>
 }
 
-const DP = (props: FieldProps<any> & Props) => {
+const FormComponent = (props: FieldProps<any> & Props) => {
   const { form, field } = props
 
-  const handleChangeDate = (value: any) => {
-    form.setFieldValue(field.name, value)
+  const handleChangeDate = (
+    date: MaterialUiPickersDate | null,
+    value?: string | null
+  ) => {
+    form.setFieldValue(field.name, date)
   }
 
-  console.log({ field })
   return (
-    <MUITimePicker
+    <KeyboardTimePicker
+      label={props.label}
+      placeholder="14:32"
+      ampm={false}
       value={field.value || null}
       onChange={handleChangeDate}
-      label="date"
       TextFieldComponent={TextField}
     />
   )

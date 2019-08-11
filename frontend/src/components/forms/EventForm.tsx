@@ -6,6 +6,7 @@ import React, { FC } from 'react'
 import { createEventInitialValues } from 'views/create-event'
 import DatePicker from './DatePicker'
 import TextField from './Fields'
+import TimePicker from './TimePicker'
 
 export interface EventFormFields {
   name: string
@@ -55,18 +56,39 @@ export const EventForm: FC<Props> = props => {
   )
 }
 
-const DatesField: FC<Props> = ({ values, handleChange }) => {
+const DatesField: FC<Props> = ({ values }) => {
   return (
     <FieldArray name="dates">
       {arrayHelpers => {
         return (
           <>
             {values.dates.map((_, index) => (
-              <Grid item key={index} md={3} container justify="center">
-                <DatePicker
-                  name={`dates.${index}.date`}
-                  label={`date ${index + 1}`}
-                />
+              <Grid
+                item
+                key={index}
+                container
+                justify="center"
+                style={{ textAlign: 'center' }}
+                spacing={2}
+              >
+                <Grid item xs={12} md={2}>
+                  <DatePicker
+                    name={`dates.${index}.date`}
+                    label={`date ${index + 1}`}
+                  />
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  <TimePicker
+                    name={`dates.${index}.startTime`}
+                    label="start time"
+                  />
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  <TimePicker
+                    name={`dates.${index}.endTime`}
+                    label="end time"
+                  />
+                </Grid>
 
                 {index !== 0 && (
                   <IconButton onClick={() => arrayHelpers.remove(index)}>
