@@ -7,19 +7,9 @@ import { createEventInitialValues } from 'views/create-event'
 import DatePicker from './DatePicker'
 import TextField from './Fields'
 import TimePicker from './TimePicker'
+import { CreateEventInput } from 'graphql/generated/events'
 
-export interface EventFormFields {
-  name: string
-  description: string
-  dates: any[]
-  location: {
-    name: string
-    city: string
-    address: string
-  }
-}
-
-type Props = FormikProps<EventFormFields>
+type Props = FormikProps<CreateEventInput>
 
 export const EventForm: FC<Props> = props => {
   return (

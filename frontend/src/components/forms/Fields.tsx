@@ -1,6 +1,6 @@
 import MUITextField, { TextFieldProps } from '@material-ui/core/TextField'
+import { Field, FieldProps, getIn } from 'formik'
 import React, { FC } from 'react'
-import { Field, FieldProps } from 'formik'
 
 export const TextField: FC<TextFieldProps> = props => {
   return <Field component={FieldComponent} {...props} />
@@ -16,13 +16,19 @@ const FieldComponent: FC<FieldProps<any> & TextFieldProps> = props => {
     form.setFieldValue(field.name, e.target.value)
   }
 
+  const error = getIn(form.errors, field.name)
+  const errorMessages = error && error.split('.')
   return (
-    <MUITextField
-      name={name}
-      label={label || name}
-      type={type}
-      onChange={handleChange}
-    />
+    <>
+      <MUITextField
+        name={name}
+        label={label || name}
+        type={type}
+        onChange={handleChange}
+        error={!!error}
+        helperText={errorMessages && errorMessages[errorMessages.length - 1]}
+      />
+    </>
   )
 }
 

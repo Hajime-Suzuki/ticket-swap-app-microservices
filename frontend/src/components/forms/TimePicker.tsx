@@ -1,6 +1,6 @@
 import TextField from '@material-ui/core/TextField'
 import { KeyboardTimePicker, MaterialUiPickersDate } from '@material-ui/pickers'
-import { Field, FieldProps } from 'formik'
+import { Field, FieldProps, getIn } from 'formik'
 import React, { FC } from 'react'
 
 interface Props {
@@ -22,6 +22,9 @@ const FormComponent = (props: FieldProps<any> & Props) => {
     form.setFieldValue(field.name, date)
   }
 
+  const error: string | undefined = getIn(form.errors, field.name)
+  const errorMessages = error && error.split('.')
+
   return (
     <KeyboardTimePicker
       label={props.label}
@@ -30,6 +33,8 @@ const FormComponent = (props: FieldProps<any> & Props) => {
       value={field.value || null}
       onChange={handleChangeDate}
       TextFieldComponent={TextField}
+      error={!!error}
+      helperText={errorMessages && errorMessages[errorMessages.length - 1]}
     />
   )
 }

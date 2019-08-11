@@ -3,7 +3,7 @@ import {
   DatePicker as MUIDatePicker,
   MaterialUiPickersDate
 } from '@material-ui/pickers'
-import { Field, FieldProps } from 'formik'
+import { Field, FieldProps, getIn } from 'formik'
 import { formatDate } from 'helpers/date'
 import React, { FC } from 'react'
 
@@ -24,12 +24,17 @@ const FormComponent = (props: FieldProps<any> & Props) => {
     form.setFieldValue(field.name, d)
   }
 
+  const error: string | undefined = getIn(form.errors, field.name)
+  const errorMessages = error && error.split('.')
+
   return (
     <MUIDatePicker
       value={field.value || null}
       onChange={handleChangeDate}
       label="date"
       TextFieldComponent={TextField}
+      error={!!error}
+      helperText={errorMessages && errorMessages[errorMessages.length - 1]}
     />
   )
 }
