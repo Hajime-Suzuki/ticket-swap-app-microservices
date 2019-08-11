@@ -45,3 +45,10 @@ DynamoDB:
 SNS:
 
 - ticket-swap*SERVICE_NAME*-_SERVICE_NAME_-events
+
+#### Frontend
+
+in local environment,
+
+- signup
+- add the user in services/_service_/.seed/user.json

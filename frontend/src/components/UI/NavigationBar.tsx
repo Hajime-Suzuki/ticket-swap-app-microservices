@@ -29,6 +29,11 @@ const NavigationBar: React.FC = () => {
               <Button color="inherit">events</Button>
             </StyledLink>
           </Grid>
+          <Grid item>
+            <StyledLink to={pathNames.createEvent()}>
+              <Button color="inherit">new event</Button>
+            </StyledLink>
+          </Grid>
           {!user && (
             <>
               <Grid item>

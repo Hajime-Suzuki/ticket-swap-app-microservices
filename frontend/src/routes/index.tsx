@@ -8,12 +8,14 @@ import EventsPage from 'views/events'
 import LoginOrSignUp from 'views/login-signup/LoginOrSignup'
 import TopPage from 'views/top'
 import { pathNames } from './paths'
+import CreateEventPage from 'views/create-event'
 
 export const Routes = () => {
   return (
     <>
       <Route path={pathNames.top()} exact component={TopPage} />
       <Route path={pathNames.events()} exact component={EventsPage} />
+      <Route path={pathNames.createEvent()} exact component={CreateEventPage} />
       <Route path={pathNames.singleEvent()} exact component={EventPage} />
       <Route path={pathNames.tickets()} exact component={EventPage} />
       <Route path={pathNames.singleTicket()} exact component={EventPage} />

@@ -44,7 +44,7 @@ const EventDateListSection: FC = () => {
                 <ListItemText>
                   <Link to={pathNames.tickets(event.id, d.date)}>
                     <Typography color="primary">
-                      {`${getDate(d.date)} - ${getYear(d.date)}`}
+                      {`${getDate(d.date)} - ${getYear(new Date(d.date))}`}
                     </Typography>
                   </Link>
                 </ListItemText>

@@ -6,12 +6,16 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import { theme } from 'theme'
 import App from './App'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <App />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <App />
+        </MuiPickersUtilsProvider>
       </ThemeProvider>
     </BrowserRouter>
   </ApolloProvider>,

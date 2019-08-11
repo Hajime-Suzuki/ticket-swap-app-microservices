@@ -1,6 +1,7 @@
 export const pathNames = {
   top: () => '/',
   events: () => '/events',
+  createEvent: () => '/create-event',
   singleEvent: (eventId?: string) =>
     eventId ? `/events/${eventId}` : '/events/:eventId',
   tickets: (eventId?: string, date?: string) =>
