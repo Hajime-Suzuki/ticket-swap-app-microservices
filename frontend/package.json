@@ -36,11 +36,11 @@
     "use-react-router": "^1.0.7"
   },
   "devDependencies": {
-    "@graphql-codegen/add": "^1.4.0",
-    "@graphql-codegen/cli": "^1.4.0",
-    "@graphql-codegen/typescript": "^1.4.0",
-    "@graphql-codegen/typescript-operations": "^1.4.0",
-    "@graphql-codegen/typescript-react-apollo": "^1.4.0",
+    "@graphql-codegen/add": "^1.5.0",
+    "@graphql-codegen/cli": "^1.5.0",
+    "@graphql-codegen/typescript": "^1.5.0",
+    "@graphql-codegen/typescript-operations": "^1.5.0",
+    "@graphql-codegen/typescript-react-apollo": "^1.5.0",
     "@types/react": "^16.8.24",
     "@types/react-router": "^5.0.3",
     "@types/react-router-dom": "^4.3.4",

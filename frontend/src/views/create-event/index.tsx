@@ -3,11 +3,12 @@ import EventForm, { EventFormFields } from 'components/forms/EventForm'
 import ContentWrapper from 'components/space/ContentWrapper'
 import { Form, Formik } from 'formik'
 import React, { FC } from 'react'
+import { useCreateEventMutation } from 'graphql/generated/events'
 
-const initialValues: EventFormFields = {
+export const createEventInitialValues: EventFormFields = {
   name: '',
   description: '',
-  dates: [''],
+  dates: [{ date: '', startTime: '', endTime: '' }],
   location: {
     name: '',
     city: '',
@@ -16,13 +17,17 @@ const initialValues: EventFormFields = {
 }
 
 const CreateEventPage: FC = () => {
-  const submit = (values: any) => {
-    console.log(values)
+  const [createEvent, result] = useCreateEventMutation()
+
+  const submit = async (values: any) => {
+    console.log(JSON.stringify(values, null, 2))
+    // const res = await createEvent({ variables: values })
+    // console.log({ res, result })
   }
   return (
     <ContentWrapper>
       <Typography variant="h5">Create Event</Typography>
-      <Formik initialValues={initialValues} onSubmit={submit}>
+      <Formik initialValues={createEventInitialValues} onSubmit={submit}>
         {formikProps => {
           return (
             <Form>

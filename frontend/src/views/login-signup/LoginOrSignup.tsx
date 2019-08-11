@@ -39,7 +39,7 @@ const LoginOrSignUp: FC<RouteComponentProps> = props => {
             isLoginPage ? initialLoginValues : (initialSignupValues as any)
           }
         >
-          {({ handleChange }) => (
+          {() => (
             <Form>
               <Grid
                 item
@@ -50,14 +50,14 @@ const LoginOrSignUp: FC<RouteComponentProps> = props => {
               >
                 {!isLoginPage && (
                   <Grid item>
-                    <TextField name="username" onChange={handleChange} />
+                    <TextField name="username" />
                   </Grid>
                 )}
                 <Grid item>
-                  <TextField name="email" onChange={handleChange} />
+                  <TextField name="email" />
                 </Grid>
                 <Grid item>
-                  <TextField name="password" onChange={handleChange} />
+                  <TextField name="password" type="password" />
                 </Grid>
               </Grid>
               <Button

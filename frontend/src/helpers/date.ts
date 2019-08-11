@@ -1,10 +1,25 @@
 import { Event } from 'graphql/generated/events'
 import { format } from 'date-fns'
 
-const FormatTypes = {
-  'MMM DD': 'MMM DD',
+export const DateFormat = {
+  'YYYY-MM-DD': 'yyyy-MM-dd',
+  'MMM DD': 'MMM dd',
   'MMM': 'MMM',
-  'DD': 'DD'
+  'DD': 'dd'
+}
+
+export const formatDate = (
+  date: Date | number,
+  formatString: keyof typeof DateFormat,
+  options?: {
+    locale?: Locale
+    weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
+    firstWeekContainsDate?: number
+    useAdditionalWeekYearTokens?: boolean
+    useAdditionalDayOfYearTokens?: boolean
+  }
+): string => {
+  return format(date, DateFormat[formatString], options)
 }
 
 interface ExtractStartDateAndEndDateReturn {
@@ -14,7 +29,7 @@ interface ExtractStartDateAndEndDateReturn {
 export const extractStartDateAndEndDate = (
   event: Partial<Event>,
   options?: {
-    format?: keyof typeof FormatTypes
+    format?: keyof typeof DateFormat
   }
 ): ExtractStartDateAndEndDateReturn => {
   if (!event || !event.dates || !event.dates.length)
@@ -27,20 +42,20 @@ export const extractStartDateAndEndDate = (
 
   if (options && options.format) {
     return {
-      startDate: format(new Date(dates.startDate), options.format),
-      endDate: format(new Date(dates.endDate), options.format)
+      startDate: formatDate(new Date(dates.startDate), options.format),
+      endDate: formatDate(new Date(dates.endDate), options.format)
     }
   }
   return dates
 }
 
 export const getDate = (date: string) => {
-  return format(new Date(date), FormatTypes['MMM DD'])
+  return formatDate(new Date(date), 'MMM DD')
 }
 
 export const extractDate = (date: string) => {
   return {
-    month: format(new Date(date), FormatTypes.MMM),
-    date: format(new Date(date), FormatTypes.DD)
+    month: formatDate(new Date(date), 'MMM'),
+    date: formatDate(new Date(date), 'DD')
   }
 }

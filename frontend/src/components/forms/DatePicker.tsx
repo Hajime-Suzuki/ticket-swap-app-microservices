@@ -1,24 +1,24 @@
 import TextField from '@material-ui/core/TextField'
 import { DatePicker as MUIDatePicker } from '@material-ui/pickers'
-import { Field, FormikProps, FieldProps } from 'formik'
+import { Field, FieldProps } from 'formik'
+import { formatDate } from 'helpers/date'
 import React, { FC } from 'react'
+
 interface Props {
-  onChange: FormikProps<any>['handleChange']
-  value: string
   name: string
   label: string
 }
 
 const DatePicker: FC<Props> = props => {
-  const { onChange: handleChangeDate, ...rest } = props
-  return <Field component={DP} {...rest}></Field>
+  return <Field component={FormComponent} {...props}></Field>
 }
 
-const DP = (props: FieldProps<any> & Props) => {
+const FormComponent = (props: FieldProps<any> & Props) => {
   const { form, field } = props
 
-  const handleChangeDate = (value: any) => {
-    form.setFieldValue(field.name, value)
+  const handleChangeDate = (date: any) => {
+    const d = formatDate(date, 'YYYY-MM-DD')
+    form.setFieldValue(field.name, d)
   }
 
   return (
