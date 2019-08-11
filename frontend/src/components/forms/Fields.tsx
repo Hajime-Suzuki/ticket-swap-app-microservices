@@ -17,7 +17,6 @@ const FieldComponent: FC<FieldProps<any> & TextFieldProps> = props => {
   }
 
   const error = getIn(form.errors, field.name)
-  const errorMessages = error && error.split('.')
   return (
     <>
       <MUITextField
@@ -26,7 +25,7 @@ const FieldComponent: FC<FieldProps<any> & TextFieldProps> = props => {
         type={type}
         onChange={handleChange}
         error={!!error}
-        helperText={errorMessages && errorMessages[errorMessages.length - 1]}
+        helperText={error}
       />
     </>
   )

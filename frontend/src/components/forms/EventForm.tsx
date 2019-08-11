@@ -1,13 +1,13 @@
 import { faMinusSquare, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Grid, IconButton } from '@material-ui/core'
+import { Grid, IconButton } from '@material-ui/core'
 import { FieldArray, FormikProps } from 'formik'
+import { CreateEventInput } from 'graphql/generated/events'
 import React, { FC } from 'react'
 import { createEventInitialValues } from 'views/create-event'
 import DatePicker from './DatePicker'
 import TextField from './Fields'
 import TimePicker from './TimePicker'
-import { CreateEventInput } from 'graphql/generated/events'
 
 type Props = FormikProps<CreateEventInput>
 
@@ -31,16 +31,6 @@ export const EventForm: FC<Props> = props => {
       </Grid>
       <Grid item>
         <TextField name="location.address" label="location address" />
-      </Grid>
-      <Grid item>
-        <Button
-          onClick={() => props.handleSubmit()}
-          variant="contained"
-          color="primary"
-          style={{ marginTop: '1em' }}
-        >
-          Submit
-        </Button>
       </Grid>
     </Grid>
   )

@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import EventForm from 'components/forms/EventForm'
 import ContentWrapper from 'components/space/ContentWrapper'
@@ -7,10 +8,10 @@ import {
   GetEventsDocument,
   useCreateEventMutation
 } from 'graphql/generated/events'
+import { createEventSchema } from 'helpers/validations/schema'
 import React, { FC } from 'react'
 import { pathNames } from 'routes/paths'
 import useRouter from 'use-react-router'
-import { createEventSchema } from 'helpers/validation'
 
 export const createEventInitialValues: CreateEventInput = {
   name: '',
@@ -25,7 +26,7 @@ export const createEventInitialValues: CreateEventInput = {
 
 const CreateEventPage: FC = () => {
   const { history } = useRouter()
-  const [createEvent, { error }] = useCreateEventMutation({
+  const [createEvent, { error, loading }] = useCreateEventMutation({
     refetchQueries: [{ query: GetEventsDocument }]
   })
 
@@ -41,17 +42,29 @@ const CreateEventPage: FC = () => {
         initialValues={createEventInitialValues}
         onSubmit={submit}
         validationSchema={createEventSchema}
+        validateOnBlur={true}
       >
         {formikProps => (
           <Form>
             <EventForm {...formikProps}></EventForm>
-            <Typography
-              color="error"
-              align="center"
-              style={{ marginTop: '1em' }}
-            >
-              {error && error.message}
-            </Typography>
+            <div style={{ textAlign: 'center' }}>
+              <Typography
+                color="error"
+                align="center"
+                style={{ marginTop: '1em' }}
+              >
+                {error && error.message}
+              </Typography>
+              <Button
+                onClick={() => formikProps.handleSubmit()}
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                style={{ margin: '1em 0em' }}
+              >
+                Submit
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>

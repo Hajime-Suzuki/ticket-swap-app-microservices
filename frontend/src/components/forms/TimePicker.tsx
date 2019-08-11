@@ -23,7 +23,6 @@ const FormComponent = (props: FieldProps<any> & Props) => {
   }
 
   const error: string | undefined = getIn(form.errors, field.name)
-  const errorMessages = error && error.split('.')
 
   return (
     <KeyboardTimePicker
@@ -34,7 +33,7 @@ const FormComponent = (props: FieldProps<any> & Props) => {
       onChange={handleChangeDate}
       TextFieldComponent={TextField}
       error={!!error}
-      helperText={errorMessages && errorMessages[errorMessages.length - 1]}
+      helperText={error}
     />
   )
 }
