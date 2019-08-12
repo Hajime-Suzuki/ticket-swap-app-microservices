@@ -38,3 +38,18 @@ export const createEventSchema = yup.object().shape({
   dates: yup.array().of(dateSchema),
   location: locationSchema
 })
+
+export const createTicketSchema = yup.object().shape({
+  date: yup.string().required(errorMessages.required('date')),
+  price: yup
+    .string()
+    // .moreThan(0)
+    .test('price', 'too many decimal numbers', function(
+      this: yup.TestContext,
+      value: string
+    ) {
+      if (value.match(/\d{1,}.\d{3,}/)) return false
+      return true
+    }),
+  description: yup.string()
+})

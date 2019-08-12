@@ -9,7 +9,7 @@ import React, { FC } from 'react'
 
 interface Props {
   name: string
-  label: string
+  label?: string
 }
 
 const DatePicker: FC<Props> = props => {
@@ -17,7 +17,7 @@ const DatePicker: FC<Props> = props => {
 }
 
 const FormComponent = (props: FieldProps<any> & Props) => {
-  const { form, field } = props
+  const { form, field, label } = props
 
   const handleChangeDate = (date: MaterialUiPickersDate) => {
     const d = formatDate(date || new Date(), 'YYYY-MM-DD')
@@ -30,7 +30,7 @@ const FormComponent = (props: FieldProps<any> & Props) => {
     <MUIDatePicker
       value={field.value || null}
       onChange={handleChangeDate}
-      label="date"
+      label={label || field.name}
       TextFieldComponent={TextField}
       error={!!error}
       helperText={error}

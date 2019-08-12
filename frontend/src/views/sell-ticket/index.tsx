@@ -1,53 +1,43 @@
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import EventForm from 'components/forms/EventForm'
+import TicketForm, { TicketFormProps } from 'components/forms/TicketForm'
 import ContentWrapper from 'components/space/ContentWrapper'
 import { Form, Formik } from 'formik'
-import {
-  CreateEventInput,
-  GetEventsDocument,
-  useCreateEventMutation
-} from 'graphql/generated/events'
-import { createEventSchema } from 'helpers/validations/schema'
+import { createTicketSchema } from 'helpers/validations/schema'
 import React, { FC } from 'react'
-import { pathNames } from 'routes/paths'
 import useRouter from 'use-react-router'
 
-export const createEventInitialValues: CreateEventInput = {
-  name: '',
-  description: '',
-  dates: [{ date: '', startTime: '', endTime: '' }],
-  location: {
-    name: '',
-    city: '',
-    address: ''
-  }
+export const createTicketInitialValues: TicketFormProps = {
+  date: '',
+  price: '0.00',
+  description: ''
 }
 
-const CreateEventPage: FC = () => {
+const SellTicketPage: FC = () => {
   const { history } = useRouter()
-  const [createEvent, { error, loading }] = useCreateEventMutation({
-    refetchQueries: [{ query: GetEventsDocument }]
-  })
+  // const [createEvent, { error, loading }] = useCreateEventMutation({
+  //   refetchQueries: [{ query: GetEventsDocument }]
+  // })
+  const error = { message: null }
+  const loading = false
 
-  const submit = async (values: CreateEventInput) => {
-    await createEvent({ variables: { data: values } })
-    history.push(pathNames.events())
+  const submit = async (values: TicketFormProps) => {
+    console.log(values)
   }
 
   return (
     <ContentWrapper>
-      <Typography variant="h5">Create Event</Typography>
+      <Typography variant="h5">Sell Ticket</Typography>
       <Formik
-        initialValues={createEventInitialValues}
+        initialValues={createTicketInitialValues}
         onSubmit={submit}
-        validationSchema={createEventSchema}
+        validationSchema={createTicketSchema}
         validateOnBlur={true}
         validateOnChange={false}
       >
         {formikProps => (
           <Form>
-            <EventForm {...formikProps}></EventForm>
+            <TicketForm {...formikProps}></TicketForm>
             <div style={{ textAlign: 'center' }}>
               <Typography
                 color="error"
@@ -73,4 +63,4 @@ const CreateEventPage: FC = () => {
   )
 }
 
-export default CreateEventPage
+export default SellTicketPage

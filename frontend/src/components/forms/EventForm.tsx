@@ -52,10 +52,7 @@ const DatesField: FC<Props> = ({ values }) => {
                 spacing={2}
               >
                 <Grid item xs={12} md={2}>
-                  <DatePicker
-                    name={`dates.${index}.date`}
-                    label={`date ${index + 1}`}
-                  />
+                  <DatePicker name={`dates.${index}.date`} label={`date`} />
                 </Grid>
                 <Grid item xs={12} md={2}>
                   <TimePicker

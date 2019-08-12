@@ -1,6 +1,6 @@
 import { faClock, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, Button } from '@material-ui/core'
 import { GrayText } from 'components/UI/Typography'
 import { extractStartDateAndEndDate } from 'helpers/date'
 import React, { FC } from 'react'
@@ -11,6 +11,8 @@ import { SingleEventRouteProps } from 'routes/types'
 import { useGetEventQuery } from 'graphql/generated/events'
 import LoadingIcon from 'components/UI/LoadingIcon'
 import ErrorMessage from 'components/messages/ErrorMessage'
+import { Link } from 'react-router-dom'
+import { pathNames } from 'routes/paths'
 
 const EventDetailsSection: FC = props => {
   const {
@@ -42,6 +44,13 @@ const EventDetailsSection: FC = props => {
       </Grid>
       <Grid item>
         <Description event={event}></Description>
+      </Grid>
+      <Grid item style={{ textAlign: 'center', margin: '1em 0' }}>
+        <Link to={pathNames.sellTicket(params.eventId)}>
+          <Button variant="contained" color="primary">
+            Sell Ticket
+          </Button>
+        </Link>
       </Grid>
     </Grid>
   )
