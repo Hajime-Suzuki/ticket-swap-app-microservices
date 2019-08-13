@@ -16,7 +16,7 @@ query getTickets {
 
 mutation createTicket {
   createTicket(
-    data: { userId: "1", eventId: "124", price: "15.09", date: "2019-08-15" }
+    data: { userId: "1", eventId: "101", price: "15.09", date: "2019-08-15" }
   ) {
     userId
   }

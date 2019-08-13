@@ -23,3 +23,11 @@ query getTicket($eventId: ID!, $ticketId: ID!) {
     }
   }
 }
+
+mutation createTicket($data: CreateTicketInput!) {
+  createTicket(data: $data) {
+    ticket {
+      price
+    }
+  }
+}

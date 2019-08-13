@@ -36,8 +36,8 @@ const SellTicketPage: FC = () => {
   //   refetchQueries: [{ query: GetEventsDocument }]
   // })
 
-  // const error = { message: null }
-  // const loading = false
+  const error = { message: null }
+  const loading = false
 
   if (!eventDates) return <LoadingIcon />
   if (getEventError) {
