@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@material-ui/styles'
 import { client } from 'graphql/client'
 import React from 'react'
-import { ApolloProvider } from 'react-apollo-hooks'
+import { ApolloProvider } from '@apollo/react-hooks'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import { theme } from 'theme'

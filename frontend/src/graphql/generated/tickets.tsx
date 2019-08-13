@@ -1,6 +1,7 @@
 /* tslint:disable */
 import gql from "graphql-tag";
-import * as ReactApolloHooks from "react-apollo-hooks";
+import * as ApolloReactCommon from "@apollo/react-common";
+import * as ApolloReactHooks from "@apollo/react-hooks";
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -199,6 +200,16 @@ export type GetTicketQuery = { __typename?: "Query" } & {
   };
 };
 
+export type CreateTicketMutationVariables = {
+  data: CreateTicketInput;
+};
+
+export type CreateTicketMutation = { __typename?: "Mutation" } & {
+  createTicket: { __typename?: "GetTicketResponse" } & {
+    ticket: Maybe<{ __typename?: "Ticket" } & Pick<Ticket, "price">>;
+  };
+};
+
 export const GetTicketsDocument = gql`
   query getTickets($keys: GetTicketsKeys!, $filter: GetTicketsFilter!) {
     getTickets(args: { keys: $keys, filter: $filter }) {
@@ -215,14 +226,21 @@ export const GetTicketsDocument = gql`
 `;
 
 export function useGetTicketsQuery(
-  baseOptions?: ReactApolloHooks.QueryHookOptions<GetTicketsQueryVariables>
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    GetTicketsQuery,
+    GetTicketsQueryVariables
+  >
 ) {
-  return ReactApolloHooks.useQuery<GetTicketsQuery, GetTicketsQueryVariables>(
+  return ApolloReactHooks.useQuery<GetTicketsQuery, GetTicketsQueryVariables>(
     GetTicketsDocument,
     baseOptions
   );
 }
 export type GetTicketsQueryHookResult = ReturnType<typeof useGetTicketsQuery>;
+export type GetTicketsQueryResult = ApolloReactCommon.QueryResult<
+  GetTicketsQuery,
+  GetTicketsQueryVariables
+>;
 export const GetTicketDocument = gql`
   query getTicket($eventId: ID!, $ticketId: ID!) {
     getTicket(args: { eventId: $eventId, id: $ticketId }) {
@@ -239,11 +257,53 @@ export const GetTicketDocument = gql`
 `;
 
 export function useGetTicketQuery(
-  baseOptions?: ReactApolloHooks.QueryHookOptions<GetTicketQueryVariables>
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    GetTicketQuery,
+    GetTicketQueryVariables
+  >
 ) {
-  return ReactApolloHooks.useQuery<GetTicketQuery, GetTicketQueryVariables>(
+  return ApolloReactHooks.useQuery<GetTicketQuery, GetTicketQueryVariables>(
     GetTicketDocument,
     baseOptions
   );
 }
 export type GetTicketQueryHookResult = ReturnType<typeof useGetTicketQuery>;
+export type GetTicketQueryResult = ApolloReactCommon.QueryResult<
+  GetTicketQuery,
+  GetTicketQueryVariables
+>;
+export const CreateTicketDocument = gql`
+  mutation createTicket($data: CreateTicketInput!) {
+    createTicket(data: $data) {
+      ticket {
+        price
+      }
+    }
+  }
+`;
+export type CreateTicketMutationFn = ApolloReactCommon.MutationFunction<
+  CreateTicketMutation,
+  CreateTicketMutationVariables
+>;
+
+export function useCreateTicketMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateTicketMutation,
+    CreateTicketMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    CreateTicketMutation,
+    CreateTicketMutationVariables
+  >(CreateTicketDocument, baseOptions);
+}
+export type CreateTicketMutationHookResult = ReturnType<
+  typeof useCreateTicketMutation
+>;
+export type CreateTicketMutationResult = ApolloReactCommon.MutationResult<
+  CreateTicketMutation
+>;
+export type CreateTicketMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateTicketMutation,
+  CreateTicketMutationVariables
+>;

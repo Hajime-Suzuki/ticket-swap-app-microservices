@@ -1,7 +1,7 @@
 /* tslint:disable */
 import gql from "graphql-tag";
-import * as ReactApolloHooks from "react-apollo-hooks";
-import * as ReactApollo from "react-apollo";
+import * as ApolloReactCommon from "@apollo/react-common";
+import * as ApolloReactHooks from "@apollo/react-hooks";
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -257,14 +257,21 @@ export const GetEventDocument = gql`
 `;
 
 export function useGetEventQuery(
-  baseOptions?: ReactApolloHooks.QueryHookOptions<GetEventQueryVariables>
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    GetEventQuery,
+    GetEventQueryVariables
+  >
 ) {
-  return ReactApolloHooks.useQuery<GetEventQuery, GetEventQueryVariables>(
+  return ApolloReactHooks.useQuery<GetEventQuery, GetEventQueryVariables>(
     GetEventDocument,
     baseOptions
   );
 }
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
+export type GetEventQueryResult = ApolloReactCommon.QueryResult<
+  GetEventQuery,
+  GetEventQueryVariables
+>;
 export const GetEventsDocument = gql`
   query getEvents {
     getEvents {
@@ -286,14 +293,21 @@ export const GetEventsDocument = gql`
 `;
 
 export function useGetEventsQuery(
-  baseOptions?: ReactApolloHooks.QueryHookOptions<GetEventsQueryVariables>
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    GetEventsQuery,
+    GetEventsQueryVariables
+  >
 ) {
-  return ReactApolloHooks.useQuery<GetEventsQuery, GetEventsQueryVariables>(
+  return ApolloReactHooks.useQuery<GetEventsQuery, GetEventsQueryVariables>(
     GetEventsDocument,
     baseOptions
   );
 }
 export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
+export type GetEventsQueryResult = ApolloReactCommon.QueryResult<
+  GetEventsQuery,
+  GetEventsQueryVariables
+>;
 export const CreateEventDocument = gql`
   mutation createEvent($data: CreateEventInput!) {
     createEvent(data: $data) {
@@ -314,22 +328,29 @@ export const CreateEventDocument = gql`
     }
   }
 `;
-export type CreateEventMutationFn = ReactApollo.MutationFn<
+export type CreateEventMutationFn = ApolloReactCommon.MutationFunction<
   CreateEventMutation,
   CreateEventMutationVariables
 >;
 
 export function useCreateEventMutation(
-  baseOptions?: ReactApolloHooks.MutationHookOptions<
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
     CreateEventMutation,
     CreateEventMutationVariables
   >
 ) {
-  return ReactApolloHooks.useMutation<
+  return ApolloReactHooks.useMutation<
     CreateEventMutation,
     CreateEventMutationVariables
   >(CreateEventDocument, baseOptions);
 }
 export type CreateEventMutationHookResult = ReturnType<
   typeof useCreateEventMutation
+>;
+export type CreateEventMutationResult = ApolloReactCommon.MutationResult<
+  CreateEventMutation
+>;
+export type CreateEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateEventMutation,
+  CreateEventMutationVariables
 >;

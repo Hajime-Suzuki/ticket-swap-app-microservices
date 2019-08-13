@@ -1,19 +1,15 @@
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import TicketForm, { TicketFormProps } from 'components/forms/TicketForm'
+import ErrorMessage from 'components/messages/ErrorMessage'
 import ContentWrapper from 'components/space/ContentWrapper'
+import LoadingIcon from 'components/UI/LoadingIcon'
 import { Form, Formik } from 'formik'
+import { useGetEventQuery } from 'graphql/generated/events'
 import { createTicketSchema } from 'helpers/validations/schema'
 import React, { FC } from 'react'
-import useRouter from 'use-react-router'
-import {
-  useGetEventQuery,
-  useCreateEventMutation,
-  GetEventsDocument
-} from 'graphql/generated/events'
 import { SellTicketRouteProps } from 'routes/types'
-import LoadingIcon from 'components/UI/LoadingIcon'
-import ErrorMessage from 'components/messages/ErrorMessage'
+import useRouter from 'use-react-router'
 
 export const createTicketInitialValues: TicketFormProps = {
   date: '',
@@ -30,14 +26,11 @@ const SellTicketPage: FC = () => {
     variables: { id: params.eventId }
   })
 
-  const eventDates = data && data.getEvent.event.dates
-
+  const eventDates = data && data.getEvent && data.getEvent.event.dates
+  if (!eventDates) return null
   // const [createEvent, { error, loading }] = useCreateTicket({
   //   refetchQueries: [{ query: GetEventsDocument }]
   // })
-
-  const error = { message: null }
-  const loading = false
 
   if (!eventDates) return <LoadingIcon />
   if (getEventError) {
@@ -50,6 +43,9 @@ const SellTicketPage: FC = () => {
   const submit = async (values: TicketFormProps) => {
     console.log(values)
   }
+
+  const error = { message: null }
+  const loading = false
 
   return (
     <ContentWrapper>
