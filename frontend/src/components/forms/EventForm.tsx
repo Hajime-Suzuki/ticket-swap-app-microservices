@@ -5,9 +5,9 @@ import { FieldArray, FormikProps } from 'formik'
 import { CreateEventInput } from 'graphql/generated/events'
 import React, { FC } from 'react'
 import { createEventInitialValues } from 'views/create-event'
-import DatePicker from './DatePicker'
-import TextField from './Fields'
-import TimePicker from './TimePicker'
+import DatePicker from '../form-elements/DatePicker'
+import TextField from '../form-elements/Fields'
+import TimePicker from '../form-elements/TimePicker'
 
 type Props = FormikProps<CreateEventInput>
 

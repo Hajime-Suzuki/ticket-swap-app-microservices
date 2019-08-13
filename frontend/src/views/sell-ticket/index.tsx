@@ -6,20 +6,46 @@ import { Form, Formik } from 'formik'
 import { createTicketSchema } from 'helpers/validations/schema'
 import React, { FC } from 'react'
 import useRouter from 'use-react-router'
+import {
+  useGetEventQuery,
+  useCreateEventMutation,
+  GetEventsDocument
+} from 'graphql/generated/events'
+import { SellTicketRouteProps } from 'routes/types'
+import LoadingIcon from 'components/UI/LoadingIcon'
+import ErrorMessage from 'components/messages/ErrorMessage'
 
 export const createTicketInitialValues: TicketFormProps = {
   date: '',
-  price: '0.00',
+  price: '',
   description: ''
 }
 
 const SellTicketPage: FC = () => {
-  const { history } = useRouter()
-  // const [createEvent, { error, loading }] = useCreateEventMutation({
+  const {
+    history,
+    match: { params }
+  } = useRouter<SellTicketRouteProps>()
+  const { data, error: getEventError } = useGetEventQuery({
+    variables: { id: params.eventId }
+  })
+
+  const eventDates = data && data.getEvent.event.dates
+
+  // const [createEvent, { error, loading }] = useCreateTicket({
   //   refetchQueries: [{ query: GetEventsDocument }]
   // })
-  const error = { message: null }
-  const loading = false
+
+  // const error = { message: null }
+  // const loading = false
+
+  if (!eventDates) return <LoadingIcon />
+  if (getEventError) {
+    return <ErrorMessage text={getEventError.message} />
+  }
+  if (!eventDates.length) {
+    return <ErrorMessage text="this event does not have a date" />
+  }
 
   const submit = async (values: TicketFormProps) => {
     console.log(values)
@@ -37,7 +63,7 @@ const SellTicketPage: FC = () => {
       >
         {formikProps => (
           <Form>
-            <TicketForm {...formikProps}></TicketForm>
+            <TicketForm {...formikProps} dates={eventDates}></TicketForm>
             <div style={{ textAlign: 'center' }}>
               <Typography
                 color="error"

@@ -15,32 +15,18 @@ const FieldComponent: FC<FieldProps<any> & TextFieldProps> = props => {
   ) => {
     form.setFieldValue(field.name, e.target.value)
   }
-
   const error = getIn(form.errors, field.name)
   return (
-    <>
-      <MUITextField
-        name={name}
-        label={label || name}
-        type={type}
-        onChange={handleChange}
-        error={!!error}
-        helperText={error}
-      />
-    </>
+    <MUITextField
+      name={name}
+      value={field.value}
+      label={label || name}
+      type={type}
+      onChange={handleChange}
+      error={!!error}
+      helperText={error}
+    />
   )
 }
-
-// TODO: remove this later
-// export const TextField: FC<TextFieldProps> = ({
-//   name,
-//   label,
-//   type,
-//   ...rest
-// }) => {
-//   return (
-//     <MUITextField name={name} label={label || name} type={type} {...rest} />
-//   )
-// }
 
 export default TextField

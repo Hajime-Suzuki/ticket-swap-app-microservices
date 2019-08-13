@@ -11,3 +11,7 @@ export type SingleEventTicketSectionRouteProps = Required<
 export type SingleEventSingleTicketSectionRouteProps = Required<
   SingleEventRouteProps
 >
+
+export interface SellTicketRouteProps {
+  eventId: string
+}

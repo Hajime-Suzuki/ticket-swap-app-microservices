@@ -43,12 +43,20 @@ export const createTicketSchema = yup.object().shape({
   date: yup.string().required(errorMessages.required('date')),
   price: yup
     .string()
-    // .moreThan(0)
+    .required(errorMessages.required('price'))
+    .test('price', 'price should be number', function(
+      this: yup.TestContext,
+      value: string
+    ) {
+      if (!value) return true
+      return !value.match(/[^.\d]/) ? true : false
+    })
     .test('price', 'too many decimal numbers', function(
       this: yup.TestContext,
       value: string
     ) {
-      if (value.match(/\d{1,}.\d{3,}/)) return false
+      if (!value) return true
+      if (value.toString().match(/\d{1,}\.\d{3,}/)) return false
       return true
     }),
   description: yup.string()

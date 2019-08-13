@@ -1,25 +1,30 @@
 import { Grid } from '@material-ui/core'
+import { Dropdown } from 'components/form-elements/Dropdown'
 import { FormikProps } from 'formik'
 import { CreateTicketInput } from 'graphql/generated/tickets'
 import React, { FC } from 'react'
-import DatePicker from './DatePicker'
-import TextField from './Fields'
+import TextField from '../form-elements/Fields'
+import { Event } from 'graphql/generated/events'
 
 export type TicketFormProps = Pick<
   CreateTicketInput,
-  'date' | 'price' | 'description'
->
+  'date' | 'description'
+> & { price: string }
 
-type Props = FormikProps<TicketFormProps>
+type Props = FormikProps<TicketFormProps> & { dates: Event['dates'] }
 
-export const TicketForm: FC<Props> = () => {
+export const TicketForm: FC<Props> = ({ dates }) => {
+  const menuItems = dates.map(date => ({
+    name: date.date,
+    value: date.date
+  }))
   return (
     <Grid container alignItems="center" direction="column" spacing={3}>
-      <Grid item xs={12} container justify="center" spacing={3}>
-        <DatePicker name="date" />
+      <Grid item>
+        <Dropdown name="date" label="date" menuItems={menuItems} />
       </Grid>
       <Grid item>
-        <TextField name="price" label="price" type="number" />
+        <TextField name="price" label="price" />
       </Grid>
       <Grid item>
         <TextField name="description" label="description" multiline />
