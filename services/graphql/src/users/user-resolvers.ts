@@ -10,10 +10,10 @@ export const userResolvers: IResolvers<ResolverContext> = {
   Query: {
     getUser: async (_, { id }) => {
       console.log('getUser')
-      const res = await usersLambda.invoke<{ user: IUser }>(
-        usersActions.getUser,
-        { id }
-      )
+      const res = await usersLambda.invoke<{ user: IUser }>({
+        actionName: usersActions.getUser,
+        data: { id }
+      })
       return res
     }
   }

@@ -10,7 +10,7 @@ import { userResolvers } from './users/user-resolvers'
 
 export interface ResolverContext {
   authorization?: string
-  user: { email: string }
+  user?: { email: string }
 }
 
 const server = new ApolloServer({

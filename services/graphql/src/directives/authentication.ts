@@ -26,7 +26,7 @@ interface RawAuthResponse {
 
 const authenticationChecker = async (
   token?: string
-): Promise<Pick<ResolverContext, 'user'>> => {
+): Promise<ResolverContext['user']> => {
   if (!token) throw new Error('login required')
 
   const [, jwtToken] = token.split('Bearer ')
@@ -52,7 +52,7 @@ const authenticationChecker = async (
   const pem = jwkToPem(jwk)
   const res = jwt.verify(jwtToken, pem) as RawAuthResponse
 
-  return { user: { email: res.username } }
+  return { email: res.username }
 }
 
 export class AuthenticatedDirective extends SchemaDirectiveVisitor {
@@ -60,6 +60,7 @@ export class AuthenticatedDirective extends SchemaDirectiveVisitor {
     const resolve = field.resolve || defaultFieldResolver
     field.resolve = async (source, args, context, info) => {
       const user = await authenticationChecker(context.authorization)
+      console.log({ user })
       const res = await resolve.apply(this, [
         source,
         args,

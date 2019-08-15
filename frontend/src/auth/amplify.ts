@@ -45,3 +45,9 @@ export const getCurrentUserInfo = async (): Promise<
 export const logout = async () => {
   return Auth.signOut()
 }
+
+export const getToken = async () => {
+  const user: CognitoUser = await Auth.currentAuthenticatedUser()
+  const session = user && user.getSignInUserSession()
+  return session && session.getAccessToken().getJwtToken()
+}

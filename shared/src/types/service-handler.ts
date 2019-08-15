@@ -1,6 +1,7 @@
 export interface HandlerEvent<TBody = any, TActionType = any> {
   body: {
-    action: TActionType,
+    action: TActionType
+    user?: { email: string }
     data: TBody
   }
 }

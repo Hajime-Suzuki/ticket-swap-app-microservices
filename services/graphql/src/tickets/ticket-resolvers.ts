@@ -11,18 +11,18 @@ export const ticketResolvers: IResolvers<ResolverContext> = {
   Query: {
     getTickets: async (_, { args }) => {
       logger.log('createTicket', args)
-      const res = await ticketLambda.invoke<{ tickets: ITicket[] }>(
-        ticketsActions.getTickets,
-        args
-      )
+      const res = await ticketLambda.invoke<{ tickets: ITicket[] }>({
+        actionName: ticketsActions.getTickets,
+        data: args
+      })
       return res
     },
     getTicket: async (_, { args }) => {
       logger.log('getTicket', args)
-      const res = await ticketLambda.invoke<{ ticket: ITicket }>(
-        ticketsActions.getTicket,
-        args
-      )
+      const res = await ticketLambda.invoke<{ ticket: ITicket }>({
+        actionName: ticketsActions.getTicket,
+        data: args
+      })
       return res
     }
   },
@@ -30,11 +30,11 @@ export const ticketResolvers: IResolvers<ResolverContext> = {
     createTicket: async (_, { data }, context) => {
       logger.log('createTicket', data)
 
-      const res = await ticketLambda.invoke<{ ticket: ITicket }>(
-        ticketsActions.createTicket,
+      const res = await ticketLambda.invoke<{ ticket: ITicket }>({
+        actionName: ticketsActions.createTicket,
         data,
         context
-      )
+      })
       return res
     }
   }

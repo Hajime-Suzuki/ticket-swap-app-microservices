@@ -15,14 +15,18 @@ export class LambdaCaller {
     this.functionName = functionName
   }
 
-  async invoke<TRes = any>(
-    actionName: string,
-    data?: any,
-    context?: ResolverContext
-  ) {
+  async invoke<TRes = any>({
+    actionName,
+    data,
+    context
+  }: {
+    actionName: string
+    data?: any
+    context?: ResolverContext | undefined
+  }) {
     const body = {
       action: actionName,
-      user: context.user,
+      user: context ? context.user : null,
       data
     }
     const params = {
