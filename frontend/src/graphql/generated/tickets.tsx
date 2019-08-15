@@ -21,7 +21,6 @@ export type CreateEventInput = {
 
 export type CreateTicketInput = {
   eventId: Scalars["ID"];
-  userId: Scalars["ID"];
   date: Scalars["String"];
   price: Scalars["String"];
   description?: Maybe<Scalars["String"]>;

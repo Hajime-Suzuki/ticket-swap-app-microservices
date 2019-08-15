@@ -14,5 +14,8 @@ export class UserModel {
   id: string
 
   @attribute()
+  username: string
+
+  @attribute()
   createdAt: string
 }

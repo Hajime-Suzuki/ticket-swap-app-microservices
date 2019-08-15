@@ -25,7 +25,12 @@ export const createTicketHandler = async (
   if (!evt) throw httpErrors(404, 'event not found')
   if (!user) throw httpErrors(404, 'user not found')
 
-  const params = { id: shortId.generate(), userId: user.id, ...data }
+  const params = {
+    id: shortId.generate(),
+    userId: user.id,
+    username: user.username,
+    ...data
+  }
   const res = await ticketRepository.save(params)
 
   await publishEvent<TicketCreatedEventBody>({

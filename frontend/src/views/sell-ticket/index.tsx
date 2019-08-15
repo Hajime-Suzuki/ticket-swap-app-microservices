@@ -10,6 +10,11 @@ import { createTicketSchema } from 'helpers/validations/schema'
 import React, { FC } from 'react'
 import { SellTicketRouteProps } from 'routes/types'
 import useRouter from 'use-react-router'
+import {
+  useCreateTicketMutation,
+  GetTicketsDocument
+} from 'graphql/generated/tickets'
+import { pathNames } from 'routes/paths'
 
 export const createTicketInitialValues: TicketFormProps = {
   date: '',
@@ -25,12 +30,10 @@ const SellTicketPage: FC = () => {
   const { data, error: getEventError } = useGetEventQuery({
     variables: { id: params.eventId }
   })
+  const [createTicket] = useCreateTicketMutation()
 
   const eventDates = data && data.getEvent && data.getEvent.event.dates
   if (!eventDates) return null
-  // const [createEvent, { error, loading }] = useCreateTicket({
-  //   refetchQueries: [{ query: GetEventsDocument }]
-  // })
 
   if (!eventDates) return <LoadingIcon />
   if (getEventError) {
@@ -42,6 +45,19 @@ const SellTicketPage: FC = () => {
 
   const submit = async (values: TicketFormProps) => {
     console.log(values)
+    await createTicket({
+      variables: { data: { ...values, eventId: params.eventId } },
+      refetchQueries: [
+        {
+          query: GetTicketsDocument,
+          variables: {
+            keys: { eventId: params.eventId },
+            filter: { date: values.date }
+          }
+        }
+      ]
+    })
+    history.push(pathNames.singleEvent(params.eventId))
   }
 
   const error = { message: null }
