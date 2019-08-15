@@ -21,12 +21,11 @@ export const ticketSchema = gql`
   }
 
   type Mutation {
-    createTicket(data: CreateTicketInput!): GetTicketResponse!
+    createTicket(data: CreateTicketInput!): GetTicketResponse! @authenticated
   }
 
   input CreateTicketInput {
     eventId: ID!
-    userId: ID!
     date: String!
     price: String!
     description: String

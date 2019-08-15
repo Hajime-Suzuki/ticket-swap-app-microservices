@@ -20,14 +20,17 @@ interface RawAuthResponse {
   'cognito:username': string
   exp: number
   iat: number
-  email: string
+  email?: string
+  username: string // email
 }
 
-// TODO: return email.
-const authenticationChecker = async (token?: string) => {
+const authenticationChecker = async (
+  token?: string
+): Promise<Pick<ResolverContext, 'user'>> => {
   if (!token) throw new Error('login required')
 
   const [, jwtToken] = token.split('Bearer ')
+
   if (!jwtToken) throw new Error('invalid token format')
 
   const decoded: any = jwt.decode(jwtToken, { complete: true })
@@ -48,7 +51,8 @@ const authenticationChecker = async (token?: string) => {
 
   const pem = jwkToPem(jwk)
   const res = jwt.verify(jwtToken, pem) as RawAuthResponse
-  return { user: { id: res.sub } }
+
+  return { user: { email: res.username } }
 }
 
 export class AuthenticatedDirective extends SchemaDirectiveVisitor {

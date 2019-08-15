@@ -65,6 +65,8 @@ custom:
             sources: ['./.seeds/tickets.json']
           - table: ${file(config.js):env.tickets_events_table}
             sources: ['./.seeds/events.json']
+          - table: ${file(config.js):env.tickets_users_table}
+            sources: ['./.seeds/users.json']
     stages:
       - dev
 
@@ -132,10 +134,10 @@ resources:
       Properties:
         TableName: ${file(config.js):env.tickets_users_table}
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: email
             AttributeType: S
         KeySchema:
-          - AttributeName: id
+          - AttributeName: email
             KeyType: HASH
 
         BillingMode: PAY_PER_REQUEST

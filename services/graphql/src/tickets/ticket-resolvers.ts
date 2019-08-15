@@ -27,12 +27,13 @@ export const ticketResolvers: IResolvers<ResolverContext> = {
     }
   },
   Mutation: {
-    createTicket: async (_, { data }) => {
+    createTicket: async (_, { data }, context) => {
       logger.log('createTicket', data)
 
       const res = await ticketLambda.invoke<{ ticket: ITicket }>(
         ticketsActions.createTicket,
-        data
+        data,
+        context
       )
       return res
     }

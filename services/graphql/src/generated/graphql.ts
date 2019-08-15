@@ -20,7 +20,6 @@ export type ICreateEventInput = {
 
 export type ICreateTicketInput = {
   eventId: Scalars["ID"];
-  userId: Scalars["ID"];
   date: Scalars["String"];
   price: Scalars["String"];
   description?: Maybe<Scalars["String"]>;

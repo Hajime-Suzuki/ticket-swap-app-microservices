@@ -1,6 +1,7 @@
 import { Lambda } from 'aws-sdk'
 import { isOffline } from '@ticket-swap-app/shared/src/constants'
 import { logger } from '../utils'
+import { ResolverContext } from '..'
 
 export class LambdaCaller {
   lambda: Lambda
@@ -14,9 +15,14 @@ export class LambdaCaller {
     this.functionName = functionName
   }
 
-  async invoke<TRes = any>(actionName: string, data?: any) {
+  async invoke<TRes = any>(
+    actionName: string,
+    data?: any,
+    context?: ResolverContext
+  ) {
     const body = {
       action: actionName,
+      user: context.user,
       data
     }
     const params = {

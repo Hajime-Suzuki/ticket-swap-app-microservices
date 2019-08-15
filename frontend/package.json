@@ -20,6 +20,7 @@
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
     "apollo-link": "^1.2.12",
+    "apollo-link-context": "^1.0.18",
     "apollo-link-http": "^1.5.15",
     "aws-amplify": "^1.1.35",
     "aws-amplify-react": "^2.3.12",

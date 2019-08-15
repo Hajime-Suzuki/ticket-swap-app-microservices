@@ -1,6 +1,5 @@
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-lambda'
 import { APIGatewayEvent } from 'aws-lambda'
-// import 'source-map-support/register'
 import { AuthenticatedDirective } from './directives/authentication'
 import { eventSchema } from './events/event'
 import { eventResolvers } from './events/event-resolvers'
@@ -11,7 +10,7 @@ import { userResolvers } from './users/user-resolvers'
 
 export interface ResolverContext {
   authorization?: string
-  user: { id: string }
+  user: { email: string }
 }
 
 const server = new ApolloServer({
