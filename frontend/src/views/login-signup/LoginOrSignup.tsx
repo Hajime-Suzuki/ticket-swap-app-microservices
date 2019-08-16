@@ -24,6 +24,7 @@ const LoginOrSignUp: FC<RouteComponentProps> = props => {
   }
   const handleLogin = async (values: typeof initialLoginValues) => {
     await login(values)
+    props.history.push(pathNames.events())
   }
   return (
     <Wrapper>

@@ -6,7 +6,7 @@ import { getToken } from 'auth/amplify'
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await getToken()
-  console.log(token)
+  console.log(`DEBUG => token: ${token}`)
   return {
     headers: {
       ...headers,

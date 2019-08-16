@@ -47,7 +47,11 @@ export const logout = async () => {
 }
 
 export const getToken = async () => {
-  const user: CognitoUser = await Auth.currentAuthenticatedUser()
-  const session = user && user.getSignInUserSession()
-  return session && session.getAccessToken().getJwtToken()
+  try {
+    const user: CognitoUser = await Auth.currentAuthenticatedUser()
+    const session = user && user.getSignInUserSession()
+    return session && session.getAccessToken().getJwtToken()
+  } catch (error) {
+    return null
+  }
 }
