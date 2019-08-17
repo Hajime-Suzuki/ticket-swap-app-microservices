@@ -80,8 +80,9 @@ export type GetTicketsFilter = {
 };
 
 export type GetTicketsKeys = {
-  eventId: Scalars["ID"];
+  eventId?: Maybe<Scalars["ID"]>;
   id?: Maybe<Scalars["ID"]>;
+  userId?: Maybe<Scalars["ID"]>;
 };
 
 export type GetTicketsResponse = {
@@ -169,7 +170,7 @@ export type User = {
 };
 export type GetTicketsQueryVariables = {
   keys: GetTicketsKeys;
-  filter: GetTicketsFilter;
+  filter?: Maybe<GetTicketsFilter>;
 };
 
 export type GetTicketsQuery = { __typename?: "Query" } & {
@@ -210,7 +211,7 @@ export type CreateTicketMutation = { __typename?: "Mutation" } & {
 };
 
 export const GetTicketsDocument = gql`
-  query getTickets($keys: GetTicketsKeys!, $filter: GetTicketsFilter!) {
+  query getTickets($keys: GetTicketsKeys!, $filter: GetTicketsFilter) {
     getTickets(args: { keys: $keys, filter: $filter }) {
       tickets {
         id

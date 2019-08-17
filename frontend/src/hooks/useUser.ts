@@ -1,21 +1,24 @@
-import { useEffect, useState } from 'react'
 import {
   getCurrentUserInfo,
+  getUserAttributes,
+  login as _login,
   logout as _logout,
-  login as _login
+  UserAttributes
 } from 'auth/amplify'
-import { CognitoUser } from '@aws-amplify/auth'
+import { useEffect, useState } from 'react'
 
 export const useUser = () => {
-  const [user, setUser] = useState<CognitoUser | undefined>(undefined)
+  const [user, setUser] = useState<UserAttributes | null>(null)
 
   useEffect(() => {
-    getCurrentUserInfo().then(res => setUser(res))
+    getCurrentUserInfo()
+      .then(res => getUserAttributes(res))
+      .then(data => setUser(data))
   }, [])
 
   const logout = async () => {
     await _logout()
-    setUser(undefined)
+    setUser(null)
   }
 
   const login = async ({
@@ -26,7 +29,8 @@ export const useUser = () => {
     password: string
   }) => {
     const loggedInUser = await _login({ email, password })
-    setUser(loggedInUser)
+    const data = await getUserAttributes(loggedInUser)
+    setUser(data)
   }
 
   // TODO: user isn't updated in nav bar component

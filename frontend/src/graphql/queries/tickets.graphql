@@ -1,4 +1,4 @@
-query getTickets($keys: GetTicketsKeys!, $filter: GetTicketsFilter!) {
+query getTickets($keys: GetTicketsKeys!, $filter: GetTicketsFilter) {
   getTickets(args: { keys: $keys, filter: $filter }) {
     tickets {
       id

@@ -1,21 +1,24 @@
 {
   "folders": [
-	{
-		"path": "/Users/hajime/programming/web/ticket-swap-app-microservices/frontend"
-	},
-	{
-		"path": "/Users/hajime/programming/web/ticket-swap-app-microservices/services/graphql/src/events"
-	},
-	{
-		"path": "/Users/hajime/programming/web/ticket-swap-app-microservices/services/graphql/src/tickets"
-	},
-	{
-		"path": "/Users/hajime/programming/web/ticket-swap-app-microservices/services/graphql/src/users"
-	},
-	{
-		"path": "/Users/hajime/programming/web/ticket-swap-app-microservices/services/graphql/.queries"
-	}
-],
+    {
+      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/frontend"
+    },
+    {
+      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/services/graphql/src/events"
+    },
+    {
+      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/services/graphql/src/tickets"
+    },
+    {
+      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/services/graphql/src/users"
+    },
+    {
+      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/services/graphql/.queries"
+    },
+    {
+      "path": "/Users/hajime/programming/web/ticket-swap-app-microservices/config"
+    }
+  ],
   "settings": {
     "workbench.colorCustomizations": {
       "activityBar.background": "#efe6ee",

@@ -80,8 +80,9 @@ export type GetTicketsFilter = {
 };
 
 export type GetTicketsKeys = {
-  eventId: Scalars["ID"];
+  eventId?: Maybe<Scalars["ID"]>;
   id?: Maybe<Scalars["ID"]>;
+  userId?: Maybe<Scalars["ID"]>;
 };
 
 export type GetTicketsResponse = {

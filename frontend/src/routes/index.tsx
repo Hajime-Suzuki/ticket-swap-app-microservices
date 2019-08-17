@@ -10,6 +10,7 @@ import TopPage from 'views/top'
 import { pathNames } from './paths'
 import CreateEventPage from 'views/create-event'
 import SellTicketPage from 'views/sell-ticket'
+import UserProfilePage from 'views/profile'
 
 export const Routes = () => {
   return (
@@ -23,6 +24,7 @@ export const Routes = () => {
       <Route path={pathNames.sellTicket()} exact component={SellTicketPage} />
       <Route path={pathNames.orderTicket()} exact component={() => null} />
       <Route path={pathNames.user()} exact component={() => null} />
+      <Route path={pathNames.profile()} exact component={UserProfilePage} />
       <Route path={pathNames.login()} exact component={LoginOrSignUp} />
       <Route path={pathNames.signup()} exact component={LoginOrSignUp} />
     </>

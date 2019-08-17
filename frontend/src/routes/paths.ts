@@ -20,6 +20,8 @@ export const pathNames = {
       ? `/order/${eventId}/${ticketId}`
       : `/order/:eventId/:ticketId`,
   user: (userId?: string) => (userId ? `/user/${userId}` : `user/:userId`),
+  profile: (username?: string) =>
+    username ? `/profile/${username}` : '/profile/:username',
   login: () => '/login',
   signup: () => '/signup'
 }

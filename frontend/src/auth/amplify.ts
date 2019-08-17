@@ -1,11 +1,13 @@
-import Amplify, { Auth } from 'aws-amplify'
 import { CognitoUser } from 'amazon-cognito-identity-js'
+import Amplify, { Auth } from 'aws-amplify'
+import { secrets } from '@ticket-swap-app/config/src/.secrets'
+import shortId from 'shortid'
 
 const config = {
   Auth: {
-    region: process.env.REACT_APP_COGNITO_REGION,
-    userPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
-    userPoolWebClientId: process.env.REACT_APP_COGNITO_WEB_CLIENT_ID
+    region: 'eu-central-1',
+    userPoolId: secrets.AWS_COGNITO_USER_POOL_ID,
+    userPoolWebClientId: secrets.AWS_COGNITO_WEB_CLIENT_ID
   }
 }
 
@@ -21,8 +23,9 @@ export const signUp = async ({ username, email, password }: SignUpArgs) => {
     username: email,
     password,
     attributes: {
-      preferred_username: username,
-      email
+      'preferred_username': username,
+      email,
+      'custom:id': shortId.generate()
     }
   })
   return res
@@ -48,10 +51,33 @@ export const logout = async () => {
 
 export const getToken = async () => {
   try {
-    const user: CognitoUser = await Auth.currentAuthenticatedUser()
+    const user = await getCurrentUserInfo()
     const session = user && user.getSignInUserSession()
     return session && session.getAccessToken().getJwtToken()
   } catch (error) {
     return null
   }
+}
+
+export interface UserAttributes {
+  email: string | undefined
+  id: string | undefined
+}
+export const getUserAttributes = (
+  user: CognitoUser | null | undefined
+): Promise<UserAttributes> => {
+  return new Promise((resolve, reject) => {
+    if (!user) return null
+    user.getUserAttributes((e, attributes) => {
+      if (e) return reject(e)
+      if (!attributes) return null
+
+      const id = attributes.find(att => att.getName() === 'custom:id')
+
+      resolve({
+        email: user.getUsername() || '',
+        id: id ? id.getValue() : ''
+      })
+    })
+  })
 }

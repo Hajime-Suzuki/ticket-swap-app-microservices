@@ -15,6 +15,8 @@ const eventCreatedTopic = getSNSARN(shared.ticketsEvent)
 export const createTicketHandler = async (
   event: HandlerEvent<ICreateTicketInput>
 ) => {
+  if (!event.body.user) throw new Error('user is not provided')
+
   const data = event.body.data
   const evt = await eventRepository.find({
     id: data.eventId

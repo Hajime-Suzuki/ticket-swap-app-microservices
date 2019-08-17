@@ -15,7 +15,6 @@ const StyledLink = styled(Link)`
 
 const NavigationBar: React.FC = () => {
   const { user, logout } = useUser()
-  console.log({ user })
   return (
     <AppBar position="static">
       <Toolbar>
@@ -35,6 +34,13 @@ const NavigationBar: React.FC = () => {
               <Button color="inherit">new event</Button>
             </StyledLink>
           </Grid>
+          {user && (
+            <Grid item>
+              <StyledLink to={pathNames.profile(user.id)}>
+                <Button color="inherit">Profile</Button>
+              </StyledLink>
+            </Grid>
+          )}
           {!user && (
             <>
               <Grid item>
