@@ -9,6 +9,10 @@ import {
 } from '@ticket-swap-app/shared/src/database'
 import { TicketModel } from '../models/Ticket'
 
+export const GSINames = {
+  userId: 'by-user-id'
+}
+
 export interface FindTicketArgs {
   userId: TicketModel['userId']
   eventId: TicketModel['eventId']

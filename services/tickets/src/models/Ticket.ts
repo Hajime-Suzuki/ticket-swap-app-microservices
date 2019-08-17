@@ -9,11 +9,11 @@ import { ITicket } from '@ticket-swap-app/gql/src/generated/graphql'
 
 @table(tableNames.tickets_tickets_table)
 export class TicketModel implements ITicket {
-  @rangeKey()
-  id: string
-
   @hashKey()
   eventId: string
+
+  @rangeKey()
+  id: string
 
   @attribute()
   userId: string

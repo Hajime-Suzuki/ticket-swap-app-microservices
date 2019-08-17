@@ -1,7 +1,8 @@
 import {
   DataMapper,
   QueryOptions,
-  StringToAnyObjectMap
+  StringToAnyObjectMap,
+  GetOptions
 } from '@aws/dynamodb-data-mapper'
 import { ZeroArgumentsConstructor } from '@aws/dynamodb-data-marshaller'
 import { DynamoDB } from 'aws-sdk'
@@ -39,9 +40,12 @@ export class Mapper<
     this.mapper = newMapper({ region, endpoint })
   }
 
-  async find<TReturn = Partial<T>>(args: Partial<T>): Promise<TReturn> {
+  async find<TReturn = Partial<T>>(
+    args: Partial<T>,
+    options?: GetOptions
+  ): Promise<TReturn> {
     try {
-      const res = await this.mapper.get(this.merge(args))
+      const res = await this.mapper.get(this.merge(args), options)
       return res as TReturn
     } catch (e) {
       if (e.name === 'ItemNotFoundException') {

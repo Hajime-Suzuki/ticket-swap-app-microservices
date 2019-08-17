@@ -1,10 +1,10 @@
 import { ticketsActions } from '@ticket-swap-app/shared/src/constants'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import { createTicketHandler } from './handlers/create-ticket'
+import { getTicketHandler } from './handlers/get-ticket'
 import { getTicketsHandler } from './handlers/get-tickets'
 import { updateTicketHandler } from './handlers/update-ticket'
 import { logger, responseHandler } from './utils'
-import { getTicketHandler } from './handlers/get-ticket'
 
 type ActionTypes = keyof typeof ticketsActions
 
