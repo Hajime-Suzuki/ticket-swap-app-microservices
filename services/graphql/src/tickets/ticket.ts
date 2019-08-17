@@ -37,9 +37,9 @@ export const ticketSchema = gql`
   }
 
   input GetTicketsKeys {
-    eventId: ID!
+    eventId: ID
     id: ID
-    # need to be able to find by userId too
+    userId: ID
   }
 
   input GetTicketsFilter {

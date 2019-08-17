@@ -43,7 +43,7 @@ export class Mapper<
   async find<TReturn = Partial<T>>(
     args: Partial<T>,
     options?: GetOptions
-  ): Promise<TReturn> {
+  ): Promise<TReturn | null> {
     try {
       const res = await this.mapper.get(this.merge(args), options)
       return res as TReturn

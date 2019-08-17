@@ -10,7 +10,7 @@ type UpdateTicketArgs = {
 export const updateTicketHandler = async (
   event: HandlerEvent<UpdateTicketArgs>
 ) => {
-  const { userId, eventId, ...data } = event.body.data
-  const res = await ticketRepository.findAndUpdate({ userId, eventId }, data)
+  const { id, eventId, ...data } = event.body.data
+  const res = await ticketRepository.findAndUpdate({ id, eventId }, data)
   return res
 }

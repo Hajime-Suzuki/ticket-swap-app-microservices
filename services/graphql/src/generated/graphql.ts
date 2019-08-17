@@ -1,6 +1,6 @@
 /* tslint:disable */
 import { GraphQLResolveInfo } from "graphql";
-export type Maybe<T> = T | null;
+export type Maybe<T> = T | undefined;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -79,8 +79,9 @@ export type IGetTicketsFilter = {
 };
 
 export type IGetTicketsKeys = {
-  eventId: Scalars["ID"];
+  eventId?: Maybe<Scalars["ID"]>;
   id?: Maybe<Scalars["ID"]>;
+  userId?: Maybe<Scalars["ID"]>;
 };
 
 export type IGetTicketsResponse = {
