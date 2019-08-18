@@ -6,15 +6,14 @@ import ContentWrapper from 'components/space/ContentWrapper'
 import LoadingIcon from 'components/UI/LoadingIcon'
 import { Form, Formik } from 'formik'
 import { useGetEventQuery } from 'graphql/generated/events'
+import {
+  GetTicketsDocument,
+  useCreateTicketMutation
+} from 'graphql/generated/tickets'
 import { createTicketSchema } from 'helpers/validations/schema'
 import React, { FC } from 'react'
-import { SellTicketRouteProps } from 'routes/types'
-import useRouter from 'use-react-router'
-import {
-  useCreateTicketMutation,
-  GetTicketsDocument
-} from 'graphql/generated/tickets'
 import { pathNames } from 'routes/paths'
+import { PrivateRouteProps, SellTicketRouteProps } from 'routes/types'
 
 export const createTicketInitialValues: TicketFormProps = {
   date: '',
@@ -22,11 +21,11 @@ export const createTicketInitialValues: TicketFormProps = {
   description: ''
 }
 
-const SellTicketPage: FC = () => {
+const SellTicketPage: FC<PrivateRouteProps<SellTicketRouteProps>> = props => {
   const {
     history,
     match: { params }
-  } = useRouter<SellTicketRouteProps>()
+  } = props
   const { data, error: getEventError } = useGetEventQuery({
     variables: { id: params.eventId }
   })

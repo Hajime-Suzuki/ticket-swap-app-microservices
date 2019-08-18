@@ -11,6 +11,7 @@ import { pathNames } from './paths'
 import CreateEventPage from 'views/create-event'
 import SellTicketPage from 'views/sell-ticket'
 import UserProfilePage from 'views/profile'
+import PrivateRoute from './PrivateRoute'
 
 export const Routes = () => {
   return (
@@ -21,10 +22,18 @@ export const Routes = () => {
       <Route path={pathNames.singleEvent()} exact component={EventPage} />
       <Route path={pathNames.tickets()} exact component={EventPage} />
       <Route path={pathNames.singleTicket()} exact component={EventPage} />
-      <Route path={pathNames.sellTicket()} exact component={SellTicketPage} />
+      <PrivateRoute
+        path={pathNames.sellTicket()}
+        exact
+        component={SellTicketPage}
+      />
       <Route path={pathNames.orderTicket()} exact component={() => null} />
       <Route path={pathNames.user()} exact component={() => null} />
-      <Route path={pathNames.profile()} exact component={UserProfilePage} />
+      <PrivateRoute
+        path={pathNames.profile()}
+        exact
+        component={UserProfilePage}
+      />
       <Route path={pathNames.login()} exact component={LoginOrSignUp} />
       <Route path={pathNames.signup()} exact component={LoginOrSignUp} />
     </>
