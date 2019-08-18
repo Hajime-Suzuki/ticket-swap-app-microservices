@@ -157,6 +157,7 @@ export type ITicket = {
   description?: Maybe<Scalars["String"]>;
   createdAt: Scalars["String"];
   soldAt?: Maybe<Scalars["String"]>;
+  event?: Maybe<IEvent>;
 };
 
 export type IUser = {
@@ -247,12 +248,12 @@ export type IResolversTypes = {
   String: ResolverTypeWrapper<Scalars["String"]>;
   GetTicketsResponse: ResolverTypeWrapper<IGetTicketsResponse>;
   Ticket: ResolverTypeWrapper<ITicket>;
-  GetTicketArgs: IGetTicketArgs;
-  GetTicketResponse: ResolverTypeWrapper<IGetTicketResponse>;
-  GetEventsResponse: ResolverTypeWrapper<IGetEventsResponse>;
   Event: ResolverTypeWrapper<IEvent>;
   EventDate: ResolverTypeWrapper<IEventDate>;
   Location: ResolverTypeWrapper<ILocation>;
+  GetTicketArgs: IGetTicketArgs;
+  GetTicketResponse: ResolverTypeWrapper<IGetTicketResponse>;
+  GetEventsResponse: ResolverTypeWrapper<IGetEventsResponse>;
   GetEventResponse: ResolverTypeWrapper<IGetEventResponse>;
   GetUserResponse: ResolverTypeWrapper<IGetUserResponse>;
   User: ResolverTypeWrapper<IUser>;
@@ -274,12 +275,12 @@ export type IResolversParentTypes = {
   String: Scalars["String"];
   GetTicketsResponse: IGetTicketsResponse;
   Ticket: ITicket;
-  GetTicketArgs: IGetTicketArgs;
-  GetTicketResponse: IGetTicketResponse;
-  GetEventsResponse: IGetEventsResponse;
   Event: IEvent;
   EventDate: IEventDate;
   Location: ILocation;
+  GetTicketArgs: IGetTicketArgs;
+  GetTicketResponse: IGetTicketResponse;
+  GetEventsResponse: IGetEventsResponse;
   GetEventResponse: IGetEventResponse;
   GetUserResponse: IGetUserResponse;
   User: IUser;
@@ -442,6 +443,7 @@ export type ITicketResolvers<
   >;
   createdAt?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   soldAt?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
+  event?: Resolver<Maybe<IResolversTypes["Event"]>, ParentType, ContextType>;
 };
 
 export type IUserResolvers<

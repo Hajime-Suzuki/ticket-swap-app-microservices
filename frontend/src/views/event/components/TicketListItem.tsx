@@ -4,6 +4,7 @@ import { TicketFromQueryRes } from '../types'
 import ListItemText from '@material-ui/core/ListItemText'
 import { ListItemAvatar, Avatar, Typography, Grid } from '@material-ui/core'
 import styled from 'styled-components'
+import { formatCurrency } from 'helpers/number'
 
 interface Props {
   ticket: TicketFromQueryRes[number]
@@ -22,7 +23,9 @@ const TicketListItem: FC<Props> = ({ ticket }) => {
           </StyledGrid>
           <StyledGrid item container xs={12} md={6} justify="space-evenly">
             <Grid item xs={6}>
-              <Typography color="primary">{`€${ticket.price}`}</Typography>
+              <Typography color="primary">{`€ ${formatCurrency(
+                ticket.price
+              )}`}</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography>{ticket.username}</Typography>

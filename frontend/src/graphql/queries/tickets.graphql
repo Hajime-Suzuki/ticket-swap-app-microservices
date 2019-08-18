@@ -11,6 +11,21 @@ query getTickets($keys: GetTicketsKeys!, $filter: GetTicketsFilter) {
   }
 }
 
+query getTicketsByUser($userId: ID!) {
+  getTickets(args: { keys: { userId: $userId } }) {
+    tickets {
+      id
+      eventId
+      price
+      date
+      event {
+        name
+        id
+      }
+    }
+  }
+}
+
 query getTicket($eventId: ID!, $ticketId: ID!) {
   getTicket(args: { eventId: $eventId, id: $ticketId }) {
     ticket {

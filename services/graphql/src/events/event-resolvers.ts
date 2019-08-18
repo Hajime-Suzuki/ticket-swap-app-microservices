@@ -4,7 +4,10 @@ import { ResolverContext } from '..'
 import { IEvent, IResolvers } from '../generated/graphql'
 import { LambdaCaller } from '../helpers/lambda-caller'
 
-const eventLambda = new LambdaCaller(shared.eventsPort, shared.eventsFunc)
+export const eventLambda = new LambdaCaller(
+  shared.eventsPort,
+  shared.eventsFunc
+)
 
 export const eventResolvers: IResolvers<ResolverContext> = {
   Query: {

@@ -1,5 +1,5 @@
 import LoadingIcon from 'components/UI/LoadingIcon'
-import { UserContext } from 'hooks/useUser'
+import { UserContext } from 'contexts/UserContext'
 import React, { ComponentType, FC, useContext } from 'react'
 import { Redirect, Route, RouteComponentProps, RouteProps } from 'react-router'
 import { pathNames } from './paths'

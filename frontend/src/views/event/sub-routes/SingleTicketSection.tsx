@@ -14,6 +14,7 @@ import useRouter from 'use-react-router'
 import Avatar from '@material-ui/core/Avatar'
 import { Link } from 'react-router-dom'
 import { pathNames } from 'routes/paths'
+import { formatCurrency } from 'helpers/number'
 
 const SingleTicketSection: FC = () => {
   const {
@@ -94,7 +95,7 @@ const Ticket: FC<TicketProps> = ({ ticket }) => {
           <div className="date">{date}</div>
         </Grid>
         <Grid item xs={9}>
-          €{ticket.price}
+          €{formatCurrency(ticket.price)}
         </Grid>
       </Grid>
     </DateBlock>

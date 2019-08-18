@@ -158,6 +158,11 @@ export type Ticket = {
   description?: Maybe<Scalars["String"]>;
   createdAt: Scalars["String"];
   soldAt?: Maybe<Scalars["String"]>;
+  event?: Maybe<Event>;
+};
+
+export type TicketEventArgs = {
+  eventId?: Maybe<Scalars["String"]>;
 };
 
 export type User = {
@@ -180,6 +185,23 @@ export type GetTicketsQuery = { __typename?: "Query" } & {
         Ticket,
         "id" | "eventId" | "userId" | "price" | "date" | "username"
       >
+    >;
+  };
+};
+
+export type GetTicketsByUserQueryVariables = {
+  userId: Scalars["ID"];
+};
+
+export type GetTicketsByUserQuery = { __typename?: "Query" } & {
+  getTickets: { __typename?: "GetTicketsResponse" } & {
+    tickets: Array<
+      { __typename?: "Ticket" } & Pick<
+        Ticket,
+        "id" | "eventId" | "price" | "date"
+      > & {
+          event: Maybe<{ __typename?: "Event" } & Pick<Event, "name" | "id">>;
+        }
     >;
   };
 };
@@ -240,6 +262,41 @@ export type GetTicketsQueryHookResult = ReturnType<typeof useGetTicketsQuery>;
 export type GetTicketsQueryResult = ApolloReactCommon.QueryResult<
   GetTicketsQuery,
   GetTicketsQueryVariables
+>;
+export const GetTicketsByUserDocument = gql`
+  query getTicketsByUser($userId: ID!) {
+    getTickets(args: { keys: { userId: $userId } }) {
+      tickets {
+        id
+        eventId
+        price
+        date
+        event {
+          name
+          id
+        }
+      }
+    }
+  }
+`;
+
+export function useGetTicketsByUserQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    GetTicketsByUserQuery,
+    GetTicketsByUserQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<
+    GetTicketsByUserQuery,
+    GetTicketsByUserQueryVariables
+  >(GetTicketsByUserDocument, baseOptions);
+}
+export type GetTicketsByUserQueryHookResult = ReturnType<
+  typeof useGetTicketsByUserQuery
+>;
+export type GetTicketsByUserQueryResult = ApolloReactCommon.QueryResult<
+  GetTicketsByUserQuery,
+  GetTicketsByUserQueryVariables
 >;
 export const GetTicketDocument = gql`
   query getTicket($eventId: ID!, $ticketId: ID!) {

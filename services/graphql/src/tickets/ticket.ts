@@ -13,6 +13,7 @@ export const ticketSchema = gql`
     description: String
     createdAt: String!
     soldAt: String
+    event(eventId: String): Event
   }
 
   type Query {

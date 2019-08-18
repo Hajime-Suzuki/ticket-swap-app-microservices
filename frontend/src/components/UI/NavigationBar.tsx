@@ -1,8 +1,8 @@
 import { Button, Grid } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import { useUser } from 'hooks/useUser'
-import React from 'react'
+import { UserContext } from 'contexts/UserContext'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { pathNames } from 'routes/paths'
 import styled from 'styled-components'
@@ -14,7 +14,7 @@ const StyledLink = styled(Link)`
 `
 
 const NavigationBar: React.FC = () => {
-  const { user, logout } = useUser()
+  const { user, logout } = useContext(UserContext)
   return (
     <AppBar position="static">
       <Toolbar>

@@ -11,13 +11,13 @@ export const getTicketsHandler = async (
 
   const options = getOptions(event.body.data)
 
+  console.log({ keys, options })
   const res = await ticketRepository.query(keys, options)
   return res
 }
 
 const getOptions = ({ keys, filter }: IGetTicketsArgs) => {
   const options: QueryOptions = {}
-
   if (filter) {
     options.filter = getQueryFilter({
       subject: 'date',
