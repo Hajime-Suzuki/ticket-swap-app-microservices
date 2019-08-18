@@ -34,7 +34,7 @@ export const signUp = async ({ username, email, password }: SignUpArgs) => {
 type LoginArgs = Pick<SignUpArgs, 'email' | 'password'>
 
 export const login = async ({ email, password }: LoginArgs) => {
-  const user = await Auth.signIn({ username: email, password })
+  const user: CognitoUser = await Auth.signIn({ username: email, password })
   return user
 }
 
