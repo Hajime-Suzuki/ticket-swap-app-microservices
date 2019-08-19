@@ -1,17 +1,15 @@
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import TicketForm, { TicketFormProps } from 'components/forms/TicketForm'
 import ErrorMessage from 'components/messages/ErrorMessage'
 import ContentWrapper from 'components/space/ContentWrapper'
 import LoadingIcon from 'components/UI/LoadingIcon'
-import { Form, Formik } from 'formik'
 import { useGetEventQuery } from 'graphql/generated/events'
 import {
   GetTicketsDocument,
   useCreateTicketMutation
 } from 'graphql/generated/tickets'
 import { createTicketSchema } from 'helpers/validations/schema'
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 import { pathNames } from 'routes/paths'
 import { PrivateRouteProps, SellTicketRouteProps } from 'routes/types'
 
@@ -29,9 +27,22 @@ const SellTicketPage: FC<PrivateRouteProps<SellTicketRouteProps>> = props => {
   const { data, error: getEventError } = useGetEventQuery({
     variables: { id: params.eventId }
   })
-  const [createTicket] = useCreateTicketMutation()
+  const [
+    createTicket,
+    { error: mutationError, loading: mutationLoading }
+  ] = useCreateTicketMutation()
 
   const eventDates = data && data.getEvent && data.getEvent.event.dates
+
+  const dateMenuItem = useMemo(() => {
+    return eventDates
+      ? eventDates.map(date => ({
+          name: date.date,
+          value: date.date
+        }))
+      : []
+  }, [eventDates])
+
   if (!eventDates) return null
 
   if (!eventDates) return <LoadingIcon />
@@ -59,43 +70,17 @@ const SellTicketPage: FC<PrivateRouteProps<SellTicketRouteProps>> = props => {
     history.push(pathNames.singleEvent(params.eventId))
   }
 
-  const error = { message: null }
-  const loading = false
-
   return (
     <ContentWrapper>
       <Typography variant="h5">Sell Ticket</Typography>
-      <Formik
-        initialValues={createTicketInitialValues}
+      <TicketForm
         onSubmit={submit}
+        initialValues={createTicketInitialValues}
         validationSchema={createTicketSchema}
-        validateOnBlur={true}
-        validateOnChange={false}
-      >
-        {formikProps => (
-          <Form>
-            <TicketForm {...formikProps} dates={eventDates}></TicketForm>
-            <div style={{ textAlign: 'center' }}>
-              <Typography
-                color="error"
-                align="center"
-                style={{ marginTop: '1em' }}
-              >
-                {error && error.message}
-              </Typography>
-              <Button
-                onClick={() => formikProps.handleSubmit()}
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                style={{ margin: '1em 0em' }}
-              >
-                Submit
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+        error={mutationError}
+        loading={mutationLoading}
+        dates={dateMenuItem}
+      ></TicketForm>
     </ContentWrapper>
   )
 }

@@ -22,7 +22,7 @@ export const Dropdown: FC<TextFieldProps & Props> = props => {
 }
 
 const FieldComponent: FC<FieldProps<any> & TextFieldProps & Props> = props => {
-  const { label, form, field, menuItems } = props
+  const { label, form, field, menuItems, disabled } = props
   const handleChange = (
     e: React.ChangeEvent<{
       name?: string | undefined
@@ -42,6 +42,7 @@ const FieldComponent: FC<FieldProps<any> & TextFieldProps & Props> = props => {
           onChange={handleChange}
           input={<Input name={field.name} />}
           autoWidth
+          disabled={disabled}
         >
           {menuItems.map((item, i) => (
             <MenuItem key={i} value={item.value}>
