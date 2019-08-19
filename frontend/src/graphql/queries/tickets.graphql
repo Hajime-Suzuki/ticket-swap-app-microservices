@@ -18,6 +18,7 @@ query getTicketsByUser($userId: ID!) {
       eventId
       price
       date
+      description
       event {
         name
         id

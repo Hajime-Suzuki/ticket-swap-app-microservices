@@ -9,7 +9,7 @@ export const TextField: FC<TextFieldProps> = props => {
 const FieldComponent: FC<
   FieldProps<any> & Omit<TextFieldProps, 'name'>
 > = props => {
-  const { label, type, form, field } = props
+  const { label, type, form, field, multiline } = props
   const handleChange = (
     e: React.ChangeEvent<
       HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
@@ -21,12 +21,13 @@ const FieldComponent: FC<
   return (
     <MUITextField
       name={field.name}
-      value={field.value}
+      value={field.value || ''}
       label={label || field.name}
       type={type}
       onChange={handleChange}
       error={!!error}
       helperText={error}
+      multiline={multiline}
     />
   )
 }

@@ -198,7 +198,7 @@ export type GetTicketsByUserQuery = { __typename?: "Query" } & {
     tickets: Array<
       { __typename?: "Ticket" } & Pick<
         Ticket,
-        "id" | "eventId" | "price" | "date"
+        "id" | "eventId" | "price" | "date" | "description"
       > & {
           event: Maybe<{ __typename?: "Event" } & Pick<Event, "name" | "id">>;
         }
@@ -271,6 +271,7 @@ export const GetTicketsByUserDocument = gql`
         eventId
         price
         date
+        description
         event {
           name
           id

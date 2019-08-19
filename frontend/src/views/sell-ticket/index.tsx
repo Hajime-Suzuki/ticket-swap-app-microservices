@@ -12,6 +12,8 @@ import { createTicketSchema } from 'helpers/validations/schema'
 import React, { FC, useMemo } from 'react'
 import { pathNames } from 'routes/paths'
 import { PrivateRouteProps, SellTicketRouteProps } from 'routes/types'
+import { Formik, Form } from 'formik'
+import { Button } from '@material-ui/core'
 
 export const createTicketInitialValues: TicketFormProps = {
   date: '',
@@ -73,14 +75,37 @@ const SellTicketPage: FC<PrivateRouteProps<SellTicketRouteProps>> = props => {
   return (
     <ContentWrapper>
       <Typography variant="h5">Sell Ticket</Typography>
-      <TicketForm
-        onSubmit={submit}
+      <Formik
         initialValues={createTicketInitialValues}
+        onSubmit={submit}
         validationSchema={createTicketSchema}
-        error={mutationError}
-        loading={mutationLoading}
-        dates={dateMenuItem}
-      ></TicketForm>
+        validateOnBlur={true}
+        validateOnChange={false}
+      >
+        {() => (
+          <Form>
+            <TicketForm dates={dateMenuItem} />
+            <div style={{ textAlign: 'center' }}>
+              <Typography
+                color="error"
+                align="center"
+                style={{ marginTop: '1em' }}
+              >
+                {mutationError && mutationError.message}
+              </Typography>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={mutationLoading}
+                style={{ margin: '1em 0em' }}
+              >
+                Submit
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </ContentWrapper>
   )
 }

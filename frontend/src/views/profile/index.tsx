@@ -3,12 +3,14 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
   Grid
 } from '@material-ui/core'
 import TicketForm, { TicketFormProps } from 'components/forms/TicketForm'
 import ErrorMessage from 'components/messages/ErrorMessage'
 import ContentWrapper from 'components/space/ContentWrapper'
 import LoadingIcon from 'components/UI/LoadingIcon'
+import { Form, Formik } from 'formik'
 import { useGetTicketsByUserQuery } from 'graphql/generated/tickets'
 import React, { FC, useState } from 'react'
 import { PrivateRouteProps, UserProfileProps } from 'routes/types'
@@ -32,8 +34,9 @@ const UserProfilePage: FC<PrivateRouteProps<UserProfileProps>> = props => {
   const { data, error, loading } = useGetTicketsByUserQuery({
     variables: { userId: (user && user.id) || '' }
   })
-  const saveTicket = () => {
-    console.log('save')
+  const saveTicket = (values: TicketFormProps) => {
+    // TODO: add mutation
+    console.log({ values })
   }
 
   const [selectedTicketId, setTicketId] = useState('')
@@ -70,7 +73,7 @@ interface Props {
   ticket: TicketFormProps | undefined
   isOpen: boolean
   closeModal: () => void
-  onSave: () => void
+  onSave: (values: TicketFormProps) => void
 }
 
 const EditTicketModal: FC<Props> = props => {
@@ -78,18 +81,25 @@ const EditTicketModal: FC<Props> = props => {
   if (!ticket) return null
   return (
     <Dialog open={isOpen}>
-      <DialogContent>
-        <TicketForm
-          initialValues={ticket}
-          onSubmit={onSave}
-          dates={[{ name: ticket.date, value: ticket.date }]}
-          disableDate
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={closeModal}>cancel</Button>
-        <Button onClick={onSave}>save</Button>
-      </DialogActions>
+      <Formik
+        initialValues={ticket}
+        onSubmit={onSave}
+        validateOnBlur={true}
+        validateOnChange={false}
+      >
+        {() => (
+          <Form>
+            <DialogTitle>Edit</DialogTitle>
+            <DialogContent style={{ padding: '1em' }}>
+              <TicketForm dates={[{ name: ticket.date, value: ticket.date }]} />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={closeModal}>cancel</Button>
+              <Button type="submit">save</Button>
+            </DialogActions>
+          </Form>
+        )}
+      </Formik>
     </Dialog>
   )
 }
