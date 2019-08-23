@@ -79,9 +79,8 @@ export type IGetTicketsFilter = {
 };
 
 export type IGetTicketsKeys = {
-  eventId?: Maybe<Scalars["ID"]>;
+  eventId: Scalars["ID"];
   id?: Maybe<Scalars["ID"]>;
-  userId?: Maybe<Scalars["ID"]>;
 };
 
 export type IGetTicketsResponse = {
@@ -125,6 +124,7 @@ export type IQuery = {
   __typename?: "Query";
   getTickets: IGetTicketsResponse;
   getTicket: IGetTicketResponse;
+  getTicketsByUserId: IGetTicketsResponse;
   getEvents: IGetEventsResponse;
   getEvent: IGetEventResponse;
   getUser?: Maybe<IGetUserResponse>;
@@ -136,6 +136,10 @@ export type IQueryGetTicketsArgs = {
 
 export type IQueryGetTicketArgs = {
   args: IGetTicketArgs;
+};
+
+export type IQueryGetTicketsByUserIdArgs = {
+  userId: Scalars["ID"];
 };
 
 export type IQueryGetEventArgs = {
@@ -158,6 +162,10 @@ export type ITicket = {
   createdAt: Scalars["String"];
   soldAt?: Maybe<Scalars["String"]>;
   event?: Maybe<IEvent>;
+};
+
+export type ITicketEventArgs = {
+  eventId?: Maybe<Scalars["String"]>;
 };
 
 export type IUser = {
@@ -407,6 +415,12 @@ export type IQueryResolvers<
     ContextType,
     IQueryGetTicketArgs
   >;
+  getTicketsByUserId?: Resolver<
+    IResolversTypes["GetTicketsResponse"],
+    ParentType,
+    ContextType,
+    IQueryGetTicketsByUserIdArgs
+  >;
   getEvents?: Resolver<
     IResolversTypes["GetEventsResponse"],
     ParentType,
@@ -443,7 +457,12 @@ export type ITicketResolvers<
   >;
   createdAt?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   soldAt?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
-  event?: Resolver<Maybe<IResolversTypes["Event"]>, ParentType, ContextType>;
+  event?: Resolver<
+    Maybe<IResolversTypes["Event"]>,
+    ParentType,
+    ContextType,
+    ITicketEventArgs
+  >;
 };
 
 export type IUserResolvers<

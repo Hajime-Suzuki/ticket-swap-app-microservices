@@ -5,6 +5,7 @@ import { getTicketHandler } from './handlers/get-ticket'
 import { getTicketsHandler } from './handlers/get-tickets'
 import { updateTicketHandler } from './handlers/update-ticket'
 import { logger, responseHandler } from './utils'
+import { getTicketsByUserIdHandler } from './handlers/get-tickets-by-user-id'
 
 type ActionTypes = keyof typeof ticketsActions
 
@@ -30,6 +31,10 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
       }
       case ticketsActions.getTickets: {
         const res = await getTicketsHandler(event)
+        return responseHandler.success({ tickets: res })
+      }
+      case ticketsActions.getTicketsByUserId: {
+        const res = await getTicketsByUserIdHandler(event)
         return responseHandler.success({ tickets: res })
       }
       case ticketsActions.updateTicket: {
