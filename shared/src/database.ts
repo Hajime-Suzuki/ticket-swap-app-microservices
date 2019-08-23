@@ -55,6 +55,15 @@ export class Mapper<
     }
   }
 
+  findManyMapByHashKey<THashKey extends keyof T>(
+    keyName: THashKey,
+    keys: T[THashKey][]
+  ) {
+    // TODO: fetch again if length > 100
+    const params = keys.map(key => this.merge({ [keyName]: key } as any))
+    return this.getMapFromIterable(keyName, this.mapper.batchGet(params))
+  }
+
   query(args: Partial<T>, options?: QueryOptions) {
     return this.getArrayFromIterable(
       this.mapper.query(this.model, args, options)
@@ -88,5 +97,15 @@ export class Mapper<
       res.push(data)
     }
     return res
+  }
+
+  private async getMapFromIterable(keyName: keyof T, iterator: any) {
+    const map = {} as Record<keyof T, T>
+    for await (const data of iterator) {
+      const key = data[keyName]
+      map[key] = data
+    }
+
+    return map
   }
 }
