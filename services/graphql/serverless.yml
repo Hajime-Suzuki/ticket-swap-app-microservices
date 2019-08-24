@@ -5,6 +5,9 @@ provider:
   name: aws
   runtime: nodejs10.x
   region: ${file(config.js):env.region}
+  tracing:
+    apiGateway: true
+    lambda: true
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -19,11 +22,18 @@ provider:
         - lambda:InvokeAsync
       Resource:
         - 'arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:*'
+    - Effect: 'Allow'
+      Action:
+        - xray:PutTraceSegments
+        - xray:PutTelemetryRecords
+      Resource:
+        - '*'
 
 plugins:
   - serverless-webpack
   - serverless-offline
   - serverless-pseudo-parameters
+  # - serverless-plugin-tracing
 
 custom:
   serverless-offline:

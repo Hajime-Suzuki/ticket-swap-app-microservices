@@ -6,6 +6,9 @@ provider:
   runtime: nodejs10.x
   region: ${file(config.js):env.region}
   environment: ${file(config.js):env}
+  tracing:
+    apiGateway: true
+    lambda: true
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -32,6 +35,13 @@ provider:
         - sqs:SendMessage
       Resource:
         - 'arn:aws:sqs:#{AWS::Region}:#{AWS::AccountId}:*'
+
+    - Effect: 'Allow'
+      Action:
+        - xray:PutTraceSegments
+        - xray:PutTelemetryRecords
+      Resource:
+        - '*'
 
 plugins:
   - serverless-webpack
