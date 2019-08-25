@@ -31,6 +31,7 @@ export const createTicketHandler = async (
     id: shortId.generate(),
     userId: user.id,
     username: user.username,
+    eventName: evt.name,
     ...data
   }
   const res = await ticketRepository.save(params)

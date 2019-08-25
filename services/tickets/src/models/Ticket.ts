@@ -35,4 +35,7 @@ export class TicketModel implements ITicket {
 
   @attribute()
   soldAt?: string
+
+  @attribute()
+  eventName?: string
 }

@@ -28,8 +28,7 @@ const TicketsList: FC<Props> = ({ tickets, openModal }) => {
             <Grid container justify="space-evenly" alignItems="center">
               <Grid item xs={12} sm={4}>
                 <Link to={pathNames.singleEvent(ticket.eventId)}>
-                  <Typography color="primary">{`${ticket.event &&
-                    ticket.event.name}`}</Typography>
+                  <Typography color="primary">{ticket.eventName}</Typography>
                 </Link>
               </Grid>
               <Grid item xs={6} sm={4}>

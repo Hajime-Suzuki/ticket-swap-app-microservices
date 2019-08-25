@@ -3,6 +3,7 @@ import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
 import { GSINames, ticketRepository } from '../repositories/tickets-repository'
 import { eventRepository } from '../repositories/event-repository'
 
+// TODO: not used.
 export const getTicketsByUserIdHandler = async (
   e: HandlerEvent<IQueryGetTicketsByUserIdArgs>
 ) => {

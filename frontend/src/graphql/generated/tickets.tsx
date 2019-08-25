@@ -158,11 +158,7 @@ export type Ticket = {
   description?: Maybe<Scalars["String"]>;
   createdAt: Scalars["String"];
   soldAt?: Maybe<Scalars["String"]>;
-  event?: Maybe<Event>;
-};
-
-export type TicketEventArgs = {
-  eventId?: Maybe<Scalars["String"]>;
+  eventName: Scalars["String"];
 };
 
 export type User = {
@@ -198,10 +194,8 @@ export type GetTicketsByUserQuery = { __typename?: "Query" } & {
     tickets: Array<
       { __typename?: "Ticket" } & Pick<
         Ticket,
-        "id" | "eventId" | "price" | "date" | "description"
-      > & {
-          event: Maybe<{ __typename?: "Event" } & Pick<Event, "name" | "id">>;
-        }
+        "id" | "eventId" | "price" | "date" | "description" | "eventName"
+      >
     >;
   };
 };
@@ -272,10 +266,7 @@ export const GetTicketsByUserDocument = gql`
         price
         date
         description
-        event {
-          name
-          id
-        }
+        eventName
       }
     }
   }

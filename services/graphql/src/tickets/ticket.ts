@@ -13,13 +13,12 @@ export const ticketSchema = gql`
     description: String
     createdAt: String!
     soldAt: String
-    event(eventId: String): Event
+    eventName: String!
   }
 
   type Query {
     getTickets(args: GetTicketsArgs!): GetTicketsResponse!
     getTicket(args: GetTicketArgs!): GetTicketResponse!
-    getTicketsByUserId(userId: ID!): GetTicketsResponse!
   }
 
   type Mutation {
@@ -39,8 +38,9 @@ export const ticketSchema = gql`
   }
 
   input GetTicketsKeys {
-    eventId: ID!
+    eventId: ID
     id: ID
+    userId: ID
   }
 
   input GetTicketsFilter {

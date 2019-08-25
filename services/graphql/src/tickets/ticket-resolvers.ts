@@ -23,14 +23,6 @@ export const ticketResolvers: IResolvers<ResolverContext> = {
         data: args
       })
       return res
-    },
-    getTicketsByUserId: async (_, args) => {
-      logger.log('getTicketsByUserI', args)
-      const res = await ticketLambda.invoke<{ tickets: ITicket[] }>({
-        actionName: ticketsActions.getTicketsByUserId,
-        data: args
-      })
-      return res
     }
   },
   Mutation: {

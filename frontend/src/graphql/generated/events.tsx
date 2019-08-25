@@ -158,11 +158,7 @@ export type Ticket = {
   description?: Maybe<Scalars["String"]>;
   createdAt: Scalars["String"];
   soldAt?: Maybe<Scalars["String"]>;
-  event?: Maybe<Event>;
-};
-
-export type TicketEventArgs = {
-  eventId?: Maybe<Scalars["String"]>;
+  eventName: Scalars["String"];
 };
 
 export type User = {
