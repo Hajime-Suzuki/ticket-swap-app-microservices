@@ -95,6 +95,10 @@ export type GetUserResponse = {
   user?: Maybe<User>;
 };
 
+export type Gsi1Keys = {
+  userId: Scalars["ID"];
+};
+
 export type Location = {
   __typename?: "Location";
   name: Scalars["String"];
@@ -108,14 +112,25 @@ export type LocationInput = {
   address: Scalars["String"];
 };
 
+export type MainKeys = {
+  eventId: Scalars["ID"];
+  id: Scalars["ID"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   createTicket: GetTicketResponse;
+  updateTicket: Ticket;
   createEvent?: Maybe<Event>;
 };
 
 export type MutationCreateTicketArgs = {
   data: CreateTicketInput;
+};
+
+export type MutationUpdateTicketArgs = {
+  keys: MainKeys;
+  data: UpdateTicketArgs;
 };
 
 export type MutationCreateEventArgs = {
@@ -159,6 +174,11 @@ export type Ticket = {
   createdAt: Scalars["String"];
   soldAt?: Maybe<Scalars["String"]>;
   eventName: Scalars["String"];
+};
+
+export type UpdateTicketArgs = {
+  price: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
 };
 
 export type User = {

@@ -19,6 +19,7 @@ query getTicketsByUser($userId: ID!) {
       price
       date
       description
+      userId
       eventName
     }
   }
@@ -42,5 +43,11 @@ mutation createTicket($data: CreateTicketInput!) {
     ticket {
       price
     }
+  }
+}
+
+mutation updateTicket($keys: MainKeys!, $data: UpdateTicketArgs!) {
+  updateTicket(keys: $keys, data: $data) {
+    id
   }
 }

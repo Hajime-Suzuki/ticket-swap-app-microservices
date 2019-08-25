@@ -37,5 +37,5 @@ export class TicketModel implements ITicket {
   soldAt?: string
 
   @attribute()
-  eventName?: string
+  eventName: string
 }

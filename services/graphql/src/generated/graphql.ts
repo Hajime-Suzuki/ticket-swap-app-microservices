@@ -94,6 +94,10 @@ export type IGetUserResponse = {
   user?: Maybe<IUser>;
 };
 
+export type IGsi1Keys = {
+  userId: Scalars["ID"];
+};
+
 export type ILocation = {
   __typename?: "Location";
   name: Scalars["String"];
@@ -107,14 +111,25 @@ export type ILocationInput = {
   address: Scalars["String"];
 };
 
+export type IMainKeys = {
+  eventId: Scalars["ID"];
+  id: Scalars["ID"];
+};
+
 export type IMutation = {
   __typename?: "Mutation";
   createTicket: IGetTicketResponse;
+  updateTicket: ITicket;
   createEvent?: Maybe<IEvent>;
 };
 
 export type IMutationCreateTicketArgs = {
   data: ICreateTicketInput;
+};
+
+export type IMutationUpdateTicketArgs = {
+  keys: IMainKeys;
+  data: IUpdateTicketArgs;
 };
 
 export type IMutationCreateEventArgs = {
@@ -158,6 +173,11 @@ export type ITicket = {
   createdAt: Scalars["String"];
   soldAt?: Maybe<Scalars["String"]>;
   eventName: Scalars["String"];
+};
+
+export type IUpdateTicketArgs = {
+  price: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
 };
 
 export type IUser = {
@@ -259,10 +279,13 @@ export type IResolversTypes = {
   User: ResolverTypeWrapper<IUser>;
   Mutation: ResolverTypeWrapper<{}>;
   CreateTicketInput: ICreateTicketInput;
+  MainKeys: IMainKeys;
+  UpdateTicketArgs: IUpdateTicketArgs;
   CreateEventInput: ICreateEventInput;
   EventDateInput: IEventDateInput;
   LocationInput: ILocationInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  GSI1Keys: IGsi1Keys;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -286,10 +309,13 @@ export type IResolversParentTypes = {
   User: IUser;
   Mutation: {};
   CreateTicketInput: ICreateTicketInput;
+  MainKeys: IMainKeys;
+  UpdateTicketArgs: IUpdateTicketArgs;
   CreateEventInput: ICreateEventInput;
   EventDateInput: IEventDateInput;
   LocationInput: ILocationInput;
   Boolean: Scalars["Boolean"];
+  GSI1Keys: IGsi1Keys;
 };
 
 export type IAuthenticatedDirectiveResolver<
@@ -382,6 +408,12 @@ export type IMutationResolvers<
     ParentType,
     ContextType,
     IMutationCreateTicketArgs
+  >;
+  updateTicket?: Resolver<
+    IResolversTypes["Ticket"],
+    ParentType,
+    ContextType,
+    IMutationUpdateTicketArgs
   >;
   createEvent?: Resolver<
     Maybe<IResolversTypes["Event"]>,

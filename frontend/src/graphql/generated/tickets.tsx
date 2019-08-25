@@ -95,6 +95,10 @@ export type GetUserResponse = {
   user?: Maybe<User>;
 };
 
+export type Gsi1Keys = {
+  userId: Scalars["ID"];
+};
+
 export type Location = {
   __typename?: "Location";
   name: Scalars["String"];
@@ -108,14 +112,25 @@ export type LocationInput = {
   address: Scalars["String"];
 };
 
+export type MainKeys = {
+  eventId: Scalars["ID"];
+  id: Scalars["ID"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   createTicket: GetTicketResponse;
+  updateTicket: Ticket;
   createEvent?: Maybe<Event>;
 };
 
 export type MutationCreateTicketArgs = {
   data: CreateTicketInput;
+};
+
+export type MutationUpdateTicketArgs = {
+  keys: MainKeys;
+  data: UpdateTicketArgs;
 };
 
 export type MutationCreateEventArgs = {
@@ -161,6 +176,11 @@ export type Ticket = {
   eventName: Scalars["String"];
 };
 
+export type UpdateTicketArgs = {
+  price: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
+};
+
 export type User = {
   __typename?: "User";
   id: Scalars["String"];
@@ -194,7 +214,13 @@ export type GetTicketsByUserQuery = { __typename?: "Query" } & {
     tickets: Array<
       { __typename?: "Ticket" } & Pick<
         Ticket,
-        "id" | "eventId" | "price" | "date" | "description" | "eventName"
+        | "id"
+        | "eventId"
+        | "price"
+        | "date"
+        | "description"
+        | "userId"
+        | "eventName"
       >
     >;
   };
@@ -224,6 +250,15 @@ export type CreateTicketMutation = { __typename?: "Mutation" } & {
   createTicket: { __typename?: "GetTicketResponse" } & {
     ticket: Maybe<{ __typename?: "Ticket" } & Pick<Ticket, "price">>;
   };
+};
+
+export type UpdateTicketMutationVariables = {
+  keys: MainKeys;
+  data: UpdateTicketArgs;
+};
+
+export type UpdateTicketMutation = { __typename?: "Mutation" } & {
+  updateTicket: { __typename?: "Ticket" } & Pick<Ticket, "id">;
 };
 
 export const GetTicketsDocument = gql`
@@ -266,6 +301,7 @@ export const GetTicketsByUserDocument = gql`
         price
         date
         description
+        userId
         eventName
       }
     }
@@ -355,4 +391,37 @@ export type CreateTicketMutationResult = ApolloReactCommon.MutationResult<
 export type CreateTicketMutationOptions = ApolloReactCommon.BaseMutationOptions<
   CreateTicketMutation,
   CreateTicketMutationVariables
+>;
+export const UpdateTicketDocument = gql`
+  mutation updateTicket($keys: MainKeys!, $data: UpdateTicketArgs!) {
+    updateTicket(keys: $keys, data: $data) {
+      id
+    }
+  }
+`;
+export type UpdateTicketMutationFn = ApolloReactCommon.MutationFunction<
+  UpdateTicketMutation,
+  UpdateTicketMutationVariables
+>;
+
+export function useUpdateTicketMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    UpdateTicketMutation,
+    UpdateTicketMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    UpdateTicketMutation,
+    UpdateTicketMutationVariables
+  >(UpdateTicketDocument, baseOptions);
+}
+export type UpdateTicketMutationHookResult = ReturnType<
+  typeof useUpdateTicketMutation
+>;
+export type UpdateTicketMutationResult = ApolloReactCommon.MutationResult<
+  UpdateTicketMutation
+>;
+export type UpdateTicketMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  UpdateTicketMutation,
+  UpdateTicketMutationVariables
 >;

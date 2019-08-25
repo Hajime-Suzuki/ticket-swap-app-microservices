@@ -8,15 +8,15 @@ import {
   ListItemText,
   Typography
 } from '@material-ui/core'
-import { GetTicketsByUserQuery } from 'graphql/generated/tickets'
+import { TicketByUser } from 'graphql/types'
 import { formatCurrency } from 'helpers/number'
-import React, { FC, SyntheticEvent } from 'react'
+import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { pathNames } from 'routes/paths'
 
 interface Props {
-  openModal: (id: string) => (e: SyntheticEvent<any, any>) => void
-  tickets: GetTicketsByUserQuery['getTickets']['tickets']
+  openModal: (ticket: TicketByUser) => () => void
+  tickets: TicketByUser[]
 }
 
 const TicketsList: FC<Props> = ({ tickets, openModal }) => {
@@ -40,7 +40,7 @@ const TicketsList: FC<Props> = ({ tickets, openModal }) => {
                 )}`}</Typography>
               </Grid>
               <Grid item xs={1}>
-                <IconButton onClick={openModal(ticket.id)}>
+                <IconButton onClick={openModal(ticket)}>
                   <FontAwesomeIcon
                     icon={faPen}
                     style={{ fontSize: 20, verticalAlign: 'middle' }}

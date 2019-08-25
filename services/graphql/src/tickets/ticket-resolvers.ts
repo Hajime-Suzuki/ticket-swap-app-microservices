@@ -35,6 +35,17 @@ export const ticketResolvers: IResolvers<ResolverContext> = {
         context
       })
       return res
+    },
+    updateTicket: async (_, data, context) => {
+      logger.log('updateTicket', data)
+
+      const res = await ticketLambda.invoke<{ ticket: ITicket }>({
+        actionName: ticketsActions.updateTicket,
+        data,
+        context
+      })
+
+      return res.ticket
     }
   }
 }

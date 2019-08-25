@@ -23,6 +23,16 @@ export const ticketSchema = gql`
 
   type Mutation {
     createTicket(data: CreateTicketInput!): GetTicketResponse! @authenticated
+    updateTicket(keys: MainKeys!, data: UpdateTicketArgs!): Ticket!
+  }
+
+  input MainKeys {
+    eventId: ID!
+    id: ID!
+  }
+
+  input GSI1Keys {
+    userId: ID!
   }
 
   input CreateTicketInput {
@@ -50,6 +60,11 @@ export const ticketSchema = gql`
   input GetTicketArgs {
     eventId: ID!
     id: ID!
+  }
+
+  input UpdateTicketArgs {
+    price: String!
+    description: String
   }
 
   type GetTicketsResponse {

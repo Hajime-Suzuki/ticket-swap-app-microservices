@@ -5,6 +5,18 @@ const errorMessages = {
   endTime: 'end time should be later than start time'
 }
 
+const helpers = {
+  shouldBeNumber(this: yup.TestContext, value: string) {
+    if (!value) return true
+    return !value.match(/[^.\d]/) ? true : false
+  },
+  shouldBe2Decimal(this: yup.TestContext, value: string) {
+    if (!value) return true
+    if (value.toString().match(/\d{1,}\.\d{3,}/)) return false
+    return true
+  }
+}
+
 const dateSchema = yup.object().shape({
   date: yup.string().required(errorMessages.required('date')),
   startTime: yup.string().required(errorMessages.required('start time')),
@@ -44,20 +56,15 @@ export const createTicketSchema = yup.object().shape({
   price: yup
     .string()
     .required(errorMessages.required('price'))
-    .test('price', 'price should be number', function(
-      this: yup.TestContext,
-      value: string
-    ) {
-      if (!value) return true
-      return !value.match(/[^.\d]/) ? true : false
-    })
-    .test('price', 'too many decimal numbers', function(
-      this: yup.TestContext,
-      value: string
-    ) {
-      if (!value) return true
-      if (value.toString().match(/\d{1,}\.\d{3,}/)) return false
-      return true
-    }),
+    .test('price', 'price should be number', helpers.shouldBeNumber)
+    .test('price', 'too many decimal numbers', helpers.shouldBe2Decimal),
+  description: yup.string()
+})
+
+export const updateTicketSchema = yup.object().shape({
+  price: yup
+    .string()
+    .test('price', 'price should be number', helpers.shouldBeNumber)
+    .test('price', 'too many decimal numbers', helpers.shouldBe2Decimal),
   description: yup.string()
 })

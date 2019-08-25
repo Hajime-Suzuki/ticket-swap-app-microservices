@@ -6,15 +6,21 @@ import {
   DialogTitle,
   Grid
 } from '@material-ui/core'
-import TicketForm, { TicketFormProps } from 'components/forms/TicketForm'
+import TicketForm from 'components/forms/TicketForm'
 import ErrorMessage from 'components/messages/ErrorMessage'
 import ContentWrapper from 'components/space/ContentWrapper'
 import LoadingIcon from 'components/UI/LoadingIcon'
 import { Form, Formik } from 'formik'
-import { useGetTicketsByUserQuery } from 'graphql/generated/tickets'
+import {
+  GetTicketsByUserDocument,
+  useGetTicketsByUserQuery,
+  useUpdateTicketMutation
+} from 'graphql/generated/tickets'
+import { TicketByUser } from 'graphql/types'
 import React, { FC, useState } from 'react'
 import { PrivateRouteProps, UserProfileProps } from 'routes/types'
 import TicketsList from './components/TicketLists'
+import { updateTicketSchema } from 'helpers/validations/schema'
 
 const useModal = () => {
   const [isOpen, setOpen] = useState(false)
@@ -34,17 +40,29 @@ const UserProfilePage: FC<PrivateRouteProps<UserProfileProps>> = props => {
   const { data, error, loading } = useGetTicketsByUserQuery({
     variables: { userId: (user && user.id) || '' }
   })
-  const saveTicket = (values: TicketFormProps) => {
-    // TODO: add mutation
-    console.log({ values })
+
+  const [
+    updateTicket,
+    { error: updateError, loading: updateLoading }
+  ] = useUpdateTicketMutation()
+
+  const saveTicket = async (values: TicketByUser) => {
+    const { id, eventId, userId, price, description } = values
+
+    await updateTicket({
+      variables: { keys: { id, eventId }, data: { price, description } },
+      refetchQueries: [
+        { query: GetTicketsByUserDocument, variables: { userId } }
+      ]
+    })
+    closeModal()
   }
 
-  const [selectedTicketId, setTicketId] = useState('')
+  const [selectedTicket, setTicket] = useState<TicketByUser | null>(null)
 
-  const openEditModal = (id: string) => (e: any) => {
-    e.stopPropagation()
+  const openEditModal = (ticket: TicketByUser) => () => {
     openModal()
-    setTicketId(id)
+    setTicket(ticket)
   }
 
   if (loading) return <LoadingIcon />
@@ -53,7 +71,6 @@ const UserProfilePage: FC<PrivateRouteProps<UserProfileProps>> = props => {
 
   const tickets = data.getTickets.tickets
 
-  const selectedTicket = tickets.find(t => t.id === selectedTicketId)
   return (
     <ContentWrapper>
       <Grid container direction="column" justify="center" alignItems="center">
@@ -64,47 +81,55 @@ const UserProfilePage: FC<PrivateRouteProps<UserProfileProps>> = props => {
         isOpen={isOpen}
         closeModal={closeModal}
         onSave={saveTicket}
+        loading={updateLoading}
+        error={updateError && updateError.message}
       />
     </ContentWrapper>
   )
 }
 
 interface Props {
-  ticket: TicketFormProps | undefined
+  ticket: TicketByUser | null
   isOpen: boolean
   closeModal: () => void
-  onSave: (values: TicketFormProps) => void
+  onSave: (values: TicketByUser) => void
+  loading?: boolean
+  error?: string
 }
 
 const EditTicketModal: FC<Props> = props => {
-  const { isOpen, closeModal, onSave, ticket } = props
+  const { isOpen, closeModal, onSave, ticket, loading, error } = props
   if (!ticket) return null
   return (
-    <Dialog open={isOpen} fullWidth maxWidth="xs">
-      <DialogTitle>Edit</DialogTitle>
-      <DialogContent>
-        <Formik
-          initialValues={ticket}
-          onSubmit={onSave}
-          validateOnBlur={true}
-          validateOnChange={false}
-        >
-          {() => (
-            <Form>
+    <Formik
+      initialValues={ticket}
+      onSubmit={onSave}
+      validateOnBlur={true}
+      validateOnChange={false}
+      validationSchema={updateTicketSchema}
+    >
+      {({ handleSubmit }) => (
+        <Form>
+          <Dialog open={isOpen} fullWidth maxWidth="xs">
+            <DialogTitle>Edit</DialogTitle>
+            <DialogContent>
               <TicketForm
                 dates={[{ name: ticket.date, value: ticket.date }]}
                 disableDate
                 fullWidth
               />
-            </Form>
-          )}
-        </Formik>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={closeModal}>cancel</Button>
-        <Button type="submit">save</Button>
-      </DialogActions>
-    </Dialog>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={closeModal}>cancel</Button>
+              <Button onClick={handleSubmit as any} disabled={loading}>
+                save
+              </Button>
+              {error && <ErrorMessage text={error}></ErrorMessage>}
+            </DialogActions>
+          </Dialog>
+        </Form>
+      )}
+    </Formik>
   )
 }
 

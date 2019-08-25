@@ -1,12 +1,9 @@
-import { IQueryGetTicketsByUserIdArgs } from '@ticket-swap-app/gql/src/generated/graphql'
 import { HandlerEvent } from '@ticket-swap-app/shared/src/types/service-handler'
-import { GSINames, ticketRepository } from '../repositories/tickets-repository'
 import { eventRepository } from '../repositories/event-repository'
+import { GSINames, ticketRepository } from '../repositories/tickets-repository'
 
 // TODO: not used.
-export const getTicketsByUserIdHandler = async (
-  e: HandlerEvent<IQueryGetTicketsByUserIdArgs>
-) => {
+export const getTicketsByUserIdHandler = async (e: HandlerEvent<any>) => {
   const { userId } = e.body.data
   const tickets = await ticketRepository.query(
     { userId },

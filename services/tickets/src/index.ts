@@ -34,7 +34,7 @@ export const handler = async (event: HandlerEvent<any, ActionTypes>) => {
       }
       case ticketsActions.updateTicket: {
         const res = await updateTicketHandler(event)
-        return responseHandler.success({ test: res })
+        return responseHandler.success({ ticket: res })
       }
       default: {
         throw new Error('unknown action')
