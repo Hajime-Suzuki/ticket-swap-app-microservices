@@ -80,26 +80,30 @@ const EditTicketModal: FC<Props> = props => {
   const { isOpen, closeModal, onSave, ticket } = props
   if (!ticket) return null
   return (
-    <Dialog open={isOpen}>
-      <Formik
-        initialValues={ticket}
-        onSubmit={onSave}
-        validateOnBlur={true}
-        validateOnChange={false}
-      >
-        {() => (
-          <Form>
-            <DialogTitle>Edit</DialogTitle>
-            <DialogContent style={{ padding: '1em' }}>
-              <TicketForm dates={[{ name: ticket.date, value: ticket.date }]} />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={closeModal}>cancel</Button>
-              <Button type="submit">save</Button>
-            </DialogActions>
-          </Form>
-        )}
-      </Formik>
+    <Dialog open={isOpen} fullWidth maxWidth="xs">
+      <DialogTitle>Edit</DialogTitle>
+      <DialogContent>
+        <Formik
+          initialValues={ticket}
+          onSubmit={onSave}
+          validateOnBlur={true}
+          validateOnChange={false}
+        >
+          {() => (
+            <Form>
+              <TicketForm
+                dates={[{ name: ticket.date, value: ticket.date }]}
+                disableDate
+                fullWidth
+              />
+            </Form>
+          )}
+        </Formik>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={closeModal}>cancel</Button>
+        <Button type="submit">save</Button>
+      </DialogActions>
     </Dialog>
   )
 }

@@ -1,4 +1,4 @@
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Grid,
@@ -42,7 +42,7 @@ const TicketsList: FC<Props> = ({ tickets, openModal }) => {
               <Grid item xs={1}>
                 <IconButton onClick={openModal(ticket.id)}>
                   <FontAwesomeIcon
-                    icon={faPlusSquare}
+                    icon={faPen}
                     style={{ fontSize: 20, verticalAlign: 'middle' }}
                   />
                 </IconButton>

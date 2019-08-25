@@ -2,14 +2,23 @@ import MUITextField, { TextFieldProps } from '@material-ui/core/TextField'
 import { Field, FieldProps, getIn } from 'formik'
 import React, { FC } from 'react'
 
-export const TextField: FC<TextFieldProps> = props => {
-  return <Field component={FieldComponent} {...props} />
+export interface TextFieldCustomProps {
+  min_width?: number | string
+}
+export const TextField: FC<TextFieldProps & TextFieldCustomProps> = props => {
+  return (
+    <Field
+      component={FieldComponent}
+      {...props}
+      style={{ minWidth: props.min_width }}
+    />
+  )
 }
 
 const FieldComponent: FC<
   FieldProps<any> & Omit<TextFieldProps, 'name'>
 > = props => {
-  const { label, type, form, field, multiline } = props
+  const { label, type, form, field, multiline, ...rest } = props
   const handleChange = (
     e: React.ChangeEvent<
       HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
@@ -28,6 +37,7 @@ const FieldComponent: FC<
       error={!!error}
       helperText={error}
       multiline={multiline}
+      {...(rest as any)}
     />
   )
 }
