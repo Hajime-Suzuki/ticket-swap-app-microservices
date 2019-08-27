@@ -35,9 +35,9 @@ const TicketsList: FC<Props> = ({ tickets, openModal }) => {
                 <Typography>{`${ticket.date}`}</Typography>
               </Grid>
               <Grid item xs={5} sm={3}>
-                <Typography color="primary">{`€ ${formatCurrency(
-                  ticket.price
-                )}`}</Typography>
+                <Typography color="primary">
+                  {formatCurrency(ticket.price)}
+                </Typography>
               </Grid>
               <Grid item xs={1}>
                 <IconButton onClick={openModal(ticket)}>

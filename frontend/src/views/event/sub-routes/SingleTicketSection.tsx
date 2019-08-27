@@ -95,7 +95,7 @@ const Ticket: FC<TicketProps> = ({ ticket }) => {
           <div className="date">{date}</div>
         </Grid>
         <Grid item xs={9}>
-          €{formatCurrency(ticket.price)}
+          {formatCurrency(ticket.price)}
         </Grid>
       </Grid>
     </DateBlock>

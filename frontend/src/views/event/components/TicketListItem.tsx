@@ -23,9 +23,9 @@ const TicketListItem: FC<Props> = ({ ticket }) => {
           </StyledGrid>
           <StyledGrid item container xs={12} md={6} justify="space-evenly">
             <Grid item xs={6}>
-              <Typography color="primary">{`€ ${formatCurrency(
-                ticket.price
-              )}`}</Typography>
+              <Typography color="primary">
+                {formatCurrency(ticket.price)}
+              </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography>{ticket.username}</Typography>
